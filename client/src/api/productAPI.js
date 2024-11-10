@@ -32,7 +32,6 @@ export function fetchProductsByFilters(role, filter, sort, pagination) {
     queryString += `${key}=${pagination[key]}`
   }
 
-
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + `/products?role=${role}&` + queryString, { credentials: 'include', })
     const data = await response.json()

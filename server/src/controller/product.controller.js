@@ -60,12 +60,11 @@ exports.fetchAllQuery = catchAsyncUtil.catchAsync(async (req, res) => {
         const brands = req.query.brand.includes(',') ? req.query.brand.split(',') : req.query.brand;
         productQuery = productQuery.find({ brand: { $in: brands } });
     }
-    if (req.query._page) {
+    if (req.query._page && !req.query.brand && !req.query.category ) {
         const pageSize = 10;
         const page = req.query._page;
         productQuery = productQuery.skip(pageSize * (page - 1)).limit(pageSize);
     }
-
     const data = await productQuery.exec();
     res.status(status.OK).json(data);
 });

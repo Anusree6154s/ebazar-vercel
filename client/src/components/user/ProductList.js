@@ -25,16 +25,17 @@ function ProductList() {
   const [filter, setFilter] = useState({})
   const [sort, setSort] = useState({})
   const [page, setPage] = useState(1)
-
+  const [filterFlag, setFilterFlag] = useState(false)
 
   const dispatch = useDispatch()
 
   const products = useSelector(selectAllProducts)
   const totalItems = useSelector(selectTotalItems)
-  const brands = useSelector(selectAllBrands)
-  const categories = useSelector(selectAllCategories)
+  const brandsUnsorted = useSelector(selectAllBrands)
+  const brands = [...brandsUnsorted].sort((a, b) => a.label.localeCompare(b.label))
+  const categoriesUnsorted = useSelector(selectAllCategories)
+  const categories = [...categoriesUnsorted].sort((a, b) => a.label.localeCompare(b.label))
   const user = useSelector(selectLoggedInUser)
-
   const filters = [
     {
       key: 0,
@@ -63,9 +64,12 @@ function ProductList() {
       let index = newFilter[section.id].findIndex(item => item === option.value)
       newFilter[section.id].splice(index, 1)
     }
-    setFilter(newFilter)
-  }
 
+    setFilter(newFilter)
+
+    if ((newFilter['brand'] && newFilter.brand.length !== 0) || (newFilter['category'] && newFilter.category.length !== 0)) setFilterFlag(true)
+    else setFilterFlag(false)
+  }
   const handleSort = (option) => {
     const newSort = option.name === 'Clear Sort' ? {} : { _sort: option.sorts, _order: option.order }
     setSort(newSort)
@@ -98,6 +102,7 @@ function ProductList() {
             setMobileFiltersOpen={setMobileFiltersOpen}
             filters={filters}
             handleFilter={handleFilter}
+            filter={filter}
           ></MobileFilter>
 
           <main className=" max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -179,12 +184,12 @@ function ProductList() {
               </div>
             </section>
 
-            {/* Pagination */}
-            <Pagination
+            {/* Pagination */}l
+            {!filterFlag && <Pagination
               handlePage={handlePage}
               page={page}
               setPage={setPage}
-              totalItems={totalItems}></Pagination>
+              totalItems={totalItems} />}
 
           </main>
         </div>
@@ -193,7 +198,7 @@ function ProductList() {
   );
 }
 
-function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, filters }) {
+function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, filters, filter }) {
   return (
     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
       <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
@@ -259,7 +264,7 @@ function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, f
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
                                   type="checkbox"
-                                  defaultChecked={option.checked}
+                                  defaultChecked={filter[section.id] ? filter[section.id].includes(option.value) : false}
                                   onChange={e => handleFilter(e, section, option)}
                                   className={`h-4 w-4 rounded border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-700 focus:ring-transparent text-customBlue `}
                                 />
@@ -383,7 +388,7 @@ function ProductGrid({ products }) {
 
 function Pagination({ handlePage, page, totalItems }) {
   const [pageBoundary, setPageBoundary] = useState({ start: 1, end: 10, index: 0 })
-  
+
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
   const startItems = (page - 1) * ITEMS_PER_PAGE + 1
   const endItems = page * ITEMS_PER_PAGE > totalItems ? totalItems : page * ITEMS_PER_PAGE
