@@ -3,9 +3,9 @@ import Home from "../../components/common/Home";
 
 function HomePage() {
     return (
-        <div>
+        // <div>
             <Home></Home>
-        </div>
+        // </div>
     );
 }
 
