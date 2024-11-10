@@ -144,8 +144,8 @@ function UserProfile() {
             </div>
           </form>
           {!editProfileVisibility && <div>
-            <div className="flex justify-between ">
-              <p className="text-gray-900 dark:text-gray-300 text-lg mb-8 flex flex-col items-center border border-gray-400 dark:border-gray-600 p-5 rounded-md h-full">
+            <div className="flex gap-10 flex-col md:flex-row">
+              <p className="text-gray-900 dark:text-gray-300 text-lg flex flex-col items-center border border-gray-400 dark:border-gray-600 p-5 rounded-md h-full">
                 <img src={user.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfZbXR5XmpH1OOJhigJF4nWkJIITHis1Y4dA&s'} alt={user.name} className="w-20 h-20 rounded-full" />
                 <div className="mt-4">
                   {user.name && <p className=" font-bold whitespace-nowrap">Name: <span className="font-normal dark:text-gray-400">{user.name}</span></p>}
@@ -162,9 +162,9 @@ function UserProfile() {
                 </div>
               </p>
 
-              <div className="ml-10 w-full p-5 rounded-md bg-gray-100 dark:bg-gray-900">
+              <div className=" w-full p-5 rounded-md bg-gray-100 dark:bg-gray-900 " >
                 <p className="text-gray-900 dark:text-gray-300 font-bold text-lg flex justify-between">
-                  <span>Your Addresses:</span>
+                  <span className={user.addresses.length === 0 && 'hidden'}>Your Addresses:</span>
                   <button
                     onClick={() => {
                       setValue('email', user.email)
@@ -172,6 +172,9 @@ function UserProfile() {
                     }}
                     className={"rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue " + (addFormVisibility ? "hidden mt-6" : "")}>Add Address</button>
                 </p>
+
+                <p className={'text-gray-500 text-center h-full flex items-center justify-center ' + ((user.addresses.length !== 0 || addFormVisibility) ? 'hidden' : '')}>No User Addresses</p>
+
                 <form
                   noValidate
                   onSubmit={handleSubmit((data) => {
