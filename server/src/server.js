@@ -4,7 +4,7 @@ const cors = require('cors') //to allow cross-origin resource sharing
 var cookieParser = require('cookie-parser');//to get cookies 
 const path = require("path")
 const routes = require("./routes");
-const { errorHandler } = require('./middlewares/errorHandler.middleware');
+const { errorHandler } = require('./middlewares/errorHandler.middleware.js');
 const passport = require("passport");
 const { localStrategy, jwtStrategy } = require('./config/passport.config');
 
