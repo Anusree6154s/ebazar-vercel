@@ -113,7 +113,7 @@ export default function Navbar({ children, name, preview }) {
                         </button>
                       </Link>
 
-                      <Link to='/cart' className={user.role === 'user' ? '' : "hidden"}>
+                      <Link to={items.length > 0 ? '/cart' : '#'} className={user.role === 'user' ? '' : "hidden"}>
                         <button
                           type="button"
                           className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
@@ -194,7 +194,7 @@ export default function Navbar({ children, name, preview }) {
                       </button>
                     </Link>
 
-                    <Link to='/cart' className={user.role === 'user' ? '' : "hidden"}>
+                    <Link to={items.length > 0 ? '/cart' : '#'}  className={user.role === 'user' ? '' : "hidden"}>
                       <button
                         type="button"
                         className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100 "

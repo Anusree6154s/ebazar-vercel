@@ -14,14 +14,12 @@ function UserOrders() {
         dispatch(fetchLoggedInUserOrdersAsync(user.id))
     }, [dispatch, user.id])
 
-
     return (
         <>
             <Link to='/' className='p-2 mb-5 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 inline-block' ><ArrowLeftIcon className='h-6 w-6 inline '></ArrowLeftIcon> Back</Link>
 
-            {orders
-                && orders.map((order, index) =>
-
+            {orders.length !== 0
+                ? orders.map((order, index) =>
                     <div key={index} className="flex flex-col bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 max-w-7xl px-6 py-8 sm:px-6 lg:px-8 mb-6">
                         <div className="mb-8 flex justify-between">
                             <span className="text-gray-900 dark:text-gray-300 font-bold text-2xl ">Order #{order.id}</span>
@@ -31,7 +29,7 @@ function UserOrders() {
                         <div className="flex flex-col border dark:border-gray-500 px-4 py-2  sm:px-6">
                             <p className="text-gray-900 dark:text-gray-300 font-bold text-lg">Items:</p>
                             <div className="flex-1 py-6 flow-root">
-                                <ul  className="-my-6 divide-y divide-gray-200 dark:divide-gray-700">
+                                <ul className="-my-6 divide-y divide-gray-200 dark:divide-gray-700">
                                     {order.items.map((item, index) => (
                                         <li key={index} className="flex py-6">
                                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md ">
@@ -91,9 +89,8 @@ function UserOrders() {
                                 </div>
                             </div>
                         }
-                    </div>
-                )
-
+                    </div>)
+                : <div className='text-center text-gray-400 text-lg w-full'>My Orders is Empty</div>
             }
         </>
     );
