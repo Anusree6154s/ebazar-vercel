@@ -9,12 +9,6 @@ import { ITEMS_PER_PAGE } from '../../app/constants';
 
 //TODO: on server, code for sortaoptions
 //TODO: in own project, fix json server link to show data for multiple filter options , and pagination for multiple limits
-const sortOptions = [
-  { name: 'Best Rating', sorts: 'rating', order: 'desc', current: false },
-  { name: 'Price: Low to High', sorts: 'price', order: 'asc', current: false },
-  { name: 'Price: High to Low', sorts: 'price', order: 'desc', current: false },
-  { name: 'Clear Sort', current: false }
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -26,6 +20,12 @@ function ProductList() {
   const [sort, setSort] = useState({})
   const [page, setPage] = useState(1)
   const [filterFlag, setFilterFlag] = useState(false)
+  const [sortOptions, setSortOptions] = useState([
+    { name: 'Best Rating', sorts: 'rating', order: 'desc', current: false },
+    { name: 'Price: Low to High', sorts: 'price', order: 'asc', current: false },
+    { name: 'Price: High to Low', sorts: 'price', order: 'desc', current: false },
+    { name: 'Clear Sort', current: false }
+  ])
 
   const dispatch = useDispatch()
 
@@ -73,6 +73,12 @@ function ProductList() {
   const handleSort = (option) => {
     const newSort = option.name === 'Clear Sort' ? {} : { _sort: option.sorts, _order: option.order }
     setSort(newSort)
+    
+    const newSortOptions = sortOptions.map(item => {
+      if (item.name === option.name && item.name!=='Clear Sort') return { ...item, current: true }
+      return { ...item, current: false }
+    })
+    setSortOptions(newSortOptions)
   }
   const handlePage = (page) => {
     setPage(page)
@@ -140,8 +146,8 @@ function ProductList() {
                               <button
                                 className={classNames(
                                   option.current ? 'font-medium text-gray-900 dark:text-gray-100' : 'text-gray-500 dark:text-gray-300',
-                                  active ? 'bg-gray-100 dark:bg-gray-600' : '',
-                                  'block px-4 py-2 text-sm cursor-pointer',
+                                  active && 'bg-gray-100 dark:bg-gray-600 w-full',
+                                  'block px-4 py-2 text-sm cursor-pointer w-full text-left',
                                 )}
                                 onClick={(e) => handleSort(option)}
                               >
