@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { selectAuthSliceStatus, selectLoggedInUser } from "../../redux";
+import { selectAuthStatus, selectLoggedInUser } from "../../redux";
 
 function Protected({ children }) {
     const user = useSelector(selectLoggedInUser)
-    const status = useSelector(selectAuthSliceStatus)
+    const status = useSelector(selectAuthStatus)
 
     if (status === 'loading') {
         return <div className='col-span-1 lg:col-span-3'>

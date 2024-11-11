@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { router } from "./routes/Routes";
 import { checkAuthAsync, fetchItemsByUserIdAsync, fetchLoggedInUserAsync, fetchWishListByUserIdAsync, selectLoggedInUser } from "./redux";
+import { SnackbarProvider } from 'notistack'
 
 function App() {
   const dispatch = useDispatch();
@@ -22,9 +23,12 @@ function App() {
   }, [dispatch]);
 
 
+
   return (
     <div className="dark:bg-gray-900">
-      <RouterProvider router={router} />
+      <SnackbarProvider>
+        <RouterProvider router={router} />
+      </SnackbarProvider>
     </div>
   );
 }

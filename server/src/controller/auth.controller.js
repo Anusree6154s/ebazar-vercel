@@ -1,8 +1,12 @@
-
 const jwt = require("jsonwebtoken");
 const httpStatus = require("http-status");
 const { env } = require("../config/env.config");
-const { catchAsyncUtil, validationUtil, apiUtil, sanitizeUtil } = require("../utils");
+const {
+  catchAsyncUtil,
+  validationUtil,
+  apiUtil,
+  sanitizeUtil,
+} = require("../utils");
 const { cryptoService, authService } = require("../services");
 const { User } = require("../model/user.model");
 const { ApiError } = require("../utils/ApiError.util");
@@ -18,14 +22,15 @@ const { ApiError } = require("../utils/ApiError.util");
  * @throws {apiUtil.ApiError} Throws an error if user signup fails.
  */
 exports.createUser = catchAsyncUtil.catchAsync(async (req, res) => {
-  validationUtil.validate({
-    email: req.body.email,
-    password: req.body.password
-  },
+  validationUtil.validate(
+    {
+      email: req.body.email,
+      password: req.body.password,
+    },
     validationUtil.validateSignup
-  )
+  );
 
-  const data = await cryptoService.crytpoSignup(req.body)
+  const data = await cryptoService.crytpoSignup(req.body);
   const token = jwt.sign(sanitizeUtil.sanitizeUser(data), env.jwt.secret_key);
 
   res
@@ -35,7 +40,7 @@ exports.createUser = catchAsyncUtil.catchAsync(async (req, res) => {
     })
     .status(httpStatus.CREATED)
     .json(sanitizeUtil.sanitizeUser(data));
-})
+});
 
 /**
  * Logs in a user by sending their token in a cookie.
@@ -51,12 +56,11 @@ exports.loginUser = catchAsyncUtil.catchAsync(async (req, res) => {
     .cookie("jwt", req.user.token, {
       expires: new Date(Date.now() + 3600000), //1hr
       httpOnly: true,
-      sameSite: 'Lax',
+      sameSite: "Lax",
     })
     .status(httpStatus.OK)
     .json(req.user.info);
-})
-
+});
 
 /**
  * Logs out a user by clearing the JWT cookie.
@@ -69,11 +73,10 @@ exports.loginUser = catchAsyncUtil.catchAsync(async (req, res) => {
  */
 exports.logoutUser = catchAsyncUtil.catchAsync(async (req, res) => {
   res
-    .cookie("jwt", '', { expires: new Date(0), httpOnly: true })
+    .cookie("jwt", "", { expires: new Date(0), httpOnly: true })
     .status(httpStatus.OK)
-    .json({ id: null })
-})
-
+    .json({ id: null });
+});
 
 /**
  * Checks if a user is authenticated and returns their information.
@@ -88,9 +91,8 @@ exports.logoutUser = catchAsyncUtil.catchAsync(async (req, res) => {
 exports.checkAuth = catchAsyncUtil.catchAsync(async (req, res) => {
   if (req.user) res.status(httpStatus.OK).json(req.user);
 
-  throw new apiUtil.ApiError(httpStatus.UNAUTHORIZED, 'Check Failed')
-})
-
+  throw new apiUtil.ApiError(httpStatus.UNAUTHORIZED, "Check Failed");
+});
 
 /**
  * Sends a One-Time Password (OTP) to the user's email for verification purposes.
@@ -108,10 +110,10 @@ exports.sendOTP = catchAsyncUtil.catchAsync(async (req, res, next) => {
     throw new apiUtil.ApiError(httpStatus.NOT_FOUND, "Email doesn't exist");
   }
   await authService.sendEmail(req.body.email, req.body.OTP, user.id);
-  res.status(httpStatus.OK).json({ message: 'OTP sent successfully' });
-})
-
-
+  res
+    .status(httpStatus.OK)
+    .json({ id: user.id, message: "OTP sent successfully" });
+});
 
 /**
  * Resets a user's password using their ID.
@@ -124,9 +126,12 @@ exports.sendOTP = catchAsyncUtil.catchAsync(async (req, res, next) => {
  * @throws {apiUtil.ApiError} Throws an error if the password reset fails.
  */
 exports.resetPassword = catchAsyncUtil.catchAsync(async (req, res) => {
-  validationUtil.validate({ password: req.body.password }, validationUtil.validateReset)
+  validationUtil.validate(
+    { password: req.body.password },
+    validationUtil.validateReset
+  );
   // if (!value.result) throw new apiUtil.ApiError(httpStatus.BAD_REQUEST, value.error)
 
-  await cryptoService.crytpoReset(req.params.id, req.body.password)
-  res.status(httpStatus.OK).json({ message: 'Password has been reset' })
-})
+  await cryptoService.crytpoReset(req.params.id, req.body.password);
+  res.status(httpStatus.OK).json({ message: "Password has been reset" });
+});
