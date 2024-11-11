@@ -102,6 +102,7 @@ describe('Auth Controller', () => {
         options: {
           httpOnly: true,
           expires: expect.any(Date),
+          sameSite: "Lax",
         }
       });
       expect(res.statusCode).toBe(httpStatus.OK);

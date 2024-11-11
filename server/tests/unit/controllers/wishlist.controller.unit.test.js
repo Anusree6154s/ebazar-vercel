@@ -156,7 +156,7 @@ describe('Wishlist Controller', () => {
             expect(next).not.toHaveBeenCalled();
         });
 
-        test('should throw an error if the wishlist is empty', async () => {
+        test('should return an empty array if the wishlist is empty', async () => {
             // Mock request, response, and next
             const req = mockRequest({
                 user: { id: 'userId123' },
@@ -179,9 +179,9 @@ describe('Wishlist Controller', () => {
             // Assertions
             expect(WishList.find).toHaveBeenCalledWith({ user: req.user.id });
             expect(WishList.find().populate).toHaveBeenCalledWith('product');
-            expect(next).toHaveBeenCalledWith(expect.any(apiUtil.ApiError));
-            expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).not.toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(httpStatus.OK);
+            expect(res.json).toHaveBeenCalledWith(expect.arrayContaining([]));
+            expect(next).not.toHaveBeenCalled();
         });
 
         test('should handle errors properly during wishlist fetching', async () => {
