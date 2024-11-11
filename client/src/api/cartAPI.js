@@ -2,33 +2,32 @@ import { BASE_URL } from "../app/constants";
 
 export function addToCart(item) {
   return new Promise(async (resolve) => {
-    const response = await fetch(BASE_URL + '/cart', {
-      method: 'POST',
+    const response = await fetch(BASE_URL + "/cart", {
+      method: "POST",
       body: JSON.stringify(item),
-      headers: { 'content-type': 'application/json' },
-      credentials: 'include',
+      headers: { "content-type": "application/json" },
+      credentials: "include",
     });
     const data = await response.json();
     resolve({ data });
   });
 }
 
-
 export function fetchItemsByUserId() {
   return new Promise(async (resolve) => {
-    const response = await fetch(BASE_URL + '/cart',{credentials: 'include',})
-    const data = await response.json()
-    resolve({ data })
+    const response = await fetch(BASE_URL + "/cart");
+    const data = await response.json();
+    resolve({ data });
   });
 }
 
 export function updateCart(update) {
   return new Promise(async (resolve) => {
-    const response = await fetch(BASE_URL + '/cart/' + update.id, {
-      method: 'PATCH',
+    const response = await fetch(BASE_URL + "/cart/" + update.id, {
+      method: "PATCH",
       body: JSON.stringify(update),
-      headers: { 'content-type': 'application/json' },
-      credentials: 'include',
+      headers: { "content-type": "application/json" },
+      credentials: "include",
     });
     const data = await response.json();
     resolve({ data });
@@ -37,10 +36,10 @@ export function updateCart(update) {
 
 export function deleteItemFromCart(itemId) {
   return new Promise(async (resolve) => {
-    const response = await fetch(BASE_URL + '/cart/' + itemId, {
-      method: 'DELETE',
-      headers: { 'content-type': 'application/json' },
-      credentials: 'include',
+    const response = await fetch(BASE_URL + "/cart/" + itemId, {
+      method: "DELETE",
+      headers: { "content-type": "application/json" },
+      credentials: "include",
     });
     const data = await response.json();
     resolve({ data });
@@ -50,12 +49,11 @@ export function deleteItemFromCart(itemId) {
 export async function resetCart(userId) {
   // [in case of server cart reset] fetch all items of user's cart and delete ech item
   return new Promise(async (resolve) => {
-    const response = await fetchItemsByUserId(userId)
-    const items = response.data
+    const response = await fetchItemsByUserId(userId);
+    const items = response.data;
     for (let item of items) {
-      await deleteItemFromCart(item.id)
+      await deleteItemFromCart(item.id);
     }
-    resolve({ status: 'success' });
+    resolve({ status: "success" });
   });
-
 }

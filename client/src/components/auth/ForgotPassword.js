@@ -91,7 +91,6 @@ const Alerts = ({
     setShowForm,
     OTPVerificationStatus,
     setOTPVerificationStatus,
-    passwordResetStatus,
     password_reset_status }) => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
@@ -129,7 +128,7 @@ const Alerts = ({
             dispatch(resetPasswordResetStatus())
         }
 
-    }, [enqueueSnackbar, closeSnackbar, otp_sent_status, dispatch, setShowForm, setOTPVerificationStatus, OTPVerificationStatus, passwordResetStatus, password_reset_status]);
+    }, [enqueueSnackbar, closeSnackbar, otp_sent_status, dispatch, setShowForm, setOTPVerificationStatus, OTPVerificationStatus,  password_reset_status]);
 }
 
 const Form1 = ({ setOTP, dispatch, auth_status, showForm }) => {
@@ -182,7 +181,6 @@ const Form1 = ({ setOTP, dispatch, auth_status, showForm }) => {
 
 const Form2 = ({ setShowForm, OTP, setOTPVerificationStatus, auth_status, showForm }) => {
     const handleBack = () => {
-        console.log('clicked back')
         setShowForm(prev => ({ ...prev, form1: true, form2: false }))
     }
 
@@ -254,7 +252,6 @@ const Form3 = ({
     userId,
     auth_status,
     showForm,
-    passwordResetStatus,
     password_reset_status }) => {
 
     const navigate = useNavigate()
@@ -277,8 +274,6 @@ const Form3 = ({
         if(password_reset_status.success)
             navigate('/login')
     }, [navigate, password_reset_status])
-
-console.log('reset password', password_reset_status, auth_status, userId)
 
     return  <div className={showForm.form3 ? '' : 'hidden'}>
         <div onClick={handleBack} className='cursor-pointer p-2 mb-5 flex items-center w-fit rounded-md hover:bg-gray-50  dark:text-gray-300 dark:hover:bg-gray-700 ' >

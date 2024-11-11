@@ -1,0 +1,14 @@
+{
+  "name": "ebazar",
+  "version": "1.0.0",
+  "description": "Ebazar - Ecommerce application made with MERN stack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node server/src/index",
+    "build":"npm run build client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

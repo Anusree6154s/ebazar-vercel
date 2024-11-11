@@ -5,7 +5,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
-import { BASE_URL } from '../../app/constants';
+import { BASE_URL_PAYMENT } from '../../app/constants';
 import { selectCurrentOrder } from "../../redux";
 
 export default function CheckoutForm() {
@@ -60,7 +60,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${BASE_URL}/order-success/${currentOrder.id}`,
+        return_url: `${BASE_URL_PAYMENT}/order-success/${currentOrder.id}`,
       },
     });
 
