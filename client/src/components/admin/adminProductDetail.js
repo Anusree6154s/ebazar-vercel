@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { StarIcon, ArrowLeftIcon } from '@heroicons/react/20/solid'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { resetNewProduct, selectProductById, fetchProductByIdAsync, editProductAsync, } from '../../redux'
 
 
@@ -14,6 +14,7 @@ function ProductDetail() {
     const dispatch = useDispatch()
     const product = useSelector(selectProductById)
     const params = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(fetchProductByIdAsync(params.id))
@@ -24,10 +25,11 @@ function ProductDetail() {
     }, [dispatch])
 
 
-    const handleDelete = () => {
+    const handleDelete = async() => {
         const oldProduct = { ...product }
         oldProduct.deleted = true
-        dispatch(editProductAsync(oldProduct))
+        await dispatch(editProductAsync(oldProduct))
+        navigate('/admin')
     }
     return (
         <div>
@@ -184,8 +186,8 @@ function ProductDetail() {
                                 <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Highlights</h3>
                                 <div className="mt-4">
                                     <ul className="list-disc space-y-2 pl-4 text-sm">
-                                        {product.highlights.map((highlight) => (
-                                            <li key={highlight} className="text-gray-400 dark:text-gray-100">
+                                        {product.highlights.map((highlight, index) => (
+                                            <li key={index} className="text-gray-400 dark:text-gray-100">
                                                 <span className="text-gray-600 dark:text-gray-400">{highlight}</span>
                                             </li>
                                         ))}

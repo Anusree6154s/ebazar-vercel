@@ -25,7 +25,7 @@ function AdminProductList() {
   const [filter, setFilter] = useState({})
   const [sort, setSort] = useState({})
   const [page, setPage] = useState(1)
-
+  const [filterFlag, setFilterFlag] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -64,6 +64,8 @@ function AdminProductList() {
       newFilter[section.id].splice(index, 1)
     }
     setFilter(newFilter)
+    if ((newFilter['brand'] && newFilter.brand.length !== 0) || (newFilter['category'] && newFilter.category.length !== 0)) setFilterFlag(true)
+    else setFilterFlag(false)
   }
 
   const handleSort = (option) => {
@@ -107,6 +109,7 @@ function AdminProductList() {
             setMobileFiltersOpen={setMobileFiltersOpen}
             filters={filters}
             handleFilter={handleFilter}
+            filter={filter}
           ></MobileFilter>
 
           <main className=" max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -136,7 +139,7 @@ function AdminProductList() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white dark:bg-gray-700 shadow-2xl ring-1 ring-black dark:ring-white ring-opacity-5 dark:ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md bg-white dark:bg-gray-700 shadow-2xl ring-1 ring-black dark:ring-white ring-opacity-5 dark:ring-opacity-5 focus:outline-none">
                       <div className="py-1">
                         {sortOptions.map((option) => (
                           <Menu.Item key={option.name} label={option.label}>
@@ -145,8 +148,8 @@ function AdminProductList() {
                               <button
                                 className={classNames(
                                   option.current ? 'font-medium text-gray-900 dark:text-gray-100' : 'text-gray-500 dark:text-gray-300',
-                                  active ? 'bg-gray-100 dark:bg-gray-600' : '',
-                                  'block px-4 py-2 text-sm cursor-pointer',
+                                  active && 'bg-gray-100 dark:bg-gray-600 w-full',
+                                  'block px-4 py-2 text-sm cursor-pointer w-full text-left',
                                 )}
                                 onClick={(e) => handleSort(option)}
                               >
@@ -180,6 +183,7 @@ function AdminProductList() {
                 <DesktopFilter
                   filters={filters}
                   handleFilter={handleFilter}
+                  filter={filter}
                 ></DesktopFilter>
 
                 {/* Product grid */}
@@ -188,11 +192,11 @@ function AdminProductList() {
             </section>
 
             {/* Pagination */}
-            <Pagination
+            {filterFlag && <Pagination
               handlePage={handlePage}
               page={page}
-              setPage={setPage}
-              totalItems={totalItems}></Pagination>
+              totalItems={totalItems}
+            />}
 
           </main>
         </div>
@@ -201,7 +205,7 @@ function AdminProductList() {
   );
 }
 
-function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, filters }) {
+function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, filters, filter }) {
   return (
     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
       <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
@@ -267,7 +271,7 @@ function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, f
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
                                   type="checkbox"
-                                  defaultChecked={option.checked}
+                                  defaultChecked={filter[section.id] ? filter[section.id].includes(option.value) : false}
                                   onChange={e => handleFilter(e, section, option)}
                                   className={`h-4 w-4 rounded border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-700 focus:ring-transparent text-customBlue `}
                                 />
@@ -294,7 +298,7 @@ function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, f
   )
 }
 
-function DesktopFilter({ filters, handleFilter }) {
+function DesktopFilter({ filters, handleFilter, filter }) {
   return (
     <form className="hidden lg:block">
       {filters.map((section) => (
@@ -322,7 +326,7 @@ function DesktopFilter({ filters, handleFilter }) {
                         name={`${section.id}[]`}
                         defaultValue={option.value}
                         type="checkbox"
-                        defaultChecked={option.checked}
+                        defaultChecked={filter[section.id] ? filter[section.id].includes(option.value) : false}
                         onChange={e => handleFilter(e, section, option)}
                         className='h-4 w-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-customBlue focus:ring-transparent'
                       />
@@ -407,9 +411,33 @@ function ProductGrid({ products, handleDelete }) {
 }
 
 function Pagination({ handlePage, page, totalItems }) {
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
-  return (
+  const [pageBoundary, setPageBoundary] = useState({ start: 1, end: 10, index: 0 })
 
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
+  const startItems = (page - 1) * ITEMS_PER_PAGE + 1
+  const endItems = page * ITEMS_PER_PAGE > totalItems ? totalItems : page * ITEMS_PER_PAGE
+
+
+  const handlePrev = () => {
+    handlePage(page > 1 ? page - 1 : page)
+    if (page === pageBoundary.start && page !== 1)
+      setPageBoundary({
+        start: pageBoundary.start - 1,
+        end: pageBoundary.end - 1,
+        index: pageBoundary.index - 1
+      })
+  }
+
+  const handleNext = () => {
+    handlePage(page < totalPages ? page + 1 : page)
+    if (page === pageBoundary.end && page !== totalPages)
+      setPageBoundary({
+        start: pageBoundary.start + 1,
+        end: pageBoundary.end + 1,
+        index: pageBoundary.index + 1
+      })
+  }
+  return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white dark:border-transparent dark:bg-gray-800 px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
         <button
@@ -430,14 +458,14 @@ function Pagination({ handlePage, page, totalItems }) {
         <div>
           <p
             className="text-sm text-gray-700 dark:text-gray-300">
-            Showing <span className="font-medium">{(page - 1) * ITEMS_PER_PAGE + 1}</span> to <span className="font-medium">{page * ITEMS_PER_PAGE > totalItems ? totalItems : page * ITEMS_PER_PAGE}</span> of{' '}
+            Showing <span className="font-medium">{startItems}</span> to <span className="font-medium">{endItems}</span> of{' '}
             <span className="font-medium">{totalItems}</span> results
           </p>
         </div>
         <div>
           <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
             <div
-              onClick={e => handlePage(page > 1 ? page - 1 : page)}
+              onClick={handlePrev}
               className={`relative inline-flex items-center rounded-l-md border px-2 py-2 text-sm font-medium ${(page - 1) < 1 ? 'bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 ' : 'text-gray-700 dark:text-gray-400 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200 dark:border-gray-500 '}`}
             >
               <span className="sr-only">Previous</span>
@@ -447,22 +475,20 @@ function Pagination({ handlePage, page, totalItems }) {
               />
             </div>
 
-            {/* Current: "z-10 bg-customBlue text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
-
-            {Array.from({ length: totalPages }).map((items, index) =>
+            {Array.from({ length: 10 }).map((items, index) =>
               <div
                 key={index}
-                onClick={e => handlePage(index + 1)}
+                onClick={() => handlePage(index + 1 + pageBoundary.index)}
                 aria-current="page"
-                className={`relative z-10 inline-flex items-center dark:border-gray-500 ${(index + 1) === page ? 'bg-customBlue dark:bg-blue-500 text-white' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-gray-100 '} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue cursor-pointer ring-gray-300 dark:ring-gray-700  border border-gray-300 `}
+                className={`relative z-10 inline-flex items-center dark:border-gray-500 ${(index + 1 + pageBoundary.index) === page ? 'bg-customBlue dark:bg-blue-500 text-white' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-gray-100 '} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue cursor-pointer ring-gray-300 dark:ring-gray-700  border border-gray-300 `}
               >
-                {index + 1}
+                {index + 1 + pageBoundary.index}
 
               </div>
             )}
 
             <div
-              onClick={e => handlePage(page < totalPages ? page + 1 : page)}
+              onClick={handleNext}
               className={`relative inline-flex items-center rounded-r-md border px-2 py-2 text-sm font-medium ${(page + 1) > totalPages ? 'bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 ' : 'text-gray-700 dark:text-gray-400 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200 dark:border-gray-500 '}`}
             >
               <span className="sr-only">Next</span>
@@ -470,14 +496,13 @@ function Pagination({ handlePage, page, totalItems }) {
                 className="h-5 w-5 cursor-pointer"
                 aria-hidden="true" />
             </div>
-
-
           </nav>
         </div>
       </div>
     </div >
   )
 }
+
 
 
 

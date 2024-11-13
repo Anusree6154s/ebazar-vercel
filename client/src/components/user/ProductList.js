@@ -70,12 +70,13 @@ function ProductList() {
     if ((newFilter['brand'] && newFilter.brand.length !== 0) || (newFilter['category'] && newFilter.category.length !== 0)) setFilterFlag(true)
     else setFilterFlag(false)
   }
+
   const handleSort = (option) => {
     const newSort = option.name === 'Clear Sort' ? {} : { _sort: option.sorts, _order: option.order }
     setSort(newSort)
-    
+
     const newSortOptions = sortOptions.map(item => {
-      if (item.name === option.name && item.name!=='Clear Sort') return { ...item, current: true }
+      if (item.name === option.name && item.name !== 'Clear Sort') return { ...item, current: true }
       return { ...item, current: false }
     })
     setSortOptions(newSortOptions)
@@ -137,7 +138,7 @@ function ProductList() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white dark:bg-gray-700 shadow-2xl ring-1 ring-black dark:ring-white ring-opacity-5 dark:ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md bg-white dark:bg-gray-700 shadow-2xl ring-1 ring-black dark:ring-white ring-opacity-5 dark:ring-opacity-5 focus:outline-none">
                       <div className="py-1">
                         {sortOptions.map((option) => (
                           <Menu.Item key={option.name} label={option.label}>
@@ -180,6 +181,7 @@ function ProductList() {
                 <DesktopFilter
                   filters={filters}
                   handleFilter={handleFilter}
+                  filter={filter}
                 ></DesktopFilter>
 
                 {/* Product grid */}
@@ -297,7 +299,7 @@ function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, f
   )
 }
 
-function DesktopFilter({ filters, handleFilter }) {
+function DesktopFilter({ filters, handleFilter, filter }) {
   return (
     <form className="hidden lg:block">
       {filters.map((section) => (
@@ -325,7 +327,7 @@ function DesktopFilter({ filters, handleFilter }) {
                         name={`${section.id}[]`}
                         defaultValue={option.value}
                         type="checkbox"
-                        defaultChecked={option.checked}
+                        defaultChecked={filter[section.id] ? filter[section.id].includes(option.value) : false}
                         onChange={e => handleFilter(e, section, option)}
                         className='h-4 w-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-customBlue focus:ring-transparent'
                       />

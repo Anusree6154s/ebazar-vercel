@@ -227,7 +227,7 @@ const Form2 = ({ setShowForm, OTP, setOTPVerificationStatus, auth_status, showFo
                 style={{ /* CSS to hide arrows */
                     '-moz-appearance': 'none', /* Firefox */
                     'appearance': 'none', /* Chrome, Safari, Edge, Opera */
-                    '-webkit-appearance': 'none'
+                    'WebkitAppearance': 'none'
                     // no style seems to remove the arrows
                 }}
             />

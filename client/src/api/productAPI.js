@@ -79,7 +79,8 @@ export function editProduct(product) {
     const response = await fetch(BASE_URL + '/products/' + product.id, {
       method: 'PATCH',
       body: JSON.stringify(product),
-      headers: { 'content-type': 'application/json' }
+      headers: { 'content-type': 'application/json' },
+      credentials: 'include',
     })
     const data = await response.json()
     resolve(data)

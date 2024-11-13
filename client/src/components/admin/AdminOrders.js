@@ -22,7 +22,7 @@ function AdminOrders() {
     useEffect(() => {
         const pagination = { _page: page }
         dispatch(fetchAllOrdersAsync({ sort, pagination }))
-    }, [])
+    }, [dispatch, page, sort])
 
     const handleUpdateOrder = (e, index) => {
         const order = { ...orders[index], status: e.target.value }
@@ -36,21 +36,21 @@ function AdminOrders() {
     }
 
     return (
-        <div>
+        <div className='w-full'>
             <Link to='/admin' className='p-2  rounded-md hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 inline-block' ><ArrowLeftIcon className='h-6 w-6 inline '></ArrowLeftIcon> Back</Link>
 
             {/* component */}
-            <table className="min-w-max w-full lg:w-full  min-h-screen overflow-auto table-auto  bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 shadow-md  my-6 ">
+            <table className="w-full lg:w-full  min-h-screen overflow-auto table-auto  bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 shadow-md  my-6 ">
                 <thead>
                     <tr className="bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300 uppercase  text-sm leading-normal ">
                         <th className="py-3 px-6 text-center ">Sr. No.</th>
                         <th
-                            className="py-3 w-20 px-0 text-center md:px-6 md:w-auto"
+                            className="py-3 w-20 px-0 text-center md:px-6 md:w-auto cursor-pointer"
                             onClick={handleSort}>
                             Order Number
                             {sort._order === 'asc' ?
-                                <ArrowUpIcon className='w-6 inline'></ArrowUpIcon> :
-                                <ArrowDownIcon className='w-6 inline'></ArrowDownIcon>}
+                                <ArrowUpIcon className='w-6 inline' /> :
+                                <ArrowDownIcon className='w-6 inline' />}
 
                         </th>
                         <th className="py-3 px-6 text-left hidden lg:table-cell">Items</th>
@@ -82,7 +82,7 @@ function AdminOrders() {
                                                 alt={item.product.title}
                                             />
                                         </div>
-                                        <span>{item.product.title}</span>
+                                        <span className="max-w-sm">{item.product.title}</span>
                                     </div>
                                 )}
                             </td>
@@ -91,7 +91,7 @@ function AdminOrders() {
                                 <span className="font-medium ml-8">₹ {order.totalPrice}</span>
                             </td>
 
-                            {order.selectedAddress && (<td className="py-3 px-6 text-left whitespace-nowrap hidden lg:table-cell">
+                            {order.selectedAddress && (<td className="py-3 px-6 text-left  hidden lg:table-cell">
                                 <div className="font-medium">{order.selectedAddress.street}, {order.selectedAddress.city}</div>
                                 <div className="font-medium">{order.selectedAddress.state}, {order.selectedAddress.country}</div>
                                 <div className="font-medium">{order.selectedAddress.pincode}</div>

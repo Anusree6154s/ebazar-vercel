@@ -28,7 +28,7 @@ require("dotenv").config();
  * @property {Object} webhook - Webhook configuration.
  * @property {string} webhook.endpoint_secret - Secret key for securing webhook endpoints.
  */
-
+console.log(process.env.JWT_SECRET_KEY)
 exports.env = {
     jwt: {
         jwt_secret_key: process.env.JWT_SECRET_KEY,
