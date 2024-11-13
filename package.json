@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cd server && npm test ",
     "start":"node server/src/index",
-    "build":"cd client && npm install && npm run build"
+    "build":"cd client && npm install --legay-peer-deps && npm run build"
   },
   "keywords": [],
   "author": "",
