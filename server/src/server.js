@@ -5,11 +5,12 @@ var cookieParser = require("cookie-parser");
 const path = require("path");
 const routes = require("./routes");
 const passport = require("passport");
-// const cors = require('cors')
+const cors = require('cors')
+const { env } = require('./config/env.config')
 
 const server = express();
 
-// server.use(cors({origin:'http://localhost:3000', credentials: true})) 
+server.use(cors({ origin: ['http://localhost:3000', `http://localhost:${env.server.port}`], credentials: true }))
 server.use(express.static(path.resolve(__dirname, "../..", "client/build")));
 
 server.use(cookieParser());
