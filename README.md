@@ -3,7 +3,7 @@
     <h1 id="title">EBazar</h1>
     <p><strong> A Fullstack E-commerce Application</strong></p>
     <p>
-      <a href="https://ebazar-frontend.netlify.app/">View Website</a> •
+      <a href="https://ebazar-a2pa.onrender.com">View Website</a> •
       <a href="https://documenter.getpostman.com/view/33572999/2sAY547K4U">View API Documentation</a>
     </p>
     <img src="https://example.com/architecture-image.png" width="700"/>
