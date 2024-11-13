@@ -9,7 +9,7 @@ const cors = require('cors')
 
 const server = express();
 
-server.use(cors({ origin: ['http://localhost:3000', `https://ebazar-a2pa.onrender.com`], credentials: true }))
+server.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 server.use(express.static(path.resolve(__dirname, "../..", "client/build")));
 
 server.use(cookieParser());
