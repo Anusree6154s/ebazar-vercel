@@ -192,7 +192,7 @@ function ProductList() {
               </div>
             </section>
 
-            {/* Pagination */}l
+            {/* Pagination */}
             {!filterFlag && <Pagination
               handlePage={handlePage}
               page={page}
