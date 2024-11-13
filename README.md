@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://example.com/logo.png" width="150"/>
+  <img src="https://github.com/user-attachments/assets/ea3b3f2d-a136-419d-99ea-25eab185c35b" width="150"/>
     <h1 id="title">EBazar</h1>
     <p><strong> A Fullstack E-commerce Application</strong></p>
     <p>

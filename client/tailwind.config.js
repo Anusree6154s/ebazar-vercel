@@ -1,3 +1,6 @@
+import aspectRatio from '@tailwindcss/aspect-ratio';
+import forms from '@tailwindcss/forms';
+
 /** @type {import('tailwindcss').Config} */
 const tailwindConfig = {
   darkMode: 'class',
@@ -18,10 +21,7 @@ const tailwindConfig = {
       }
     },
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [aspectRatio, forms],
 };
 
 export default tailwindConfig;
