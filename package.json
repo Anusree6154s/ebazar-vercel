@@ -6,7 +6,8 @@
   "scripts": {
     "test": "cd server && npm test ",
     "start":"node server/src/index",
-    "build":"cd client && npm install --force && npm run build"
+    "build":"cd client && npm run build",
+    "pre-start":"cd server && npm install"
   },
   "keywords": [],
   "author": "",
