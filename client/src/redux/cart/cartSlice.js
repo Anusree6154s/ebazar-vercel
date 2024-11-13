@@ -1,10 +1,10 @@
-import {  createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
     addToCartAsync,
-    fetchItemsByUserIdAsync,
-    updateCartAsync,
     deleteItemFromCartAsync,
-    resetCartAsync
+    fetchItemsByUserIdAsync,
+    resetCartAsync,
+    updateCartAsync
 } from './cartThunks';
 
 const initialState = {

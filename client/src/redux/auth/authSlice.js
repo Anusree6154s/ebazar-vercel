@@ -92,12 +92,10 @@ export const authSlice = createSlice({
       .addCase(resetPasswordAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.password_reset_status.success = true;
-        console.log("fulfilled", action);
       })
       .addCase(resetPasswordAsync.rejected, (state, action) => {
         state.status = "idle";
         state.password_reset_status.fail = true;
-        console.log("rejected", action);
       })
       .addCase(resetPasswordResetStatus, (state) => {
         state.password_reset_status = { success: null, fail: null };

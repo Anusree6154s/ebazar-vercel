@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const { crytpoJwt, crytpoSignup, crytpoReset } = require('../../../src/services/controller.services/crypto.service');
 const { authService } = require('../../../src/services');
 const { User } = require('../../../src/model/user.model');
+const { env } = require('../../config/env.config')
 
 jest.mock('../../../src/utils/crypto.util');
 jest.mock('../../../src/utils/sanitize.util');
@@ -36,7 +37,7 @@ describe('Crypto Service Unit Test', () => {
 
             expect(cryptoUtil.hashPassword).toHaveBeenCalledWith(password, user.salt);
             expect(crypto.timingSafeEqual).toHaveBeenCalledWith(user.password, Buffer.from('hashed_password'));
-            expect(jwt.sign).toHaveBeenCalledWith({ id: user._id }, process.env.SECRET_KEY);
+            expect(jwt.sign).toHaveBeenCalledWith({ id: user._id }, env.jwt.jwt_secret_key);
             expect(done).toHaveBeenCalledWith(null, { info: { id: 'user123', name: 'Test User' }, token: 'generated_token' });
         });
 

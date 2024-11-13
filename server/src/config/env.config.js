@@ -13,7 +13,7 @@ require("dotenv").config();
  * @constant
  * @type {Object}
  * @property {Object} jwt - JWT configuration.
- * @property {string} jwt.secret_key - Secret key for JWT authentication.
+ * @property {string} jwt.jwt_secret_key - Secret key for JWT authentication.
  * @property {Object} mongoose - MongoDB configuration.
  * @property {string} mongoose.uri - URI for MongoDB connection.
  * @property {Object} stripe - Stripe configuration.
@@ -29,28 +29,22 @@ require("dotenv").config();
  * @property {string} webhook.endpoint_secret - Secret key for securing webhook endpoints.
  */
 
-
 exports.env = {
     jwt: {
-        secret_key: process.env.SECRET_KEY,
+        jwt_secret_key: process.env.JWT_SECRET_KEY,
     },
     mongoose: {
-        uri: process.env.URI + (process.env.NODE_ENV === 'test' ? '-test' : ''),
+        uri: process.env.NODE_ENV === 'test' ? process.env.URI_TEST : process.env.URI,
     },
     stripe: {
-        key: process.env.STRIPE,
+        stripe_secret_key: process.env.STRIPE_SECRET_KEY,
     },
     email: {
-        senders_email: process.env.SENDERS_EMAIL,
-        senders_email_2: process.env.SENDERS_EMAIL2,
-        app_password: process.env.SENDERS_GMAIL_APP_PASSWORD,
-        app_password_2: process.env.SENDERS_GMAIL_APP_PASSWORD2,
+        senders_gmail: process.env.SENDERS_GMAIL,
+        senders_gmail_app_password: process.env.SENDERS_GMAIL_APP_PASSWORD,
     },
     server: {
         port: process.env.PORT,
-    },
-    webhook: {
-        endpoint_secret: process.env.ENDPOINT_SECRET,
-    },
+    }
 
 };

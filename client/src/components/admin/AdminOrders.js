@@ -22,7 +22,7 @@ function AdminOrders() {
     useEffect(() => {
         const pagination = { _page: page }
         dispatch(fetchAllOrdersAsync({ sort, pagination }))
-    }, [sort, page, dispatch])
+    }, [])
 
     const handleUpdateOrder = (e, index) => {
         const order = { ...orders[index], status: e.target.value }

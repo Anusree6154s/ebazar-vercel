@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../../model/user.model");
 const { cryptoUtil, sanitizeUtil, apiUtil } = require("../../utils");
 const { authService } = require("..");
+const { env } = require('../../config/env.config')
 
 /**
  * Hashes the provided password and creates a JWT token for the user if the password matches.
@@ -22,7 +23,7 @@ const crytpoJwt = async function (user, password, done) {
         if (!crypto.timingSafeEqual(user.password, hashedPassword)) {
             done(null, false, { message: "Invalid credentials" });
         } else {
-            const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY);
+            const token = jwt.sign({ id: user._id }, env.jwt.jwt_secret_key);
             return done(null, { info: sanitizeUtil.sanitizeUser(user), token: token });
         }
     } catch (error) {

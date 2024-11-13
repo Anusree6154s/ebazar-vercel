@@ -31,7 +31,7 @@ exports.createUser = catchAsyncUtil.catchAsync(async (req, res) => {
   );
 
   const data = await cryptoService.crytpoSignup(req.body);
-  const token = jwt.sign(sanitizeUtil.sanitizeUser(data), env.jwt.secret_key);
+  const token = jwt.sign(sanitizeUtil.sanitizeUser(data), env.jwt.jwt_secret_key);
 
   res
     .cookie("jwt", token, {

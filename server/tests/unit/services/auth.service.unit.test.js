@@ -2,9 +2,10 @@ const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 const httpStatus = require('http-status');
-const { sendEmail, createUser } = require('../../../src/services/auth.services/auth.service'); 
+const { sendEmail, createUser } = require('../../../src/services/auth.services/auth.service');
 const { User } = require('../../../src/model/user.model');
 const { apiUtil } = require('../../../src/utils');
+const { env } = require('../../config/env.config')
 
 jest.mock('fs');
 jest.mock('nodemailer');
@@ -20,8 +21,8 @@ describe('Auth Service', () => {
 
         beforeEach(() => {
             jest.clearAllMocks();
-            process.env.SENDERS_EMAIL2 = 'sender@example.com';
-            process.env.SENDERS_GMAIL_APP_PASSWORD2 = 'password';
+            env.email_senders_gmail = 'sender@example.com';
+            env.email.senders_gamil_app_password = 'password';
         });
 
         test('should send an email successfully', async () => {
@@ -40,7 +41,7 @@ describe('Auth Service', () => {
             // Assertions
             expect(fs.readFile).toHaveBeenCalled()
             expect(mockSendMail).toHaveBeenCalledWith({
-                from: process.env.SENDERS_EMAIL2,
+                from: env.email.senders_gmail,
                 to: email,
                 subject: "Ebazar PASSWORD RECOVERY",
                 html: '<p>Your OTP is: 123456</p>',
@@ -80,7 +81,7 @@ describe('Auth Service', () => {
             } catch (error) {
                 // Assertions
                 expect(mockSendMail).toHaveBeenCalledWith({
-                    from: process.env.SENDERS_EMAIL2,
+                    from: env.email.senders_gmail,
                     to: email,
                     subject: "Ebazar PASSWORD RECOVERY",
                     html: '<p>Your OTP is: 123456</p>',

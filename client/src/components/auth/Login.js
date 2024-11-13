@@ -15,7 +15,6 @@ function Login() {
   const user = useSelector(selectLoggedInUser);
   const error = useSelector(selectError);
 
-  console.log('user', user);
 
   if (user && user.role === 'user') {
     return <Navigate to="/" replace={true}></Navigate>;

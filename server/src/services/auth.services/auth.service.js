@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const { apiUtil } = require('../../utils');
 const { User } = require('../../model/user.model');
 const httpStatus = require('http-status');
+const { env } = require('../../config/env.config')
 
 
 /**
@@ -34,13 +35,13 @@ const sendEmail = (email, OTP, id) => {
       var transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: process.env.SENDERS_EMAIL2,
-          pass: process.env.SENDERS_GMAIL_APP_PASSWORD2,
+          user: env.email.senders_gmail,
+          pass: env.email.senders_gmail_app_password
         },
       });
 
       const mail_configs = {
-        from: process.env.SENDERS_EMAIL2,
+        from: env.email.senders_gmail,
         to: email,
         subject: "Ebazar PASSWORD RECOVERY",
         html,

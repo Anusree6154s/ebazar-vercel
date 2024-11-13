@@ -1,5 +1,6 @@
-require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE);
+const { env } = require('../config/env.config')
+const stripe = require("stripe")(env.stripe.stripe_secret_key);
+const httpStatus = require('http-status');
 
 exports.createPaymentIntentCallback = async (req, res) => {
 
@@ -37,5 +38,6 @@ exports.createPaymentIntentCallback = async (req, res) => {
 
     } catch (error) {
         console.log("checkout session error: ", error)
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: "Payment Server Error" });
     }
 }

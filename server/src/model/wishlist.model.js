@@ -21,4 +21,4 @@ createVirtualID(wishListSchema)
  * @type {Model}
  * @returns {Model} - The Mongoose model for the WishList schema.
  */
-exports.WishList = mongoose.model('WishList', wishListSchema, 'wishList')
+exports.WishList = mongoose.model('WishList', wishListSchema, 'wishlist')

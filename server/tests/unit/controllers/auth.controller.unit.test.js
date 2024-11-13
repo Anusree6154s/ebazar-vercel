@@ -15,6 +15,7 @@ const { apiUtil, validationUtil, sanitizeUtil } = require('../../../src/utils');
 const { User } = require('../../../src/model/user.model');
 const { cryptoService, authService } = require('../../../src/services');
 const jwt = require("jsonwebtoken");
+const { env } = require('../../config/env.config')
 
 jest.useFakeTimers()
 //doesnt require the server or mongoose to work because we are mocking those functions
@@ -73,7 +74,7 @@ describe('Auth Controller', () => {
     test('should generate a JWT token and set test as a cookie', async () => {
       await createUser(req, res, next);
 
-      expect(jwt.sign).toHaveBeenCalledWith(mockSanitzedUserResult, process.env.SECRET_KEY);
+      expect(jwt.sign).toHaveBeenCalledWith(mockSanitzedUserResult, env.jwt.jwt_secret_key);
       const cookie = res.cookies['jwt'];
       expect(cookie).toEqual({
         value: mockjwtToken,
@@ -169,7 +170,7 @@ describe('Auth Controller', () => {
       await sendOTP(req, res, next);
 
       await jest.runAllTimersAsync();
-      
+
       // check if methods are called properly
       expect(User.findOne).toHaveBeenCalledWith({ email: req.body.email });
       expect(authService.sendEmail).toHaveBeenCalledWith(req.body.email, req.body.OTP, mockUserFindResult.id);
@@ -199,7 +200,7 @@ describe('Auth Controller', () => {
   });
 
   describe('resetPassword', () => {
-    beforeEach(()=>{
+    beforeEach(() => {
       req.params = { id: '123' }
       validationUtil.validate.mockReturnValue(mockValidationResult);
       cryptoService.crytpoReset.mockReturnValue();

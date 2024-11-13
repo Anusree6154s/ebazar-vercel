@@ -40,11 +40,8 @@ exports.addToCart = catchAsyncUtil.catchAsync(async (req, res) => {
 exports.fetchCartByUser = catchAsyncUtil.catchAsync(async (req, res) => {
     const { id } = req.user;
     const data = await Cart.find({ user: id }).populate('product');
-    if (!data) {
-        throw new apiUtil.ApiError(httpStatus.NOT_FOUND, 'No items in cart.')
-    }
-    res.status(httpStatus.OK).json(data);
 
+    res.status(httpStatus.OK).json(data);
 });
 
 

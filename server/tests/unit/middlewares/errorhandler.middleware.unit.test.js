@@ -67,7 +67,7 @@ describe('errorHandler middleware', () => {
         expect(res.json).toHaveBeenCalledWith({ message: 'Generic error' });
     });
 
-    test('should handle errors without a statusCode and return a default statusCode', () => {
+    test('should handle errors without a statusCode and return a default statusCode 400', () => {
         const req = mockRequest();
         const res = mockResponse();
         const next = mockNext();
@@ -78,7 +78,7 @@ describe('errorHandler middleware', () => {
 
         errorHandler(noStatusCodeError, req, res, next);
 
-        expect(res.status).toHaveBeenCalledWith(undefined);
+        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({ message: 'Error without status code' });
     });
 });

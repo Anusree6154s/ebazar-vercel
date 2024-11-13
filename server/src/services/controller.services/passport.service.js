@@ -15,7 +15,7 @@ const { sanitizeUtil } = require("../../utils/index.js");
  */
 const optsJwt = {
     jwtFromRequest: cookieService.cookieExtractor,
-    secretOrKey: env.jwt.secret_key
+    secretOrKey: env.jwt.jwt_secret_key
 }
 
 /**

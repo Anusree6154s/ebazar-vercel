@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const { env } = require("../config/env.config");
+const { env } = require("../config/env.config.js");
 const server = require("../../src/server.js");
 
 // jest.useFakeTimers()
 const setupTestDB = () => {
-  const mongoURI = env.mongoose.uri
+  const mongoURI_TEST = env.mongoose.uri_test
   const serverURL = env.server.port
 
   let serverInstance
@@ -21,8 +21,8 @@ const setupTestDB = () => {
     //   .catch(error => console.log('Mongoose test error:', error))
 
     try {
-      await mongoose.connect(mongoURI)
-      // console.log('Connected to MongoDB URI: ' + mongoURI)
+      await mongoose.connect(mongoURI_TEST)
+      console.log('Connected to MongoDB TEST URI: ' + mongoURI_TEST)
       serverInstance = await server.listen(serverURL, () => {
         // console.log('Test-Server running on port ' + serverURL)
       })

@@ -11,11 +11,11 @@ export function fetchAllOrders(sort, pagination) {
     queryString += `${key}=${pagination[key]}`
   }
   return new Promise(async (resolve) => {
-    const response = await fetch(BASE_URL + '/orders/admin?' + queryString, {credentials: true,})
+    const response = await fetch(BASE_URL + '/orders/admin?' + queryString, { credentials: "include" })
     const data = await response.json()
-    const totalOrderData = await fetch(BASE_URL + '/orders/admin?_limit=1000')
+    const totalOrderData = await fetch(BASE_URL + '/orders/admin?_limit=1000', { credentials: "include" })
     const total = await totalOrderData.json()
-    resolve({ orders: data, totalOrders: total.length })
+    resolve({ data: { orders: data, totalOrders: total.length } })
   });
 }
 
@@ -26,7 +26,7 @@ export function updateOrder(order) {
       method: 'PATCH',
       body: JSON.stringify(order),
       headers: { 'content-type': 'application/json' },
-      credentials: true,
+      credentials: "include",
     })
     const data = await response.json()
     resolve({ data })

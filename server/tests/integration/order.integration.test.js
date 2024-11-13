@@ -23,7 +23,7 @@ describe("Order routes", () => {
         const data = await insertUsers(dbDataOne)
         userId = data._id.toString()
 
-        token = jwt.sign({ id: data._id, ...data }, env.jwt.secret_key)
+        token = jwt.sign({ id: data._id, ...data }, env.jwt.jwt_secret_key)
 
         let product = await insertProducts([product1])
         productId = product[0]._id.toString()

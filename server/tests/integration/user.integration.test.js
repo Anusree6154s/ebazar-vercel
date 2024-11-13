@@ -15,7 +15,7 @@ describe("User routes", () => {
         // create a user and use its _id to create a jwt token
         const data = await insertUsers(dbDataOne)
         userId = data._id.toString()
-        token = jwt.sign({ id: data._id, ...data }, env.jwt.secret_key)
+        token = jwt.sign({ id: data._id, ...data }, env.jwt.jwt_secret_key)
     })
 
     afterAll(async () => {

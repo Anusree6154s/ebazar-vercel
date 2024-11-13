@@ -77,27 +77,21 @@ describe('Cart Controller', () => {
             expect(next).not.toHaveBeenCalled();
         });
 
-        test('should handle case when no cart items are found for the user', async () => {
+        test('should return an empty cart when no cart items are found for the user', async () => {
             const mockQuery = {
-                populate: jest.fn().mockResolvedValue()
+                populate: jest.fn().mockResolvedValue([]) // Mocking the result as an empty array
             };
 
             Cart.find = jest.fn().mockReturnValue(mockQuery);
 
-            await fetchCartByUser(req, res, next)
-
+            await fetchCartByUser(req, res, next);
             await jest.runAllTimersAsync();
 
             expect(Cart.find).toHaveBeenCalledWith({ user: req.user.id });
             expect(mockQuery.populate).toHaveBeenCalledWith("product");
-
-            expect(next).toHaveBeenCalledWith(expect.any(apiUtil.ApiError));
-            expect(next.mock.calls[0][0]).toMatchObject({
-                statusCode: httpStatus.NOT_FOUND,
-                message: "No items in cart.",
-            });
-            expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).not.toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalledWith([]);
+            expect(next).not.toHaveBeenCalled();
         });
 
         test('should handle errors during the fetch process', async () => {
@@ -192,7 +186,7 @@ describe('Cart Controller', () => {
     });
 
     describe('updateCart', () => {
-        beforeEach(()=>{
+        beforeEach(() => {
             mongoose.Types.ObjectId.isValid = jest.fn().mockReturnValue(true);
         })
 
@@ -200,7 +194,7 @@ describe('Cart Controller', () => {
             const mockCartData = { product: 'productId', quantity: 5 };
             const mockUpdatedCart = { ...mockCartData, populate: jest.fn().mockResolvedValue(mockCartData) };
 
-            
+
             Cart.findByIdAndUpdate.mockResolvedValue(mockUpdatedCart);
 
             req.params = { id: 'validId' };

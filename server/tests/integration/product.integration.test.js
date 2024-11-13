@@ -15,7 +15,7 @@ describe("Product routes", () => {
     beforeAll(async () => {
         // create a user and use its _id to create a jwt token
         const data = await insertUsers(userOne)
-        token = jwt.sign({ id: data._id, ...data }, env.jwt.secret_key)
+        token = jwt.sign({ id: data._id, ...data }, env.jwt.jwt_secret_key)
     })
 
     describe('POST /api/products', () => {
