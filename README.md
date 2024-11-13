@@ -6,7 +6,7 @@
       <a href="https://ebazar-a2pa.onrender.com">View Website</a> •
       <a href="https://documenter.getpostman.com/view/33572999/2sAY547K4U">View API Documentation</a>
     </p>
-    <img src="https://example.com/architecture-image.png" width="700"/>
+    <img src="https://github.com/user-attachments/assets/4e7326cc-b8f3-4f30-80f7-3c334f17d545" width="700"/>
 </div>
 
 ## Table of Contents
@@ -36,7 +36,6 @@
   - **Redux**
   - **Material UI**
   - **Tailwind CSS**
-  - **Stripe**
 
 - ### Backend
 
@@ -63,8 +62,9 @@
 - Admin Features
   - Product Management - Add, update, delete, and view products.
   - Order Management: Manage user orders.
-- API Documentation
-  - Postman API documentation for developers.
+- API Routes and Documentation
+  - Created RESTful API routes and documented them in Postman 
+
 
 ## Getting Started
 
@@ -233,5 +233,5 @@ npm test
 - **Automated Testing:** Set up automated tests for front-end and back-end components to ensure application reliability and reduce bugs.
 
 <p align="center"> 
- <img width="0" id="image" alt="ebazar-backend-demo-gif" src="https://example.com/demo-gif.gif" >
+ <img width="0" id="image" src="https://github.com/user-attachments/assets/79ce90d7-50da-4fde-b00a-874311bfbcd5" >
 </p>
