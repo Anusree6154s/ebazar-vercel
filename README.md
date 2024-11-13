@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/ea3b3f2d-a136-419d-99ea-25eab185c35b" width="150"/>
+  <img src="https://github.com/user-attachments/assets/857e127c-8f02-4221-951e-475e10ad5977" width="150"/>
     <h1 id="title">EBazar</h1>
     <p><strong> A Fullstack E-commerce Application</strong></p>
     <p>
