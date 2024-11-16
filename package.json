@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "cd server && npm test ",
-    "start":"node server/src/index",
-    "build":"cd client && npm run build",
-    "pre-start":"cd server && npm install"
+    "test:cov": "cd server && npm run test:coverage ",
+    "start": "node server/src/index",
+    "build": "cd client && npm run build",
+    "pre-start": "cd server && npm install"
   },
   "keywords": [],
   "author": "",

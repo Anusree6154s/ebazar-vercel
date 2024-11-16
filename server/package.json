@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
     "dev": "nodemon --trace-warnings src/index",
     "build": "npm i",
-    "start": "node src/index"
+    "start": "node src/index",
+    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --detectOpenHandles"
   },
   "jest": {
     "testPathIgnorePatterns": [
