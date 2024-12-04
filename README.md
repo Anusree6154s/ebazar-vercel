@@ -1,15 +1,16 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/857e127c-8f02-4221-951e-475e10ad5977" width="150"/>
+  <img src="https://github.com/user-attachments/assets/ca432d2d-09a0-40f8-a043-bdbbae85b4c6" width="150"/>
     <h1 id="title">EBazar</h1>
     <p><strong> A Fullstack E-commerce Application</strong></p>
     <p>
       <a href="https://ebazar-a2pa.onrender.com">View Website</a> •
       <a href="https://documenter.getpostman.com/view/33572999/2sAY547K4U">View API Documentation</a>
     </p>
-    <img src="https://github.com/user-attachments/assets/4e7326cc-b8f3-4f30-80f7-3c334f17d545" width="700"/>
+    <img src="https://github.com/user-attachments/assets/b1351b33-b68d-457f-b7c8-bc020adfba2d" width="700"/>
 </div>
 
 ## Table of Contents
+
 
 1. [Project Overview](#project-overview)
 2. [Tech Stack](#tech-stack)
@@ -232,6 +233,7 @@ npm test
 - **Lazy Loading and Caching:** Use lazy loading for images and API response caching to improve page load times and performance.
 - **Automated Testing:** Set up automated tests for front-end and back-end components to ensure application reliability and reduce bugs.
 
+
 <p align="center"> 
- <img width="0" id="image" src="https://github.com/user-attachments/assets/79ce90d7-50da-4fde-b00a-874311bfbcd5" >
+ <img width="0" id="image" src="https://github.com/user-attachments/assets/7558c916-e7df-4c9d-aa39-92d3e48f8f2d" >
 </p>
