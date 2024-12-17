@@ -6,10 +6,12 @@ import "../../styles/Stripe.css";
 import { useDispatch, useSelector } from "react-redux";
 import { makePaymentAsync, selectClientSecret, selectCurrentOrder } from "../../redux";
 
-const stripePromise = loadStripe("pk_test_51OzsYKSEvg4ni96G0o8oXWwkoOKQ4IgvrNnPF86rxihl5866nDtsS6LzY8i6HEpgvukiPOgofvzO3qUj1yW1E1Wy00BsBbS4Jo");
+
 
 
 export default function StripePayment() {
+  const stripePromise = loadStripe("pk_test_51OzsYKSEvg4ni96G0o8oXWwkoOKQ4IgvrNnPF86rxihl5866nDtsS6LzY8i6HEpgvukiPOgofvzO3qUj1yW1E1Wy00BsBbS4Jo");
+
   const clientSecret = useSelector(selectClientSecret)
   const currentOrder = useSelector(selectCurrentOrder)
   const dispatch = useDispatch()

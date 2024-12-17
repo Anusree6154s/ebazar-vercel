@@ -15,13 +15,13 @@ export const userSlice = createSlice({
     initialState,
     extraReducers: (builder) => {
         builder
-            .addCase(fetchLoggedInUserAsync.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.userInfo = action.payload;
-            })
+            // .addCase(fetchLoggedInUserAsync.pending, (state) => {
+            //     state.status = 'loading';
+            // })
+            // .addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
+            //     state.status = 'idle';
+            //     state.userInfo = action.payload;
+            // })
             .addCase(fetchLoggedInUserOrdersAsync.pending, (state) => {
                 state.status = 'loading';
             })

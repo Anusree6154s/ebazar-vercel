@@ -17,7 +17,10 @@ server.use(express.json());
 
 passport.use("local", localStrategy);
 passport.use("jwt", jwtStrategy);
-
+server.use((req, res, next)=>{
+  console.log(req.url)
+  next()
+})
 server.use(
   "/api",
   routes
