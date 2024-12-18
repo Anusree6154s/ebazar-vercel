@@ -25,11 +25,11 @@ function App() {
 
 
   return (
-    <div className="dark:bg-gray-900">
+    // <div className="dark:bg-gray-900">
       <SnackbarProvider maxSnack={1}>
         <RouterProvider router={router} />
       </SnackbarProvider>
-    </div>
+    // </div>
   );
 }
 

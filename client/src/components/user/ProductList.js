@@ -229,6 +229,7 @@ function ProductList() {
                 ></DesktopFilter>
 
                 {/* Product grid */}
+                {console.log(products)}
                 {products ? (
                   products.length > 0 ? (
                     <ProductGrid products={products}></ProductGrid>
@@ -239,7 +240,9 @@ function ProductList() {
                   )
                 ) : (
                   <div className="col-span-1 lg:col-span-3">
-                    <div className="loader"></div>
+                    <div className="loader-wrapper">
+                      <div className="loader"></div>
+                    </div>
                   </div>
                 )}
               </div>
