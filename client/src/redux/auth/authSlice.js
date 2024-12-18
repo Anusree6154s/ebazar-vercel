@@ -33,6 +33,9 @@ export const authSlice = createSlice({
     resetPasswordResetStatus: (state) => {
       state.password_reset_status = { success: null, fail: null };
     },
+    resetAuthError:(state)=>{
+      state.loggedInUser=null
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -56,7 +59,8 @@ export const authSlice = createSlice({
       })
       .addCase(LoginUserAsync.rejected, (state, action) => {
         state.status = "idle";
-        state.error = action.error;
+        state.loggedInUser = {error: action.error};
+        // state.error = action.error;
       })
       .addCase(checkAuthAsync.pending, (state, action) => {
         state.status = "loading";
@@ -111,5 +115,5 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { resetOTPSentStatus, resetPasswordResetStatus } =
+export const { resetOTPSentStatus, resetPasswordResetStatus, resetAuthError } =
   authSlice.actions;

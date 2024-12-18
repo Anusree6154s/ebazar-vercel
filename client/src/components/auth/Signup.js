@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { createUserAsync, selectLoggedInUser } from "../../redux";
+import { createUserAsync, resetAuthError,  selectLoggedInUser } from "../../redux";
 import { enqueueSnackbar } from "notistack";
 
 function Signup() {
@@ -15,32 +15,19 @@ function Signup() {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const globalUser = useSelector(selectLoggedInUser);
+  const user = useSelector(selectLoggedInUser);
   const [passwordFocus, setPasswordFocus] = useState(false);
-  const [user, setUser] = useState(null);
-  const [hasSubmit, setHasSubmit] = useState(false);
 
   useEffect(() => {
-    if (globalUser && hasSubmit) {
-      setUser(globalUser);
-      setHasSubmit(false);
-    }
-  }, [globalUser, hasSubmit]);
-
-  useEffect(() => {
-    if (globalUser) {
-      setUser(globalUser);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (user) {
     if (user?.error) {
       enqueueSnackbar(user.error.message, { variant: "error" });
-      setUser(null);
-    } else if (user?.role) return <Navigate to="/" replace={true}></Navigate>;
-    else return <Navigate to="/admin" replace={true}></Navigate>;
-  }
+      dispatch(resetAuthError());
+    }
+  }, [dispatch, user]);
+
+  if (user?.role === "user") return <Navigate to="/" replace={true}></Navigate>;
+  else if (user?.role === "admin")
+    return <Navigate to="/admin" replace={true}></Navigate>;
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center h-screen overflow-hidden">
@@ -66,7 +53,6 @@ function Signup() {
                         //role will be given via backend
                       })
                     );
-                    setHasSubmit(true);
                   })}
                 >
                   <input
@@ -74,7 +60,7 @@ function Signup() {
                       required: "Email is required",
                       pattern: {
                         value: /^\S+@\S+\.\S+$/,
-                        message: "Email not valid",
+                        message: "Invalid email format ",
                       },
                     })}
                     className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
