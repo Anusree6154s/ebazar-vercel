@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { Link, Navigate } from "react-router-dom";
 import {
   deleteItemFromCartAsync,
@@ -15,13 +15,17 @@ function Cart() {
 
   const totalPrice =
     items.length > 0
-      ? Number(items.reduce(
-        (amount, item) => item.product.price * item.quantity + amount,
-        0
-      ).toFixed(2))
+      ? Number(
+          items
+            .reduce(
+              (amount, item) => item.product.price * item.quantity + amount,
+              0
+            )
+            .toFixed(2)
+        )
       : 0;
 
-      const totalItems =
+  const totalItems =
     items.length > 0
       ? items.reduce((amount, item) => item.quantity + amount, 0)
       : 0;

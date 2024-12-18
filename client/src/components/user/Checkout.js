@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   createOrderAsync,
   deleteItemFromCartAsync,
@@ -13,6 +13,7 @@ import {
   updateCartAsync,
   updateUserAsync,
 } from "../../redux";
+import { enqueueSnackbar } from "notistack";
 
 //TODO: clear cart items upon clicking order now
 //TODO: stock number change in server
@@ -24,21 +25,24 @@ function Checkout() {
     reset,
     handleSubmit,
     // formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onChange" });
 
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
   const user = useSelector(selectLoggedInUser);
   const currentOrder = useSelector(selectCurrentOrder);
+  const addressRef = useRef();
 
-  const totalPrice = Number(items.reduce(
-    (amount, item) => item.product.price * item.quantity + amount,
-    0
-  )).toFixed(2);
+  const totalPrice = Number(
+    items.reduce(
+      (amount, item) => item.product.price * item.quantity + amount,
+      0
+    )
+  ).toFixed(2);
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
 
   const [selectedAddress, setSelectedAddress] = useState(
-    user.addresses[0] || {}
+    user.addresses[0] || null
   );
   const [paymentMethod, setpaymentMethod] = useState("cash");
 
@@ -52,9 +56,18 @@ function Checkout() {
     );
   };
   const handleDelete = (item) => dispatch(deleteItemFromCartAsync(item.id));
-  const handleAddress = (e) => setSelectedAddress(JSON.parse(e.target.value));
+
+  const handleAddress = (address) => setSelectedAddress(address);
   const handlePayment = (e) => setpaymentMethod(e.target.value);
   const handleOrder = () => {
+    if (!selectedAddress) {
+      addressRef.current.focus();
+      enqueueSnackbar("Please enter your address before placing the order.", {
+        variant: "error",
+      });
+      return;
+    }
+
     const today = new Date();
     const date = `${String(today.getDate()).padStart(2, "0")}-${String(
       today.getMonth() + 1
@@ -75,19 +88,12 @@ function Checkout() {
   };
 
   return (
-    <div>
-      {/* {!items.length && <Navigate to='/' replace={true}></Navigate>} */}
+    <>
       {currentOrder && currentOrder.paymentMethod === "cash" && (
-        <Navigate
-          to={`/order-success/${currentOrder.id}`}
-          replace={true}
-        ></Navigate>
+        <Navigate to={`/order-success/${currentOrder.id}`} replace={true} />
       )}
       {currentOrder && currentOrder.paymentMethod === "card" && (
-        <Navigate
-          to={`/stripe-payment/${currentOrder.id}`}
-          replace={true}
-        ></Navigate>
+        <Navigate to={`/stripe-payment/${currentOrder.id}`} replace={true} />
       )}
 
       <Link
@@ -133,6 +139,7 @@ function Checkout() {
                         <input
                           type="text"
                           {...register("name", { required: "required" })}
+                          ref={addressRef}
                           id="full-name"
                           autoComplete="given-name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
@@ -290,7 +297,6 @@ function Checkout() {
                   {user.addresses.length !== 0 && (
                     <fieldset>
                       <legend className="text-lg font-semibold leading-7 text-gray-900 dark:text-gray-300">
-                        {" "}
                         Address
                       </legend>
                       <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
@@ -301,19 +307,23 @@ function Checkout() {
                           {user.addresses.map((address, index) => (
                             <li
                               key={index}
-                              className=" flex justify-between items-baseline border px-5"
+                              className=" flex justify-between items-baseline border px-5 group cursor-pointer"
+                              onClick={() => handleAddress(address)}
                             >
                               <div className=" flex items-baseline gap-5 ">
                                 <input
                                   type="radio"
                                   name="address"
-                                  onChange={(e) => handleAddress(e)}
+                                  checked={
+                                    JSON.stringify(address) ===
+                                    JSON.stringify(selectedAddress)
+                                  }
                                   value={JSON.stringify(address)}
                                   className="border-gray-300 dark:border-gray-600 text-customBlue focus:ring-customBlue dark:bg-gray-800 dark:hover:bg-blue-600 dark:text-blue-500 dark:focus:ring-blue-600"
                                 />
                                 <label
                                   htmlFor=""
-                                  className="flex justify-between gap-x-6 py-5"
+                                  className="flex justify-between gap-x-6 py-5  cursor-pointer"
                                 >
                                   <div className="flex min-w-0 gap-x-4">
                                     <div className="min-w-0 flex-auto">
@@ -497,7 +507,7 @@ function Checkout() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

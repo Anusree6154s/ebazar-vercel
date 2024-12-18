@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { selectLoggedInUser, updateUserAsync } from "../../redux";
 
 //TODO: payment will be added when working on server

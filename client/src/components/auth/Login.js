@@ -22,7 +22,6 @@ function Login() {
 
   useEffect(() => {
     if (user?.error) {
-      console.log(user)
       enqueueSnackbar(user.error.message, { variant: "error" });
       dispatch(resetAuthError());
     }

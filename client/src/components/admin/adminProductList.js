@@ -1,15 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon, PencilIcon } from "@heroicons/react/24/outline";
+import { XIcon, PencilIcon } from "@heroicons/react/outline";
 import {
   ChevronDownIcon,
-  FunnelIcon,
+  FilterIcon,
   MinusIcon,
   PlusIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   StarIcon,
-} from "@heroicons/react/20/solid";
+} from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProductsByFiltersAsync,
@@ -204,7 +204,7 @@ function AdminProductList() {
                   onClick={() => setMobileFiltersOpen(true)}
                 >
                   <span className="sr-only">Filters</span>
-                  <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                  <FilterIcon className="h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -288,7 +288,7 @@ function MobileFilter({
                   onClick={() => setMobileFiltersOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
-                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  <XIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
 
@@ -451,10 +451,10 @@ function ProductGrid({ products, handleDelete }) {
                   >
                     <PencilIcon className="absolute top-4 right-16 inline p-2 z-20 items-center rounded-md h-10  text-sm font-medium text-white bg-opacity-50 bg-black border border-white  hover:bg-opacity-60"></PencilIcon>
                   </Link>
-                  <XMarkIcon
+                  <XIcon
                     onClick={() => handleDelete(product)}
                     className="absolute top-4 right-4 inline p-2 z-20 rounded-md h-10 text-sm font-medium  text-white bg-opacity-50 bg-black border border-white cursor-pointer hover:bg-opacity-60"
-                  ></XMarkIcon>
+                  ></XIcon>
                   <Link
                     to={`/admin/product-detail/${product.id}`}
                     className="absolute inset-0"

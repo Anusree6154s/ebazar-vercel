@@ -1,4 +1,4 @@
-import { createBrowserRouter,Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import { ForgotPassword, PageNotFound, Protected } from "../components/auth";
 import LogOut from "../components/auth/Logout";
 import {
@@ -24,13 +24,8 @@ import ProductListPage from "../pages/user/ProductListPage";
 import ErrorFallbackPage from "../pages/common/ErrorFallbackPage";
 
 function RootLayout() {
-  return (
-    <div>
-      <div className="p-4">
-        <Outlet /> {/* Renders the matched child route */}
-      </div>
-    </div>
-  );
+  // Renders the matched child route
+  return <Outlet />;
 }
 
 export const router = createBrowserRouter([

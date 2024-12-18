@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { useForm } from "react-hook-form";
 import {
   createProductAsync,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StarIcon, ArrowLeftIcon } from '@heroicons/react/20/solid'
+import { StarIcon, ArrowLeftIcon } from '@heroicons/react/solid'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteItemFromWishListAsync, selectWishList } from '../../redux';

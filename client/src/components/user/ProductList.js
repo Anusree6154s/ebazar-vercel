@@ -229,8 +229,14 @@ function ProductList() {
                 ></DesktopFilter>
 
                 {/* Product grid */}
-                {products.length > 0 ? (
-                  <ProductGrid products={products}></ProductGrid>
+                {products ? (
+                  products.length > 0 ? (
+                    <ProductGrid products={products}></ProductGrid>
+                  ) : (
+                    <p className="text-gray-500 text-center col-span-3">
+                      No Products Available
+                    </p>
+                  )
                 ) : (
                   <div className="col-span-1 lg:col-span-3">
                     <div className="loader"></div>
@@ -449,68 +455,67 @@ function ProductGrid({ products }) {
       {/* Your content */}
       <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
-          {products &&
-            products.map((product) => (
-              <div
-                key={product.id}
-                className="group relative border-2 dark:border-gray-700  dark:hover:bg-gray-700 dark:hover:border-transparent rounded-md p-2 flex flex-col justify-between"
-                id="product-grid-card"
-              >
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 dark:opacity-90 dark:group-hover:opacity-100  lg:h-60 flex-2">
-                  <img
-                    src={product.thumbnail}
-                    alt={product.title}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full "
-                  />
-                </div>
-                <div className="mt-4 flex-1">
-                  <div className="flex flex-col justify-between gap-2 h-full">
-                    <h3 className="text-medium text-gray-700 dark:text-gray-200">
-                      <Link to={`/product-detail/${product.id}`}>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {product.title}
-                      </Link>
-                    </h3>
-                    <div className="flex justify-between">
-                      <div>
-                        <p className=" font-medium text-3xl md:text-2xl text-gray-900 dark:text-gray-100 ">
-                          ₹
-                          {(
-                            product.price -
-                            product.price * (product.discountPercentage / 100)
-                          ).toFixed(2)}
-                        </p>
-                        <p className=" font-medium line-through text-gray-400 dark:text-gray-500 ">
-                          ₹{product.price}
-                        </p>
-                      </div>
-
-                      <p className="text-base text-green-600 font-medium  dark:text-gray-500 ">
-                        {product.discountPercentage}% off
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="group relative border-2 dark:border-gray-700  dark:hover:bg-gray-700 dark:hover:border-transparent rounded-md p-2 flex flex-col justify-between"
+              id="product-grid-card"
+            >
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 dark:opacity-90 dark:group-hover:opacity-100  lg:h-60 flex-2">
+                <img
+                  src={product.thumbnail}
+                  alt={product.title}
+                  className="h-full w-full object-cover object-center lg:h-full lg:w-full "
+                />
+              </div>
+              <div className="mt-4 flex-1">
+                <div className="flex flex-col justify-between gap-2 h-full">
+                  <h3 className="text-medium text-gray-700 dark:text-gray-200">
+                    <Link to={`/product-detail/${product.id}`}>
+                      <span aria-hidden="true" className="absolute inset-0" />
+                      {product.title}
+                    </Link>
+                  </h3>
+                  <div className="flex justify-between">
+                    <div>
+                      <p className=" font-medium text-3xl md:text-2xl text-gray-900 dark:text-gray-100 ">
+                        ₹
+                        {(
+                          product.price -
+                          product.price * (product.discountPercentage / 100)
+                        ).toFixed(2)}
+                      </p>
+                      <p className=" font-medium line-through text-gray-400 dark:text-gray-500 ">
+                        ${product.price}
                       </p>
                     </div>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ">
-                      {[0, 1, 2, 3, 4].map((index) => {
-                        const isFullStar = product.rating >= index + 1; // Fully filled star
 
-                        return (
-                          <span key={index}>
-                            {isFullStar ? (
-                              <StarIconSolid className="text-yellow-400 h-5 w-5" />
-                            ) : (
-                              <StarIconOutline className="text-gray-300 dark:text-yellow-700 h-5 w-5" />
-                            )}
-                          </span>
-                        );
-                      })}
+                    <p className="text-base text-green-600 dark:text-green-600 font-medium  dark:text-gray-500 ">
+                      {product.discountPercentage}% off
                     </p>
                   </div>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ">
+                    {[0, 1, 2, 3, 4].map((index) => {
+                      const isFullStar = product.rating >= index + 1; // Fully filled star
+
+                      return (
+                        <span key={index}>
+                          {isFullStar ? (
+                            <StarIconSolid className="text-yellow-400 h-5 w-5" />
+                          ) : (
+                            <StarIconOutline className="text-gray-300 dark:text-yellow-700 h-5 w-5" />
+                          )}
+                        </span>
+                      );
+                    })}
+                  </p>
                 </div>
-                {product.stock === 0 && (
-                  <p className="text-red-500">out of stock</p>
-                )}
               </div>
-            ))}
+              {product.stock === 0 && (
+                <p className="text-red-500">out of stock</p>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -8,7 +8,8 @@ export const fetchLoggedInUserAsync = createAsyncThunk(
       const response = await fetchLoggedInUser();
       return response.data;
     } catch (error) {
-      rejectWithValue(null);
+      console.log(error)
+      rejectWithValue({});
     }
   }
 );
