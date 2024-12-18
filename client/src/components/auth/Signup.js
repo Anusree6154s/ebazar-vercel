@@ -1,26 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { createUserAsync, selectLoggedInUser } from "../../redux";
+import { enqueueSnackbar } from "notistack";
 
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange" });
-  const user = useSelector(selectLoggedInUser);
-  const [passwordFocus, setPasswordFocus] = useState(false);
 
-  if (user && !user.error) {
-    if (user.role === "user") {
-      return <Navigate to="/" replace={true}></Navigate>;
-    } else {
-      return <Navigate to="/admin" replace={true}></Navigate>;
+  const globalUser = useSelector(selectLoggedInUser);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+  const [user, setUser] = useState(null);
+  const [hasSubmit, setHasSubmit] = useState(false);
+
+  useEffect(() => {
+    if (globalUser && hasSubmit) {
+      setUser(globalUser);
+      setHasSubmit(false);
     }
+  }, [globalUser, hasSubmit]);
+
+  useEffect(() => {
+    if (globalUser) {
+      setUser(globalUser);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (user) {
+    if (user?.error) {
+      enqueueSnackbar(user.error.message, { variant: "error" });
+      setUser(null);
+    } else if (user?.role) return <Navigate to="/" replace={true}></Navigate>;
+    else return <Navigate to="/admin" replace={true}></Navigate>;
   }
 
   return (
@@ -47,6 +66,7 @@ function Signup() {
                         //role will be given via backend
                       })
                     );
+                    setHasSubmit(true);
                   })}
                 >
                   <input
@@ -60,12 +80,10 @@ function Signup() {
                     className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="email"
                     placeholder="Email"
+                    autoComplete="true"
                   />
                   <p className="text-warning  text-xs mt-1">
                     {errors?.email?.message}
-                  </p>
-                  <p className="text-warning  text-xs mt-1">
-                    {user?.error && "Email must be unique"}
                   </p>
 
                   <input
@@ -86,6 +104,7 @@ function Signup() {
                     className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
                     type="password"
                     placeholder="Password"
+                    autoComplete="true"
                     onFocus={() => !errors.password && setPasswordFocus(true)}
                     onBlur={() => setPasswordFocus(false)}
                   />
@@ -106,6 +125,7 @@ function Signup() {
                     className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
                     type="password"
                     placeholder="Confirm Password"
+                    autoComplete="true"
                   />
                   <p className="text-warning  text-xs mt-1">
                     {errors?.confirmPassword?.message}

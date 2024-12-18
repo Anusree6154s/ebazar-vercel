@@ -1,13 +1,19 @@
 import { BASE_URL } from "../app/constants";
+import { handleError } from "./apiErrorHandler";
 
 export function createUser(userData) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     const response = await fetch(BASE_URL + "/auth/signup", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "content-type": "application/json" },
       credentials: "include",
     });
+    if (!response.ok) {
+      const error = await response.json();
+      reject(handleError(response, error));
+      return;
+    }
     const data = await response.json();
     resolve({ data });
   });
@@ -27,7 +33,7 @@ export function LoginUser(loginInfo) {
       const data = await response.json();
       resolve({ data });
     } else {
-      const error = await response.text();
+      const error = await response.json();
       reject(error);
     }
   });

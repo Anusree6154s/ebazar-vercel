@@ -7,8 +7,9 @@ import {
   signOutsAsync,
   updateUserAsync,
   resetPasswordAsync,
+  // authError,
 } from "./authThunks";
-import { resetOTPSentStatus, resetPasswordResetStatus } from "./authActions";
+// import { resetOTPSentStatus, resetPasswordResetStatus } from "./authActions";
 
 const initialState = {
   loggedInUser: null,
@@ -25,6 +26,14 @@ const initialState = {
 export const authSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    resetOTPSentStatus: (state) => {
+      state.otp_sent_status = { success: null, fail: null };
+    },
+    resetPasswordResetStatus: (state) => {
+      state.password_reset_status = { success: null, fail: null };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createUserAsync.pending, (state) => {
@@ -33,6 +42,10 @@ export const authSlice = createSlice({
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUser = action.payload;
+      })
+      .addCase(createUserAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.loggedInUser = { error: action.payload };
       })
       .addCase(LoginUserAsync.pending, (state) => {
         state.status = "loading";
@@ -83,9 +96,6 @@ export const authSlice = createSlice({
         state.status = "idle";
         state.otp_sent_status.fail = action.error.message;
       })
-      .addCase(resetOTPSentStatus, (state) => {
-        state.otp_sent_status = { success: null, fail: null };
-      })
       .addCase(resetPasswordAsync.pending, (state, action) => {
         state.status = "loading";
       })
@@ -96,11 +106,10 @@ export const authSlice = createSlice({
       .addCase(resetPasswordAsync.rejected, (state, action) => {
         state.status = "idle";
         state.password_reset_status.fail = true;
-      })
-      .addCase(resetPasswordResetStatus, (state) => {
-        state.password_reset_status = { success: null, fail: null };
       });
   },
 });
 
 export default authSlice.reducer;
+export const { resetOTPSentStatus, resetPasswordResetStatus } =
+  authSlice.actions;

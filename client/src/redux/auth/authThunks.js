@@ -11,9 +11,14 @@ import {
 
 export const createUserAsync = createAsyncThunk(
     'user/createUser',
-    async (userData) => {
-        const response = await createUser(userData);
-        return response.data;
+    async (userData, {rejectWithValue}) => {
+        try {
+            const response = await createUser(userData);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+       
     }
 );
 
