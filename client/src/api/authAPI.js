@@ -1,5 +1,4 @@
 import { BASE_URL } from "../app/constants";
-import { handleError } from "./apiErrorHandler";
 
 export function createUser(userData) {
   return new Promise(async (resolve, reject) => {
@@ -9,13 +8,13 @@ export function createUser(userData) {
       headers: { "content-type": "application/json" },
       credentials: "include",
     });
-    if (!response.ok) {
+    if(response.ok){
+      const data = await response.json();
+      resolve({ data });
+    }else{
       const error = await response.json();
-      reject(handleError(response, error));
-      return;
+      reject(error)
     }
-    const data = await response.json();
-    resolve({ data });
   });
 }
 

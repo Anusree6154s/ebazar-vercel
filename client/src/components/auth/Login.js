@@ -1,7 +1,13 @@
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { LoginUserAsync, selectError, selectLoggedInUser } from '../../redux';
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
+import {
+  LoginUserAsync,
+  resetAuthError,
+  selectLoggedInUser,
+} from "../../redux";
+import { enqueueSnackbar } from "notistack";
+import { useEffect} from "react";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,19 +19,22 @@ function Login() {
   } = useForm();
 
   const user = useSelector(selectLoggedInUser);
-  const error = useSelector(selectError);
 
+  useEffect(() => {
+    if (user?.error) {
+      console.log(user)
+      enqueueSnackbar(user.error.message, { variant: "error" });
+      dispatch(resetAuthError());
+    }
+  }, [dispatch, user]);
 
-  if (user && user.role === 'user') {
+  if (user && user.role === "user") {
     return <Navigate to="/" replace={true}></Navigate>;
   }
 
-  if (user && user.role === 'admin') {
+  if (user && user.role === "admin") {
     return <Navigate to="/admin" replace={true}></Navigate>;
   }
-
-  // {(user && user.role === 'user') && <Navigate to='/' replace={true}></Navigate>}
-  // {(user && user.role === 'admin') && <Navigate to='/admin' replace={true}></Navigate>}
 
   return (
     <>
@@ -44,53 +53,51 @@ function Login() {
                         LoginUserAsync({
                           email: data.email,
                           password: data.password,
-                        }),
+                        })
                       );
                     })}
                   >
                     <input
-                      {...register('email', {
-                        required: 'Email is required',
+                      {...register("email", {
+                        required: "Email is required",
                         pattern: {
                           value: /^\S+@\S+\.\S+$/,
-                          message: 'Email not valid',
+                          message: "Email not valid",
                         },
                       })}
                       className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                       type="email"
                       placeholder="Email"
+                      autoComplete="true"
                     />
-                    {errors.email && (
-                      <p className="text-xs text-warning">
-                        {errors.email.message}
-                      </p>
-                    )}
+                    <p className="text-xs text-warning">
+                      {errors?.email?.message}
+                    </p>
+
                     <input
-                      {...register('password', {
-                        required: 'Password is required',
+                      {...register("password", {
+                        required: "Password is required",
                       })}
                       className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                       type="password"
                       placeholder="Password"
+                      autoComplete="true"
                     />
-                    <p className="flex">
-                      {errors.password && (
-                        <span className="text-xs text-warning flex-1 text-left">
-                          {errors.password.message}
-                        </span>
-                      )}
-                      {error && (
-                        <span className="text-xs text-warning flex-1 text-left">
-                          {error.message}
-                        </span>
-                      )}
-                      <button
-                        onClick={() => navigate('/forgot-password')}
-                        className="text-xs text-gray-600 flex-1 text-right"
-                      >
-                        Forgot Password?
-                      </button>
-                    </p>
+                    {/* <p className="flex"> */}
+                    <span className="text-xs text-warning flex-1 text-left">
+                      {errors?.password?.message}
+                    </span>
+
+                    {/* </p> */}
+                    <span className="text-xs text-warning flex-1 text-left">
+                      {user?.error?.message}
+                    </span>
+                    <button
+                      onClick={() => navigate("/forgot-password")}
+                      className="text-xs text-gray-600 flex-1 text-right w-full"
+                    >
+                      Forgot Password?
+                    </button>
 
                     <button
                       type="submit"
@@ -101,22 +108,23 @@ function Login() {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         stroke="#FFFFFF"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         className="feather feather-user-check w-6 h-6 -ml-2"
                       >
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="8.5" cy="7" r="4"></circle>
-                        <polyline points="17 11 19 13 23 9"></polyline>
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="8.5" cy={7} r={4} />
+                        <polyline points="17 11 19 13 23 9" />
                       </svg>
+
                       <span className="ml-3">Sign In</span>
                     </button>
                   </form>
                   <p className="mt-6 text-xs text-gray-600 text-center">
                     <span>Not a member? </span>
                     <button
-                      onClick={() => navigate('/signup')}
+                      onClick={() => navigate("/signup")}
                       className="border-b border-primary border-dotted text-primary hover:text-primary-hover font-bold"
                     >
                       Create an Account

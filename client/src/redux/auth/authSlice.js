@@ -7,9 +7,7 @@ import {
   signOutsAsync,
   updateUserAsync,
   resetPasswordAsync,
-  // authError,
 } from "./authThunks";
-// import { resetOTPSentStatus, resetPasswordResetStatus } from "./authActions";
 
 const initialState = {
   loggedInUser: null,
@@ -48,7 +46,7 @@ export const authSlice = createSlice({
       })
       .addCase(createUserAsync.rejected, (state, action) => {
         state.status = "idle";
-        state.loggedInUser = { error: action.payload };
+        state.loggedInUser = { error: action.error };
       })
       .addCase(LoginUserAsync.pending, (state) => {
         state.status = "loading";
@@ -60,7 +58,6 @@ export const authSlice = createSlice({
       .addCase(LoginUserAsync.rejected, (state, action) => {
         state.status = "idle";
         state.loggedInUser = {error: action.error};
-        // state.error = action.error;
       })
       .addCase(checkAuthAsync.pending, (state, action) => {
         state.status = "loading";
