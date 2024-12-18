@@ -1,15 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XIcon, StarIcon as StarIconOutline } from "@heroicons/react/outline";
 import {
   ChevronDownIcon,
-  FunnelIcon,
+  FilterIcon,
   MinusIcon,
   PlusIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  StarIcon,
-} from "@heroicons/react/20/solid";
+  StarIcon as StarIconSolid,
+} from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -23,6 +23,7 @@ import {
   selectTotalItems,
 } from "../../redux";
 import { ITEMS_PER_PAGE } from "../../app/constants";
+// import { ChevronDownIcon } from "@heroicons/react/solid";
 
 //TODO: on server, code for sortaoptions
 //TODO: in own project, fix json server link to show data for multiple filter options , and pagination for multiple limits
@@ -213,7 +214,7 @@ function ProductList() {
                   onClick={() => setMobileFiltersOpen(true)}
                 >
                   <span className="sr-only">Filters</span>
-                  <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                  <FilterIcon className="h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -301,7 +302,7 @@ function MobileFilter({
                   onClick={() => setMobileFiltersOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
-                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  <XIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
 
@@ -444,62 +445,75 @@ function DesktopFilter({ filters, handleFilter, filter }) {
 
 function ProductGrid({ products }) {
   return (
-    <div className="lg:col-span-3">
+    <section className="lg:col-span-3" id="product-grid">
       {/* Your content */}
-      <div>
-        <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
-            {products &&
-              products.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative border-2 dark:border-gray-700  dark:hover:bg-gray-700 dark:hover:border-transparent rounded-md p-2"
-                >
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 dark:opacity-90 dark:group-hover:opacity-100  lg:h-60">
-                    <img
-                      src={product.thumbnail}
-                      alt={product.title}
-                      className="h-full w-full object-cover object-center lg:h-full lg:w-full "
-                    />
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    <div>
-                      <h3 className="text-medium text-gray-700 dark:text-gray-200">
-                        <Link to={`/product-detail/${product.id}`}>
-                          <span
-                            aria-hidden="true"
-                            className="absolute inset-0"
-                          />
-                          {product.title}
-                        </Link>
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ">
-                        <StarIcon className="h-4 w-4"></StarIcon>
-                        {product.rating}
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-end">
-                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                        ₹
-                        {(
-                          product.price -
-                          product.price * (product.discountPercentage / 100)
-                        ).toFixed(2)}
-                      </p>
-                      <p className="text-sm font-medium line-through text-gray-400 dark:text-gray-500 ">
-                        ₹{product.price}
-                      </p>
-                    </div>
-                  </div>
-                  {product.stock === 0 && (
-                    <p className="text-red-500">out of stock</p>
-                  )}
+      <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
+          {products &&
+            products.map((product) => (
+              <div
+                key={product.id}
+                className="group relative border-2 dark:border-gray-700  dark:hover:bg-gray-700 dark:hover:border-transparent rounded-md p-2 flex flex-col justify-between"
+                id="product-grid-card"
+              >
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 dark:opacity-90 dark:group-hover:opacity-100  lg:h-60 flex-2">
+                  <img
+                    src={product.thumbnail}
+                    alt={product.title}
+                    className="h-full w-full object-cover object-center lg:h-full lg:w-full "
+                  />
                 </div>
-              ))}
-          </div>
+                <div className="mt-4 flex-1">
+                  <div className="flex flex-col justify-between gap-2 h-full">
+                    <h3 className="text-medium text-gray-700 dark:text-gray-200">
+                      <Link to={`/product-detail/${product.id}`}>
+                        <span aria-hidden="true" className="absolute inset-0" />
+                        {product.title}
+                      </Link>
+                    </h3>
+                    <div className="flex justify-between">
+                      <div>
+                        <p className=" font-medium text-3xl md:text-2xl text-gray-900 dark:text-gray-100 ">
+                          ₹
+                          {(
+                            product.price -
+                            product.price * (product.discountPercentage / 100)
+                          ).toFixed(2)}
+                        </p>
+                        <p className=" font-medium line-through text-gray-400 dark:text-gray-500 ">
+                          ₹{product.price}
+                        </p>
+                      </div>
+
+                      <p className="text-base text-green-600 font-medium  dark:text-gray-500 ">
+                        {product.discountPercentage}% off
+                      </p>
+                    </div>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ">
+                      {[0, 1, 2, 3, 4].map((index) => {
+                        const isFullStar = product.rating >= index + 1; // Fully filled star
+
+                        return (
+                          <span key={index}>
+                            {isFullStar ? (
+                              <StarIconSolid className="text-yellow-400 h-5 w-5" />
+                            ) : (
+                              <StarIconOutline className="text-gray-300 dark:text-yellow-700 h-5 w-5" />
+                            )}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  </div>
+                </div>
+                {product.stock === 0 && (
+                  <p className="text-red-500">out of stock</p>
+                )}
+              </div>
+            ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
