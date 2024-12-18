@@ -490,7 +490,7 @@ function ProductGrid({ products }) {
                       </p>
                     </div>
 
-                    <p className="text-base text-green-600 dark:text-green-600 font-medium  dark:text-gray-500 ">
+                    <p className="text-base text-green-600 dark:text-green-600 font-medium  ">
                       {product.discountPercentage}% off
                     </p>
                   </div>

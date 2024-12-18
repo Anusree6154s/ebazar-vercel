@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchLoggedInUserAsync, fetchLoggedInUserOrdersAsync } from './userThunks';
+import { fetchLoggedInUserOrdersAsync } from './userThunks';
 
 const initialState = {
     userInfo: null, //for detailed user info
