@@ -7,7 +7,7 @@
     "test": "cd server && npm test ",
     "test:cov": "cd server && npm run test:coverage ",
     "start": "node server/src/index",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd client && npm run build",
     "pre-start": "cd server && npm install"
   },
   "keywords": [],
