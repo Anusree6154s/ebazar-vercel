@@ -1,5 +1,7 @@
 export const ITEMS_PER_PAGE = 10;
-// export const BASE_URL = "http://localhost:8080/api";
-// export const BASE_URL_PAYMENT = "http://localhost:8080";
-export const BASE_URL = 'https://ebazar-a2pa.onrender.com/api'
-export const BASE_URL_PAYMENT = 'https://ebazar-a2pa.onrender.com'
+//  const backendURL = "http://localhost:8080";
+//  const backendURL = "https://ebazar-a2pa.onrender.com";
+const backendURL = "https://ebazar-backend.vercel.app"
+
+export const BASE_URL = backendURL+"/api";
+export const BASE_URL_PAYMENT = backendURL;
