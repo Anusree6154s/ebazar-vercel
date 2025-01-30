@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "builds": [
-    { "src": "src/server.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/.*", "dest": "/src/server.js" }
-  ],
   "scripts": {
     "dev": "nodemon --trace-warnings src/index",
     "build": "npm i",
@@ -52,6 +46,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "serverless-http": "^3.2.0",
     "stripe": "^14.23.0"
   }
 }
