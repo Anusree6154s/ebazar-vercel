@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "builds": [
+    { "src": "src/server.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/.*", "dest": "/src/server.js" }
+  ],
   "scripts": {
     "dev": "nodemon --trace-warnings src/index",
     "build": "npm i",
