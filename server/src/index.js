@@ -1,11 +1,11 @@
 //contains only mongoose connection
-require('dotenv').config();
+require('dotenv').config({path:'../.env'});
 const server = require('./server')
 const mongoose = require('mongoose');
 const { env } = require('./config/env.config')
 
 const mongoURI = env.mongoose.uri
-const serverURL = env.server.port
+// const serverURL = env.server.port
 
 
 mongoose.connect(mongoURI).then(async () => {
@@ -22,3 +22,5 @@ mongoose.connect(mongoURI).then(async () => {
 //     console.log('methodName:', methodName)
 //     console.log('methodArgs:', methodArgs)
 // });
+module.exports = server;
+export const config = { maxDuration: 30 };

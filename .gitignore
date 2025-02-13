@@ -59,3 +59,9 @@ coverage/
 ehthumbs.db
 Icon?
 __MACOSX/
+.vercel
+.env*.local
+.env
+
+.dist
+/node_modules

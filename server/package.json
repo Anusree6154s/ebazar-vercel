@@ -2,10 +2,10 @@
   "name": "ebazar-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev": "nodemon --trace-warnings src/index",
-    "build": "npm i",
+    "build": "npm i && cd ../client && npm run build",
     "start": "node src/index",
     "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --detectOpenHandles"
@@ -47,6 +47,7 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "serverless-http": "^3.2.0",
-    "stripe": "^14.23.0"
+    "stripe": "^14.23.0",
+    "vercel": "^39.4.2"
   }
 }

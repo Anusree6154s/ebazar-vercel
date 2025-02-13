@@ -18,10 +18,7 @@ server.use(express.json());
 passport.use("local", localStrategy);
 passport.use("jwt", jwtStrategy);
 
-server.use(
-  "/api",
-  routes
-);
+server.use("/api", routes);
 server.get("*", (req, res) =>
   res.sendFile(path.resolve(__dirname, "../..", "client/build", "index.html"))
 );
@@ -29,3 +26,4 @@ server.get("*", (req, res) =>
 server.use(errorHandler);
 
 module.exports = server;
+
