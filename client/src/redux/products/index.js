@@ -1,4 +1,3 @@
-export * from './productsSlice';
-export * from './productsThunks';
-export * from './productsSelectors';
-export * from './productsActions';
+export * from "./productsSlice";
+export * from "./productsThunks";
+export * from "./productsSelectors";

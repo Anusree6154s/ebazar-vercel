@@ -16,9 +16,9 @@ function Protected({ children }) {
     );
   }
 
-  if (status === "idle" && !user) {
-    return <Navigate to="/home" replace={true}></Navigate>;
-  }
+  // if (status === "idle" && !user) {
+  //   return <Navigate to="/home" replace={true}></Navigate>;
+  // }
 
   return children;
   // return status === 'loading' ? <div className='col-span-1 lg:col-span-3'><div className="loader"></div></div> : status === 'idle' && !user ? <Navigate to='/login' replace={true}></Navigate> : children

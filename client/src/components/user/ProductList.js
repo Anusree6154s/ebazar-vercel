@@ -10,11 +10,13 @@ import {
   ChevronRightIcon,
   StarIcon as StarIconSolid,
 } from "@heroicons/react/solid";
+import { ShoppingCartIcon, HeartIcon } from "@heroicons/react/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   fetchBrandsAsync,
   fetchCategoriesAsync,
+  fetchProductByIdAsync,
   fetchProductsByFiltersAsync,
   selectAllBrands,
   selectAllCategories,
@@ -23,6 +25,7 @@ import {
   selectTotalItems,
 } from "../../redux";
 import { ITEMS_PER_PAGE } from "../../app/constants";
+import ImageTransformer from "./ImageTransformer";
 // import { ChevronDownIcon } from "@heroicons/react/solid";
 
 //TODO: on server, code for sortaoptions
@@ -129,9 +132,25 @@ function ProductList() {
 
   useEffect(() => {
     const pagination = { _page: page };
-    dispatch(
-      fetchProductsByFiltersAsync({ role: user.role, filter, sort, pagination })
-    );
+    if (user) {
+      dispatch(
+        fetchProductsByFiltersAsync({
+          role: user.role,
+          filter,
+          sort,
+          pagination,
+        })
+      );
+    } else {
+      dispatch(
+        fetchProductsByFiltersAsync({
+          role: "user",
+          filter,
+          sort,
+          pagination,
+        })
+      );
+    }
   }, [user, filter, sort, page, dispatch]);
 
   useEffect(() => {
@@ -143,9 +162,18 @@ function ProductList() {
     dispatch(fetchCategoriesAsync());
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   console.log("products:", products);
+  //   if (products && products.length > 0) {
+  //     products.forEach((product) => {
+  //       dispatch(fetchProductByIdAsync(product.id));
+  //     });
+  //   }
+  // }, [products]);
+
   return (
     <div className="ProductList">
-      <div className="bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 rounded-md">
+      <div className="bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 rounded-md ">
         <div>
           {/* Mobile filter dialog */}
           <MobileFilter
@@ -158,7 +186,7 @@ function ProductList() {
 
           <main className=" max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Options Tab */}
-            <div className="flex items-baseline justify-end  p-6 ">
+            <div className="flex items-baseline justify-end px-6 pt-6">
               <div className="flex items-center">
                 {/* Sort Menu*/}
                 <Menu as="div" className="relative inline-block text-left">
@@ -229,7 +257,6 @@ function ProductList() {
                 ></DesktopFilter>
 
                 {/* Product grid */}
-                {console.log(products)}
                 {products ? (
                   products.length > 0 ? (
                     <ProductGrid products={products}></ProductGrid>
@@ -461,62 +488,66 @@ function ProductGrid({ products }) {
           {products.map((product) => (
             <div
               key={product.id}
-              className="group relative border-2 dark:border-gray-700  dark:hover:bg-gray-700 dark:hover:border-transparent rounded-md p-2 flex flex-col justify-between"
+              className="group relative border-[1.5px] dark:border-gray-700  rounded-md p-2 flex flex-col justify-between dark:hover:bg-gradient-to-b dark:hover:from-gray-900 dark:hover:to-transparent transition duration-300 "
               id="product-grid-card"
             >
-              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 dark:opacity-90 dark:group-hover:opacity-100  lg:h-60 flex-2">
-                <img
-                  src={product.thumbnail}
-                  alt={product.title}
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full "
-                />
+              <div className="aspect-[1/1] w-full min-h-auto overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 dark:opacity-95  dark:group-hover:opacity-100  lg:h-60  bg-gray-50 flex-1 transition-opacity duration-300">
+                <ImageTransformer src={product.thumbnail} className={""}/>
               </div>
               <div className="mt-4 flex-1">
-                <div className="flex flex-col justify-between gap-2 h-full">
-                  <h3 className="text-medium text-gray-700 dark:text-gray-200">
-                    <Link to={`/product-detail/${product.id}`}>
-                      <span aria-hidden="true" className="absolute inset-0" />
+                <Link to={`/product-detail/${product.id}`}>
+                  <span aria-hidden="true" className="absolute inset-0" />
+                </Link>
+                <div className="flex flex-col gap-2 justify-between h-full">
+                  <div>
+                    <span className="text-xs text-gray-400 font-bold uppercase">
+                      {product.brand || "No Brand"}
+                    </span>
+                    <h3 className="text-sm text-gray-700 dark:text-gray-200 truncate">
                       {product.title}
-                    </Link>
-                  </h3>
-                  <div className="flex justify-between">
-                    <div>
-                      <p className=" font-medium text-3xl md:text-2xl text-gray-900 dark:text-gray-100 ">
-                        ₹
-                        {(
-                          product.price -
-                          product.price * (product.discountPercentage / 100)
-                        ).toFixed(2)}
-                      </p>
-                      <p className=" font-medium line-through text-gray-400 dark:text-gray-500 ">
+                    </h3>
+                  </div>
+                  <div className="flex flex-col">
+                    <p className=" font-medium text-3xl md:text-2xl text-gray-900 dark:text-gray-100">
+                      <span className="mr-1">₹</span>
+                      {(
+                        product.price -
+                        product.price * (product.discountPercentage / 100)
+                      ).toFixed(2)}
+                    </p>
+                    <div className="flex gap-2 text-sm">
+                      <p className="font-medium line-through text-gray-400 dark:text-gray-500 ">
                         ${product.price}
                       </p>
+                      <p className=" text-green-600 dark:text-green-600 font-medium  ">
+                        {product.discountPercentage}% off
+                      </p>
                     </div>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 flex gap-[0.18rem] items-center ">
+                      {[0, 1, 2, 3, 4].map((index) => {
+                        const isFullStar = product.rating >= index + 1; // Fully filled star
 
-                    <p className="text-base text-green-600 dark:text-green-600 font-medium  ">
-                      {product.discountPercentage}% off
+                        return (
+                          <span key={index}>
+                            {isFullStar ? (
+                              <StarIconSolid className="text-yellow-400 h-4 w-4" />
+                            ) : (
+                              <StarIconOutline className="text-gray-300 dark:text-yellow-700 h-4 w-4" />
+                            )}
+                          </span>
+                        );
+                      })}
                     </p>
                   </div>
-                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ">
-                    {[0, 1, 2, 3, 4].map((index) => {
-                      const isFullStar = product.rating >= index + 1; // Fully filled star
-
-                      return (
-                        <span key={index}>
-                          {isFullStar ? (
-                            <StarIconSolid className="text-yellow-400 h-5 w-5" />
-                          ) : (
-                            <StarIconOutline className="text-gray-300 dark:text-yellow-700 h-5 w-5" />
-                          )}
-                        </span>
-                      );
-                    })}
-                  </p>
+                  <div className="flex justify-center gap-5 z-10 cursor-pointer">
+                    <ShoppingCartIcon className="h-8 w-8 rounded-full p-2 hover:bg-gray-100 text-gray-700  transition duration-300 border dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700" />
+                    <HeartIcon className="h-8 w-8  rounded-full p-2 hover:bg-gray-100 text-gray-700  transition duration-300 border dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700" />
+                  </div>
                 </div>
               </div>
-              {product.stock === 0 && (
-                <p className="text-red-500">out of stock</p>
-              )}
+              <p className="text-red-500 text-[0.65rem] font-bold text-center mt-2">
+                {product.stock === 0 && "Out of stock"}
+              </p>
             </div>
           ))}
         </div>

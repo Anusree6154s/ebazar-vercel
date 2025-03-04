@@ -1,12 +1,10 @@
-
-const { Product } = require('../model/product.model.js');
-const status = require('http-status');
-const { catchAsyncUtil, apiUtil } = require('../utils/index.js');
-
+const { Product } = require("../model/product.model.js");
+const status = require("http-status");
+const { catchAsyncUtil, apiUtil } = require("../utils/index.js");
 
 /**
  * Controller to create a new product.
- * 
+ *
  * @function
  * @name createProduct
  * @memberof module:controller/product.controller.js
@@ -17,15 +15,14 @@ const { catchAsyncUtil, apiUtil } = require('../utils/index.js');
  * @throws {Error} Will forward any errors to the error-handling middleware
  */
 exports.createProduct = catchAsyncUtil.catchAsync(async (req, res) => {
-    const product = new Product(req.body);
-    const data = await product.save();
-    res.status(status.CREATED).json(data);
+  const product = new Product(req.body);
+  const data = await product.save();
+  res.status(status.CREATED).json(data);
 });
-
 
 /**
  * Controller to fetch products based on query parameters.
- * 
+ *
  * @function
  * @name fetchAllQuery
  * @memberof module:controller/product.controller.js
@@ -42,37 +39,44 @@ exports.createProduct = catchAsyncUtil.catchAsync(async (req, res) => {
  * @throws {Error} Will forward any errors to the error-handling middleware
  */
 exports.fetchAllQuery = catchAsyncUtil.catchAsync(async (req, res) => {
-    let productQuery = null;
+  let productQuery = null;
 
-    if (req.query.role === 'user') {
-        productQuery = Product.find({ deleted: { $ne: true } });
-    } else if (req.query.role === 'admin') {
-        productQuery = Product.find();
-    }
-    if (req.query._sort && req.query._order) {
-        productQuery = productQuery.sort({ [req.query._sort]: req.query._order });
-    }
-    if (req.query.category) {
-        const categories = req.query.category.includes(',') ? req.query.category.split(',') : req.query.category;
-        productQuery = productQuery.find({ category: { $in: categories } });
-    }
-    if (req.query.brand) {
-        const brands = req.query.brand.includes(',') ? req.query.brand.split(',') : req.query.brand;
-        productQuery = productQuery.find({ brand: { $in: brands } });
-    }
-    if (req.query._page && !req.query.brand && !req.query.category ) {
-        const pageSize = 10;
-        const page = req.query._page;
-        productQuery = productQuery.skip(pageSize * (page - 1)).limit(pageSize);
-    }
-    const data = await productQuery.exec();
-    res.status(status.OK).json(data);
+  if (req.query.role === "user") {
+    productQuery = Product.find({ deleted: { $ne: true } });
+  } else if (req.query.role === "admin") {
+    productQuery = Product.find();
+  }
+  if (req.query._sort && req.query._order) {
+    productQuery = productQuery.sort({ [req.query._sort]: req.query._order });
+  }
+  if (req.query.category) {
+    const categories = req.query.category.includes(",")
+      ? req.query.category.split(",")
+      : req.query.category;
+    productQuery = productQuery.find({ category: { $in: categories } });
+  }
+  if (req.query.brand) {
+    const brands = req.query.brand.includes(",")
+      ? req.query.brand.split(",")
+      : req.query.brand;
+    productQuery = productQuery.find({ brand: { $in: brands } });
+  }
+  if (req.query._page && !req.query.brand && !req.query.category) {
+    const pageSize = 10;
+    const page = req.query._page;
+    productQuery = productQuery.skip(pageSize * (page - 1)).limit(pageSize);
+  }
+  const data = await productQuery.exec();
+
+  //Enable Vercel caching (1 day cache)
+  res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate");
+
+  res.status(status.OK).json(data);
 });
-
 
 /**
  * Controller to fetch a product by its ID.
- * 
+ *
  * @function
  * @name fetchProductsById
  * @memberof module:controller/product.controller.js
@@ -84,18 +88,19 @@ exports.fetchAllQuery = catchAsyncUtil.catchAsync(async (req, res) => {
  * @throws {Error} Will forward any other errors to the error-handling middleware
  */
 exports.fetchProductsById = catchAsyncUtil.catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const data = await Product.findById(id);
-    if (!data) {
-        throw new apiUtil.ApiError(status.NOT_FOUND, "Product not found");
-    }
-    res.status(status.OK).json(data);
+  const { id } = req.params;
+  const data = await Product.findById(id);
+  if (!data) {
+    throw new apiUtil.ApiError(status.NOT_FOUND, "Product not found");
+  }
+  //Enable Vercel caching (1 day cache)
+  res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate");
+  res.status(status.OK).json(data);
 });
-
 
 /**
  * Controller to update a product by its ID.
- * 
+ *
  * @function
  * @name updateProduct
  * @memberof module:controller/product.controller.js
@@ -108,10 +113,10 @@ exports.fetchProductsById = catchAsyncUtil.catchAsync(async (req, res) => {
  * @throws {Error} Will forward any other errors to the error-handling middleware
  */
 exports.updateProduct = catchAsyncUtil.catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const data = await Product.findByIdAndUpdate(id, req.body, { new: true });
-    if (!data) {
-        throw new apiUtil.ApiError(status.NOT_FOUND, "Product not found");
-    }
-    res.status(status.OK).json(data);
+  const { id } = req.params;
+  const data = await Product.findByIdAndUpdate(id, req.body, { new: true });
+  if (!data) {
+    throw new apiUtil.ApiError(status.NOT_FOUND, "Product not found");
+  }
+  res.status(status.OK).json(data);
 });

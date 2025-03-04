@@ -16,10 +16,10 @@ const protectedRouter = express.Router();
 router
   .use("/auth", authRouter)
   .use("/payment", paymentRouter)
+  .use("/products", productsRouter)
   .use(isAuthJwt, protectedRouter);
 
 protectedRouter
-  .use("/products", productsRouter)
   .use("/categories", categoriesRouter)
   .use("/brands", brandsRouter)
   .use("/users", usersRouter)

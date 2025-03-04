@@ -8,7 +8,6 @@ import {
   createProductAsync,
   editProductAsync,
 } from "./productsThunks";
-import { resetNewProduct } from "./productsActions";
 
 const initialState = {
   products: null,
@@ -23,7 +22,14 @@ const initialState = {
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    clearSelectedProduct(state) {
+      state.selectedProduct = null;
+    },
+    resetNewProduct(state) {
+      state.newProduct = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductsAsync.pending, (state) => {
@@ -80,11 +86,9 @@ export const productsSlice = createSlice({
         );
         state.products.splice(index, 1, action.payload);
         state.newProduct = action.payload;
-      })
-      .addCase(resetNewProduct, (state) => {
-        state.newProduct = null;
       });
   },
 });
 
 export default productsSlice.reducer;
+export const { clearSelectedProduct, resetNewProduct } = productsSlice.actions;

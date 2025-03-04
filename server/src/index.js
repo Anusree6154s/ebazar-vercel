@@ -1,18 +1,18 @@
 //contains only mongoose connection
-require('dotenv').config({path:'../.env'});
+
 const server = require('./server')
 const mongoose = require('mongoose');
 const { env } = require('./config/env.config')
 
 const mongoURI = env.mongoose.uri
-// const serverURL = env.server.port
+const serverURL = env.server.port
 
-
+console.log('Connecting to mongoose DB..')
 mongoose.connect(mongoURI).then(async () => {
     console.log('Connected to MongoDB URI: ' + mongoURI)
-    // server.listen(serverURL, () => {
-    //     console.log('Server running on port ' + serverURL)
-    // })
+    server.listen(serverURL, () => {
+        console.log('Server running on port ' + serverURL)
+    })
 }).catch((error) => console.log('Mongoose error:', error))
 
 // console.log(httpServer.address())
@@ -23,4 +23,4 @@ mongoose.connect(mongoURI).then(async () => {
 //     console.log('methodArgs:', methodArgs)
 // });
 module.exports = server;
-export const config = { maxDuration: 30 };
+// export const config = { maxDuration: 30 };
