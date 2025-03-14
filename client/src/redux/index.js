@@ -5,3 +5,4 @@ export * from './orders';
 export * from './products';
 export * from './user';
 export * from './wishlist';
+export * from './indexedDB';

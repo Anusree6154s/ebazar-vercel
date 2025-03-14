@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { BASE_URL_PAYMENT } from '../../app/constants';
 import { selectCurrentOrder } from "../../redux";
 
-export default function CheckoutForm() {
+export default function PaymentForm() {
   const stripe = useStripe();
   const elements = useElements();
 

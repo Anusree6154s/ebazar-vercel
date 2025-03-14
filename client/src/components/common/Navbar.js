@@ -7,8 +7,15 @@ import {
   HeartIcon,
 } from "@heroicons/react/outline";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectItems, selectLoggedInUser, selectWishList } from "../../redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectItems,
+  selectLoggedInUser,
+  selectWishList,
+  selectWishlistLengthIDB,
+  setWishlistlength,
+} from "../../redux";
+import { getWishlistItemsCountIDB } from "../../indexedDB/wishlistDB";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -18,6 +25,8 @@ export default function Navbar({ children, name, preview }) {
   const user = useSelector(selectLoggedInUser);
   const cartItems = useSelector(selectItems);
   const wishlistItems = useSelector(selectWishList);
+  const dispatch = useDispatch();
+  const wishlistItemsLengthIDB = useSelector(selectWishlistLengthIDB);
 
   const [dark, setDark] = useState(false);
   const [userNavigation, setUserNavigation] = useState(null);
@@ -46,7 +55,18 @@ export default function Navbar({ children, name, preview }) {
     } else {
       localStorage.setItem("color-theme", "light");
     }
-  }, []);
+
+    const fetchWishlistItemsCountIDB = async () => {
+      try {
+        const numberOfWishlistItemsIDB = await getWishlistItemsCountIDB();
+        dispatch(setWishlistlength(numberOfWishlistItemsIDB));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchWishlistItemsCountIDB();
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -128,25 +148,24 @@ export default function Navbar({ children, name, preview }) {
                       </svg>
                     </button>
 
-                    {user && (
-                      <Link
-                        to="/wishlist"
-                        // className={user.role === "user" ? "" : "hidden"}
+                    <Link
+                      to="/wishlist"
+                      // className={user.role === "user" ? "" : "hidden"}
+                    >
+                      <button
+                        type="button"
+                        className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
                       >
-                        <button
-                          type="button"
-                          className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
-                        >
-                          <span className="sr-only">View WishList</span>
-                          <HeartIcon className="h-6 w-6" aria-hidden="true" />
-                          {wishlistItems.length > 0 && (
-                            <span className="absolute items-center rounded-md bg-pink-50 -mt-10 px-2 py-1 text-xs font-medium text-pink-500 ring-1 ring-inset ring-pink-600/10 ">
-                              {wishlistItems.length}
-                            </span>
-                          )}
-                        </button>
-                      </Link>
-                    )}
+                        <span className="sr-only">View WishList</span>
+                        <HeartIcon className="h-6 w-6" aria-hidden="true" />
+                        {(wishlistItems.length > 0 ||
+                          wishlistItemsLengthIDB > 0) && (
+                          <span className="absolute items-center rounded-md bg-pink-50 -mt-10 px-2 py-1 text-xs font-medium text-pink-500 ring-1 ring-inset ring-pink-600/10 ">
+                            {wishlistItems.length || wishlistItemsLengthIDB}
+                          </span>
+                        )}
+                      </button>
+                    </Link>
 
                     <Link
                       to={cartItems.length > 0 ? "/cart" : "#"}
@@ -271,9 +290,10 @@ export default function Navbar({ children, name, preview }) {
                       >
                         <span className="sr-only">View WishList</span>
                         <HeartIcon className="h-6 w-6" aria-hidden="true" />
-                        {wishlistItems.length > 0 && (
+                        {(wishlistItems.length > 0 ||
+                          wishlistItemsLengthIDB > 0) && (
                           <span className="absolute items-center rounded-md bg-pink-50 -mt-10 px-2 py-1 text-xs font-medium text-pink-500 ring-1 ring-inset ring-pink-600/10 ">
-                            {wishlistItems.length}
+                            {wishlistItems.length || wishlistItemsLengthIDB}
                           </span>
                         )}
                       </button>

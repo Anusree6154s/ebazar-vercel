@@ -6,6 +6,8 @@ import wishListReducer from '../redux/wishlist/wishlistSlice';
 import adminReducer from '../redux/admin/adminSlice'
 import userReducer from '../redux/user/userSlice'
 import ordersReducer from '../redux/orders/ordersSlice'
+import IDBItemsLengthReducer
+from '../redux/indexedDB/IDBSlice'
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +17,7 @@ export const store = configureStore({
     wishlist: wishListReducer,
     admin: adminReducer,
     user: userReducer,
-    orders: ordersReducer
+    orders: ordersReducer,
+    IDBItemsLength:IDBItemsLengthReducer
   },
 });

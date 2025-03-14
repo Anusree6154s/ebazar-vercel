@@ -20,7 +20,7 @@ import {
   selectUserId,
   sendOTPAsync,
 } from "../../redux";
-import { Loader } from "../common/Loader";
+import Loader from "../common/Loader";
 
 function ForgotPassword() {
   const otp_sent_status = useSelector(selectOTPSentStatus);

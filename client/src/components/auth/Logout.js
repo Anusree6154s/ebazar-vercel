@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { selectLoggedInUser, signOutsAsync } from "../../redux";
 
-function LogOut() {
+function Logout() {
     const user = useSelector(selectLoggedInUser)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -17,4 +17,4 @@ function LogOut() {
     );
 }
 
-export default LogOut;
+export default Logout;
