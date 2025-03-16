@@ -39,37 +39,28 @@ exports.createProduct = catchAsyncUtil.catchAsync(async (req, res) => {
  * @throws {Error} Will forward any errors to the error-handling middleware
  */
 exports.fetchAllQuery = catchAsyncUtil.catchAsync(async (req, res) => {
-  let productQuery = null;
+  const filter = {};
+  const sort = {};
 
-  if (req.query.role === "user") {
-    productQuery = Product.find({ deleted: { $ne: true } });
-  } else if (req.query.role === "admin") {
-    productQuery = Product.find();
-  }
-  if (req.query._sort && req.query._order) {
-    productQuery = productQuery.sort({ [req.query._sort]: req.query._order });
-  }
-  if (req.query.category) {
-    const categories = req.query.category.includes(",")
-      ? req.query.category.split(",")
-      : req.query.category;
-    productQuery = productQuery.find({ category: { $in: categories } });
-  }
-  if (req.query.brand) {
-    const brands = req.query.brand.includes(",")
-      ? req.query.brand.split(",")
-      : req.query.brand;
-    productQuery = productQuery.find({ brand: { $in: brands } });
-  }
+  if (req.query.role === "user") filter.deleted = { $ne: true };
+  if (req.query._sort && req.query._order)
+    sort[req.query._sort] = req.query._order === "desc" ? -1 : 1;
+  if (req.query.category)
+    filter.category = { $in: req.query.category.split(",") };
+  if (req.query.brand) filter.brand = { $in: req.query.brand.split(",") };
+
+  const pagination = {};
   if (req.query._page && !req.query.brand && !req.query.category) {
-    const pageSize = 10;
     const page = req.query._page;
-    productQuery = productQuery.skip(pageSize * (page - 1)).limit(pageSize);
+    pagination.limit = 10;
+    pagination.skip = pagination.limit * (page - 1);
   }
-  const data = await productQuery.exec();
 
-  //Enable Vercel caching (1 day cache)
-  res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate");
+  const data = await Product.find(filter)
+    .sort(sort)
+    .skip(pagination.skip || 0)
+    .limit(pagination.limit || 0)
+    .exec();
 
   res.status(status.OK).json(data);
 });
@@ -118,5 +109,21 @@ exports.updateProduct = catchAsyncUtil.catchAsync(async (req, res) => {
   if (!data) {
     throw new apiUtil.ApiError(status.NOT_FOUND, "Product not found");
   }
+  res.status(status.OK).json(data);
+});
+
+/**
+ * Controller to get count of total products.
+ *
+ * @function
+ * @name getProductCount
+ * @memberof module:controller/product.controller.js
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} Responds with the total product count and status code 200 (OK)
+ * @throws {Error} Will forward any errors to the error-handling middleware
+ */
+exports.getProductCount = catchAsyncUtil.catchAsync(async (req, res) => {
+  const data = await Product.estimatedDocumentCount();
   res.status(status.OK).json(data);
 });

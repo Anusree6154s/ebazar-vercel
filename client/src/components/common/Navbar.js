@@ -1,21 +1,14 @@
-import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  MenuIcon,
-  ShoppingCartIcon,
-  XIcon,
-  HeartIcon,
-} from "@heroicons/react/outline";
-import { Link, useNavigate } from "react-router-dom";
+import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/outline";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import {
   selectItems,
   selectLoggedInUser,
-  selectWishList,
-  selectWishlistLengthIDB,
-  setWishlistlength,
+  selectWishListLength,
 } from "../../redux";
-import { getWishlistItemsCountIDB } from "../../indexedDB/wishlistDB";
+import MobileNavOptions from "./MobileNavOptions";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -24,9 +17,8 @@ function classNames(...classes) {
 export default function Navbar({ children, name, preview }) {
   const user = useSelector(selectLoggedInUser);
   const cartItems = useSelector(selectItems);
-  const wishlistItems = useSelector(selectWishList);
+  const wishlistLength = useSelector(selectWishListLength);
   const dispatch = useDispatch();
-  const wishlistItemsLengthIDB = useSelector(selectWishlistLengthIDB);
 
   const [dark, setDark] = useState(false);
   const [userNavigation, setUserNavigation] = useState(null);
@@ -55,17 +47,6 @@ export default function Navbar({ children, name, preview }) {
     } else {
       localStorage.setItem("color-theme", "light");
     }
-
-    const fetchWishlistItemsCountIDB = async () => {
-      try {
-        const numberOfWishlistItemsIDB = await getWishlistItemsCountIDB();
-        dispatch(setWishlistlength(numberOfWishlistItemsIDB));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchWishlistItemsCountIDB();
   }, [dispatch]);
 
   useEffect(() => {
@@ -158,10 +139,9 @@ export default function Navbar({ children, name, preview }) {
                       >
                         <span className="sr-only">View WishList</span>
                         <HeartIcon className="h-6 w-6" aria-hidden="true" />
-                        {(wishlistItems.length > 0 ||
-                          wishlistItemsLengthIDB > 0) && (
+                        {wishlistLength > 0 && (
                           <span className="absolute items-center rounded-md bg-pink-50 -mt-10 px-2 py-1 text-xs font-medium text-pink-500 ring-1 ring-inset ring-pink-600/10 ">
-                            {wishlistItems.length || wishlistItemsLengthIDB}
+                            {wishlistLength}
                           </span>
                         )}
                       </button>
@@ -246,91 +226,11 @@ export default function Navbar({ children, name, preview }) {
                   </div>
                 </div>
 
-                <div className="-mr-2 flex items-center gap-3 md:hidden">
-                  {/* Mobile menu button */}
-                  <button
-                    id="theme-toggle"
-                    onClick={handleTheme}
-                    type="button"
-                    className="flex items-center text-gray-500 dark:text-gray-400  hover:text-gray-100 dark:hover:text-gray-100 focus:outline-none focus:ring-4 focus:ring-transparent rounded-lg text-sm p-2.5 dark:border-gray-600"
-                  >
-                    {dark ? "Light Mode" : "Dark Mode"}
-                    <svg
-                      id="theme-toggle-dark-icon"
-                      className={`${dark ? "hidden" : ""}  w-5 h-5 ml-2`}
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                    </svg>
-                    <svg
-                      id="theme-toggle-light-icon"
-                      className={`${dark ? "" : "hidden"}  w-5 h-5 ml-2`}
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                  </button>
-
-                  {user && (
-                    <Link
-                      to="/wishlist"
-                      // className={user.role === "user" ? "" : "hidden"}
-                    >
-                      <button
-                        type="button"
-                        className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
-                      >
-                        <span className="sr-only">View WishList</span>
-                        <HeartIcon className="h-6 w-6" aria-hidden="true" />
-                        {(wishlistItems.length > 0 ||
-                          wishlistItemsLengthIDB > 0) && (
-                          <span className="absolute items-center rounded-md bg-pink-50 -mt-10 px-2 py-1 text-xs font-medium text-pink-500 ring-1 ring-inset ring-pink-600/10 ">
-                            {wishlistItems.length || wishlistItemsLengthIDB}
-                          </span>
-                        )}
-                      </button>
-                    </Link>
-                  )}
-
-                  <Link
-                    to={cartItems.length > 0 ? "/cart" : "#"}
-                    // className={user.role === "user" ? "" : "hidden"}
-                  >
-                    <button
-                      type="button"
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100 "
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View cart</span>
-                      <ShoppingCartIcon
-                        className="h-6 w-6"
-                        aria-hidden="true"
-                      />
-                      {cartItems.length > 0 && (
-                        <span className="absolute items-center rounded-md bg-blue-50 -mt-10 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10">
-                          {cartItems.length}
-                        </span>
-                      )}
-                    </button>
-                  </Link>
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                    <span className="absolute -inset-0.5" />
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div>
+                <MobileNavOptions
+                  handleTheme={handleTheme}
+                  dark={dark}
+                  open={open}
+                />
               </div>
             </div>
 
@@ -393,7 +293,6 @@ export default function Navbar({ children, name, preview }) {
       )}
       <main className="dark:bg-gray-900">
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 w-[90%]">
-          {/* Your content */}
           {children}
         </div>
       </main>

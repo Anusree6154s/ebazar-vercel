@@ -23,7 +23,7 @@ export default function ProductImages({ productImages }) {
 
       <ImageTransformer
         src={productImages[2]}
-        className=" sm:overflow-hidden sm:rounded-lg border-gray-300 border w-[calc(100%/3.4)] hidden lg:block"
+        className=" sm:overflow-hidden sm:rounded-lg border-gray-300 border lg:w-[calc(100%/3.4)] hidden h-auto aspect-[1/1] lg:block"
       />
     </>
   );

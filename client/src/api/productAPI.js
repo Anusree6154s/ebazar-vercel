@@ -39,15 +39,23 @@ export function fetchProductsByFilters(role, filter, sort, pagination) {
   return new Promise(async (resolve) => {
     const response = await fetch(
       BASE_URL + `/products?role=${role}&` + queryString,
-      { credentials: "include" }
+      {
+        credentials: "include",
+        headers: { "Accept-Encoding": "gzip, deflate" },
+      }
     );
     const data = await response.json();
-    const totalItemData = await fetch(
-      BASE_URL + `/products?role=${role}&_limit=1000`,
-      { credentials: "include" }
-    );
-    const total = await totalItemData.json();
-    resolve({ products: data, totalItems: total.length });
+    resolve({ products: data });
+  });
+}
+
+export function fetchProductCount() {
+  return new Promise(async (resolve) => {
+    const res = await fetch(BASE_URL + "/products/count", {
+      credentials: "include",
+    });
+    const productCount = await res.json();
+    resolve({ totalItems: productCount });
   });
 }
 
@@ -118,4 +126,3 @@ export function editProduct(product) {
     resolve(data);
   });
 }
-

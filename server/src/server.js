@@ -6,14 +6,26 @@ const path = require("path");
 const routes = require("./routes");
 const passport = require("passport");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const server = express();
 
+server.use(morgan("dev"));
 server.use(cors({ origin: "http://localhost:3000", credentials: true }));
 server.use(express.static(path.resolve(__dirname, "../..", "client/build")));
 
 server.use(cookieParser());
+
 server.use(express.json());
+
+server.use((req, res, next) => {
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("Keep-Alive", "timeout=5, max=100");
+
+  //Enable Vercel caching (1 day cache)
+  res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate");
+  next();
+});
 
 passport.use("local", localStrategy);
 passport.use("jwt", jwtStrategy);
@@ -26,4 +38,3 @@ server.get("*", (req, res) =>
 server.use(errorHandler);
 
 module.exports = server;
-

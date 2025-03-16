@@ -7,12 +7,14 @@ import {
   ProductGrid,
   Sort,
 } from "../../components";
-import { useFetchData, useFilters, usePagination } from "../../hooks";
+import { useFetchData, useFilters } from "../../hooks";
+import { useSelector } from "react-redux";
+import { selectPage } from "../../redux";
 
 function ProductListPage() {
   const [sort, setSort] = useState({});
   const { filter, filterFlag, handleFilter } = useFilters();
-  const { page, setPage } = usePagination();
+  const page = useSelector(selectPage);
   const { products, totalItems, brands, categories } = useFetchData(
     filter,
     sort,
@@ -70,14 +72,7 @@ function ProductListPage() {
               </div>
             </section>
 
-            {!filterFlag && (
-              <Pagination
-                handlePage={setPage}
-                page={page}
-                setPage={setPage}
-                totalItems={totalItems}
-              />
-            )}
+            {!filterFlag && <Pagination totalItems={totalItems} />}
           </main>
         </div>
       </div>

@@ -8,6 +8,7 @@ const brandSchema = new Schema({
 })
 
 modelsUtil.createVirtualID(brandSchema)
+brandSchema.index({ value: 1 });
 
 
 /**

@@ -55,7 +55,7 @@ export function MobileFilterDialog({
               </div>
 
               {/* Filters */}
-              <form className="mt-4 border-t border-gray-200 dark:border-gray-700">
+              <form className="mt-4 border-t border-gray-200 dark:border-gray-700 w-full">
                 {filters.map((section) => (
                   <Disclosure
                     as="div"

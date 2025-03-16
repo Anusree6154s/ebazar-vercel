@@ -29,6 +29,7 @@ function LoginPage() {
   
 
   if (user && user.role === "user") {
+    
     return <Navigate to="/" replace={true}/>;
   }
 

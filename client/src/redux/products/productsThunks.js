@@ -7,6 +7,7 @@ import {
   fetchCategories,
   createProduct,
   editProduct,
+  fetchProductCount,
 } from "../../api";
 
 export const fetchProductsAsync = createAsyncThunk(
@@ -58,6 +59,19 @@ export const fetchCategoriesAsync = createAsyncThunk(
         return response;
     } catch (error) {
         return rejectWithValue([])
+    }
+   
+  }
+);
+
+export const fetchProductCountAsync= createAsyncThunk(
+  "products/fetchProductCount",
+  async (_, {rejectWithValue}) => {
+    try {
+        const response = await fetchProductCount();
+        return response;
+    } catch (error) {
+        return rejectWithValue(null)
     }
    
   }

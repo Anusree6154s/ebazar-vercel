@@ -14,8 +14,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  /* transition: all 0.3s ease; */
   * {
-    transition: all 0.3s ease;
+    transition: width 0.3s ease, height 0.3s ease, max-width 0.3s ease,
+      max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease,
+      transform 0.3s ease, opacity 0.3s ease, border-width 0.3s ease,
+      box-shadow 0.3s ease, letter-spacing 0.3s ease, line-height 0.3s ease;
   }
 }
 

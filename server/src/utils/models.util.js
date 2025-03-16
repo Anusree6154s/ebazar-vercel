@@ -7,17 +7,19 @@
  * @returns {void}
  */
 function createVirtualID(schema) {
-    // Add a virtual 'id' property
-    schema.virtual('id').get(function () { this._id });
+  // Add a virtual 'id' property
+  schema.virtual("id").get(function () {
+    return this._id;
+  });
 
-    // Set virtual id to JSON response
-    schema.set('toJSON', {
-        virtuals: true,
-        versionKey: false,
-        transform: function (doc, ret) {
-            delete ret._id;
-        }
-    });
+  // Set virtual id to JSON response
+  schema.set("toJSON", {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      delete ret._id;
+    },
+  });
 }
 
-module.exports = { createVirtualID }
+module.exports = { createVirtualID };

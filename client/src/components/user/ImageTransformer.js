@@ -42,7 +42,7 @@ const ImageTransformer = ({
   }
 
   return (
-    <div className={`${className} relative`}>
+    <div className={`${className} h-full`}>
       {loadingState === "loading" && (
         <div className="h-full w-full object-cover object-center bg-gray-100 animate-pulse "></div>
       )}

@@ -1,8 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ITEMS_PER_PAGE } from "../../app/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPage, setPage } from "../../redux";
 
-export default function Pagination({ handlePage, page, totalItems }) {
+export default function Pagination({ totalItems }) {
+  const page = useSelector(selectPage);
+  const dispatch = useDispatch();
   const [pageBoundary, setPageBoundary] = useState({
     start: 1,
     end: 10,
@@ -15,7 +19,7 @@ export default function Pagination({ handlePage, page, totalItems }) {
     page * ITEMS_PER_PAGE > totalItems ? totalItems : page * ITEMS_PER_PAGE;
 
   const handlePrev = () => {
-    handlePage(page > 1 ? page - 1 : page);
+    dispatch(setPage(page > 1 ? page - 1 : page));
     if (page === pageBoundary.start && page !== 1)
       setPageBoundary({
         start: pageBoundary.start - 1,
@@ -25,7 +29,7 @@ export default function Pagination({ handlePage, page, totalItems }) {
   };
 
   const handleNext = () => {
-    handlePage(page < totalPages ? page + 1 : page);
+    dispatch(setPage(page < totalPages ? page + 1 : page));
     if (page === pageBoundary.end && page !== totalPages)
       setPageBoundary({
         start: pageBoundary.start + 1,
@@ -37,7 +41,7 @@ export default function Pagination({ handlePage, page, totalItems }) {
     <div className="flex items-center justify-between border-t border-gray-200 bg-white dark:border-transparent dark:bg-gray-800  pt-6 ">
       <div className="flex flex-1 justify-between sm:hidden">
         <button
-          onClick={(e) => handlePage(page > 1 ? page - 1 : page)}
+          onClick={(e) => dispatch(setPage(page > 1 ? page - 1 : page))}
           className={`relative inline-flex items-center rounded-md border border-gray-300   px-4 py-2 text-sm font-medium ${
             page - 1 < 1
               ? "bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 "
@@ -50,7 +54,9 @@ export default function Pagination({ handlePage, page, totalItems }) {
           Page {page}
         </p>
         <button
-          onClick={(e) => handlePage(page < totalPages ? page + 1 : page)}
+          onClick={(e) =>
+            dispatch(setPage(page < totalPages ? page + 1 : page))
+          }
           className={`relative inline-flex items-center rounded-md border border-gray-300   px-4 py-2 text-sm font-medium ${
             page + 1 > totalPages
               ? "bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 "
@@ -91,9 +97,11 @@ export default function Pagination({ handlePage, page, totalItems }) {
             {Array.from({ length: 10 }).map((items, index) => (
               <div
                 key={index}
-                onClick={() => handlePage(index + 1 + pageBoundary.index)}
+                onClick={() =>
+                  dispatch(setPage(index + 1 + pageBoundary.index))
+                }
                 aria-current="page"
-                className={`relative z-10 inline-flex items-center dark:border-gray-500 ${
+                className={`w-10 justify-center relative z-10 inline-flex items-center dark:border-gray-500 ${
                   index + 1 + pageBoundary.index === page
                     ? "bg-customBlue dark:bg-blue-500 text-white"
                     : "text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-gray-100 "

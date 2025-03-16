@@ -33,6 +33,6 @@ exports.createCategory = catchAsyncUtil.catchAsync(async (req, res) => {
  * @throws {Error} Will forward any errors to the error-handling middleware
  */
 exports.fetchCategories = catchAsyncUtil.catchAsync(async (req, res) => {
-    const data = await Category.find().exec();
+    const data = await Category.find();
     res.status(status.OK).json(data);
 });

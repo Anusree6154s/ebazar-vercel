@@ -1,15 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addToWishListAsync,
   fetchBrandsAsync,
   fetchCategoriesAsync,
+  fetchProductCountAsync,
   fetchProductsByFiltersAsync,
   selectAllBrands,
   selectAllCategories,
   selectAllProducts,
   selectLoggedInUser,
   selectTotalItems,
+  selectWishList,
+  setWishlistItemsIDB,
 } from "../redux";
+import {
+  clearWishlistIDB,
+  getWishlistItemsCountIDB,
+  getWishlistItemsIDB,
+  removeFromWishlistIDB,
+} from "../indexedDB/wishlistDB";
 
 export const useFetchData = (filter, sort, page) => {
   const dispatch = useDispatch();
@@ -18,6 +28,7 @@ export const useFetchData = (filter, sort, page) => {
   const totalItems = useSelector(selectTotalItems);
   const brandsUnsorted = useSelector(selectAllBrands);
   const categoriesUnsorted = useSelector(selectAllCategories);
+  const wishlistItems = useSelector(selectWishList);
 
   const brands = [...brandsUnsorted].sort((a, b) =>
     a.label.localeCompare(b.label)
@@ -29,7 +40,37 @@ export const useFetchData = (filter, sort, page) => {
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoriesAsync());
+    dispatch(fetchProductCountAsync());
   }, [dispatch]);
+  console.log("user in useFetchData", user);
+
+  useEffect(() => {
+    if (user?.role === "user") {
+      const fetchWishlistItemsIDB = async () => {
+        try {
+          const wishlistItemsIDB = await getWishlistItemsIDB();
+          return wishlistItemsIDB;
+        } catch (error) {
+          console.error("Error fetching IDB wishlist length: ", error);
+        }
+      };
+
+      const StoreIDBWishlistToDB = async () => {
+        const wishlistItemsIDB = await fetchWishlistItemsIDB();
+        if (wishlistItemsIDB.length > 0) {
+          wishlistItemsIDB.forEach((item) =>
+            dispatch(addToWishListAsync(item))
+          );
+          // const totalWishlistItems = [...wishlistItems, ...wishlistItemsIDB];
+          // dispatch(setWishlistItemsIDB(totalWishlistItems));
+          await clearWishlistIDB();
+        }
+      };
+
+      StoreIDBWishlistToDB();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const pagination = { _page: page };

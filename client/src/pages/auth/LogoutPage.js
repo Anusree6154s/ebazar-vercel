@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { selectLoggedInUser, signOutsAsync } from "../../redux";
 
-function Logout() {
+function LogoutPage() {
     const user = useSelector(selectLoggedInUser)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -12,9 +12,9 @@ function Logout() {
 
     return (
         <>
-            {!user && <Navigate to='/login' replace={true}></Navigate>}
+            {!user && <Navigate to='/' replace={true}/>}
         </>
     );
 }
 
-export default Logout;
+export default LogoutPage;

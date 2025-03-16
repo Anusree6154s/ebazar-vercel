@@ -4,3 +4,4 @@ export const selectAllBrands = (state) => state.product.brands;
 export const selectAllCategories = (state) => state.product.categories;
 export const selectProductById = (state) => state.product.selectedProduct;
 export const selectNewProduct = (state) => state.product.newProduct;
+export const selectPage = (state) => state.product.page;

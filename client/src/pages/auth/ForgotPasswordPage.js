@@ -20,9 +20,9 @@ import {
   selectUserId,
   sendOTPAsync,
 } from "../../redux";
-import Loader from "../common/Loader";
+import Loader from "../../components/common/Loader";
 
-function ForgotPassword() {
+function ForgotPasswordPage() {
   const otp_sent_status = useSelector(selectOTPSentStatus);
   const password_reset_status = useSelector(selectPasswordResetStatus);
   const auth_status = useSelector(selectAuthStatus);
@@ -374,4 +374,4 @@ const Form3 = ({
     </div>
   );
 };
-export default ForgotPassword;
+export default ForgotPasswordPage;

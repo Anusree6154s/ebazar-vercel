@@ -7,6 +7,7 @@ import {
   fetchCategoriesAsync,
   createProductAsync,
   editProductAsync,
+  fetchProductCountAsync,
 } from "./productsThunks";
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   selectedProduct: null,
   newProduct: null,
   status: "idle",
+  page: 1,
 };
 
 export const productsSlice = createSlice({
@@ -28,6 +30,9 @@ export const productsSlice = createSlice({
     },
     resetNewProduct(state) {
       state.newProduct = null;
+    },
+    setPage(state, action) {
+      state.page = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -52,7 +57,6 @@ export const productsSlice = createSlice({
       .addCase(fetchProductsByFiltersAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.products = action.payload.products;
-        state.totalItems = action.payload.totalItems;
       })
       .addCase(fetchBrandsAsync.pending, (state) => {
         state.status = "loading";
@@ -86,9 +90,16 @@ export const productsSlice = createSlice({
         );
         state.products.splice(index, 1, action.payload);
         state.newProduct = action.payload;
+      })
+      .addCase(fetchProductCountAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProductCountAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.totalItems = action.payload.totalItems;
       });
   },
 });
 
 export default productsSlice.reducer;
-export const { clearSelectedProduct, resetNewProduct } = productsSlice.actions;
+export const { clearSelectedProduct, resetNewProduct, setPage } = productsSlice.actions;

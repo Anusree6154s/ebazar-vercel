@@ -1,6 +1,6 @@
 export const DB_NAME = "EbazarDB";
 export const CART_STORE_NAME = "cart";
-export const WISHLIST_STORE_NAME = "cart";
+export const WISHLIST_STORE_NAME = "wishlist";
 export const DB_VERSION = 1;
 
 //open or create cart indexedDB
