@@ -2,14 +2,14 @@ import { enqueueSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCartAsync,
-  selectItems,
+  selectCartItems,
   selectLoggedInUser,
   updateCartAsync,
-} from "../redux";
+} from "../../redux";
 
 export const useHandleAdd = ({ quantity, product }) => {
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectItems);
+  const cartItems = useSelector(selectCartItems);
   const user = useSelector(selectLoggedInUser);
 
   const handleAdd = () => {

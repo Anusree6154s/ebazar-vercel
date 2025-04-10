@@ -233,6 +233,17 @@ npm test
 - **Lazy Loading and Caching:** Use lazy loading for images and API response caching to improve page load times and performance.
 - **Automated Testing:** Set up automated tests for front-end and back-end components to ensure application reliability and reduce bugs.
 
+## Todo
+- [x] modularise files
+- [ ] setup add to cart before login
+  - [ ] store logged out user data in indexed db
+  - [ ] upon log in transfar any indexeddb data to cart. clear indexed db
+- [ ] add advanced mongodb queries and optimisation
+- [ ] ask gpt what else to add
+- [ ] add a welcome banner
+- [ ] sort button not working
+- [ ] 
+
 
 <p align="center"> 
  <img width="0" id="image" src="https://github.com/user-attachments/assets/7558c916-e7df-4c9d-aa39-92d3e48f8f2d" >

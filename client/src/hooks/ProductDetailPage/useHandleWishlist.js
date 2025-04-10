@@ -4,9 +4,9 @@ import {
   addToWishListAsync,
   selectLoggedInUser,
   selectWishList,
-} from "../redux";
+} from "../../redux";
 
-export const  useHandleWishlist=({ product })=> {
+export const useHandleWishlist = ({ product }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
   const wishList = useSelector(selectWishList);
@@ -15,6 +15,7 @@ export const  useHandleWishlist=({ product })=> {
     const productExistsInWishlist = wishList.some(
       (item) => item.product.title === product.title
     );
+    console.log(product.id);
 
     if (productExistsInWishlist) {
       enqueueSnackbar("Already in Wishlist!", { variant: "AlreadyInWishlist" });
@@ -25,4 +26,4 @@ export const  useHandleWishlist=({ product })=> {
   };
 
   return { handleWishList };
-}
+};

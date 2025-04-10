@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToCartAsync, selectLoggedInUser } from "../redux";
+import { addToCartAsync, selectLoggedInUser } from "../../redux";
 
 export const useHandleBuy = ({ quantity, product }) => {
   const dispatch = useDispatch();

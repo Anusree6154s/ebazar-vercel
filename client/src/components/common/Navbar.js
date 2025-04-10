@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  selectItems,
+  selectCartItems,
   selectLoggedInUser,
   selectWishListLength,
 } from "../../redux";
@@ -16,7 +16,7 @@ function classNames(...classes) {
 
 export default function Navbar({ children, name, preview }) {
   const user = useSelector(selectLoggedInUser);
-  const cartItems = useSelector(selectItems);
+  const cartItems = useSelector(selectCartItems);
   const wishlistLength = useSelector(selectWishListLength);
   const dispatch = useDispatch();
 

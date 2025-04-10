@@ -11,7 +11,7 @@ console.log('Connecting to mongoose DB..')
 mongoose.connect(mongoURI).then(async () => {
     console.log('Connected to MongoDB URI: ' + mongoURI)
     server.listen(serverURL, () => {
-        console.log('Server running on port ' + serverURL)
+        console.log(`Server running on http://localhost:${serverURL}`)
     })
 }).catch((error) => console.log('Mongoose error:', error))
 

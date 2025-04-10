@@ -10,6 +10,7 @@ export function addToWishList(item) {
       credentials: 'include',
     });
     const data = await response.json();
+    console.log('wishlist api data', data)
     resolve({ data });
   });
 }
@@ -17,6 +18,7 @@ export function fetchWishListByUserId() {
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + '/wishlist', { credentials: 'include', })
     const data = await response.json()
+    console.log('wishlit data', data)
     resolve({ data })
   });
 }

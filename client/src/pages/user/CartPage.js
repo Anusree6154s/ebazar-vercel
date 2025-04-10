@@ -4,11 +4,11 @@ import BackButton from "../../components/common/BackButton";
 import CartItem from "../../components/user/CartPage/CartItem";
 import {
     selectCartStatus,
-    selectItems
+    selectCartItems
 } from "../../redux";
 
 function CartPage() {
-  const items = useSelector(selectItems);
+  const items = useSelector(selectCartItems);
   const status = useSelector(selectCartStatus);
   const navigate = useNavigate();
 

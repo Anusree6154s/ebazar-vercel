@@ -28,7 +28,6 @@ export const useFetchData = (filter, sort, page) => {
   const totalItems = useSelector(selectTotalItems);
   const brandsUnsorted = useSelector(selectAllBrands);
   const categoriesUnsorted = useSelector(selectAllCategories);
-  const wishlistItems = useSelector(selectWishList);
 
   const brands = [...brandsUnsorted].sort((a, b) =>
     a.label.localeCompare(b.label)
@@ -42,7 +41,7 @@ export const useFetchData = (filter, sort, page) => {
     dispatch(fetchCategoriesAsync());
     dispatch(fetchProductCountAsync());
   }, [dispatch]);
-  console.log("user in useFetchData", user);
+  // console.log("user in useFetchData", user);
 
   useEffect(() => {
     if (user?.role === "user") {
@@ -61,8 +60,6 @@ export const useFetchData = (filter, sort, page) => {
           wishlistItemsIDB.forEach((item) =>
             dispatch(addToWishListAsync(item))
           );
-          // const totalWishlistItems = [...wishlistItems, ...wishlistItemsIDB];
-          // dispatch(setWishlistItemsIDB(totalWishlistItems));
           await clearWishlistIDB();
         }
       };

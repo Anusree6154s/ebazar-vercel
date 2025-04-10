@@ -1,7 +1,7 @@
 import { getTransaction, CART_STORE_NAME } from ".";
 
 // add/update items to cart
-export const addToCart = async (item) => {
+export const addToCartIDB = async (item) => {
   try {
     const store = await getTransaction(CART_STORE_NAME, "readwrite");
     return new Promise((resolve, reject) => {
@@ -31,7 +31,7 @@ export async function getCartItems() {
 }
 
 // Remove an item from the cart
-export async function removeFromCart(itemId) {
+export async function removeFromCartIDB(itemId) {
   try {
     const store = await getTransaction(CART_STORE_NAME, "readwrite");
     return new Promise((resolve, reject) => {
@@ -57,6 +57,22 @@ export async function clearCart() {
     });
   } catch (error) {
     console.error("Error clearing cart:", error);
+    throw error;
+  }
+}
+
+export async function existsInCartIDB(productId) {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readonly");
+    return new Promise((resolve, reject) => {
+      const request = store.get(productId);
+      request.onsuccess = () => resolve(!!request.result);
+      // If product exists, return true; otherwise, false
+      request.onerror = () =>
+        reject("Failed to check exitence of product in wishlist");
+    });
+  } catch (error) {
+    console.error("Error check exitence of product in wishlist:", error);
     throw error;
   }
 }

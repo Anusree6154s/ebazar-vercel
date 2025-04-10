@@ -8,14 +8,14 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  selectItems,
+  selectCartItems,
   selectLoggedInUser,
   selectWishListLength,
 } from "../../redux";
 
 export default function MobileNavOptions({ handleTheme, dark, open }) {
   const user = useSelector(selectLoggedInUser);
-  const cartItems = useSelector(selectItems);
+  const cartItems = useSelector(selectCartItems);
   const wishlistItemsLength = useSelector(selectWishListLength);
 
   return (

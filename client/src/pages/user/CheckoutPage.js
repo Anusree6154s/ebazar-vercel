@@ -8,7 +8,7 @@ import {
   deleteItemFromCartAsync,
   resetCartAsync,
   selectCurrentOrder,
-  selectItems,
+  selectCartItems,
   selectLoggedInUser,
   updateCartAsync,
   updateUserAsync,
@@ -24,7 +24,7 @@ function CheckoutPage() {
   } = useForm({ mode: "onChange" });
 
   const dispatch = useDispatch();
-  const items = useSelector(selectItems);
+  const items = useSelector(selectCartItems);
   const user = useSelector(selectLoggedInUser);
   const currentOrder = useSelector(selectCurrentOrder);
   const addressRef = useRef();
