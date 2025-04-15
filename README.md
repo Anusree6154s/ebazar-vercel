@@ -234,15 +234,19 @@ npm test
 - **Automated Testing:** Set up automated tests for front-end and back-end components to ensure application reliability and reduce bugs.
 
 ## Todo
-- [x] modularise files
+- [ ] modularise files
 - [ ] setup add to cart before login
   - [ ] store logged out user data in indexed db
   - [ ] upon log in transfar any indexeddb data to cart. clear indexed db
+- [ ] setup add to wishlist before login
+  - [ ] store logged out user data in indexed db
+  - [ ] upon log in transfar any indexeddb data to wishlist. clear indexed db
 - [ ] add advanced mongodb queries and optimisation
 - [ ] ask gpt what else to add
 - [ ] add a welcome banner
 - [ ] sort button not working
-- [ ] 
+- [ ] fix the naimation on the outline of the prodict cards while changing theme
+- [ ] providing your own ErrorBoundary or errorElement prop on your route.
 
 
 <p align="center"> 
