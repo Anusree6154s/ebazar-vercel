@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   BackButton,
   BreadCrumb,
@@ -9,33 +8,15 @@ import {
   ProductInfoDesktop,
   ProductInfoMobile,
 } from "../../components";
+import AdminProductDetailUpdateButtons from "../../components/admin/AdminProductDetailUpdateButtons";
+import useAdminProductDetailHandler from "../../hooks/Admin/useAdminProductDetailHandler";
 import {
-  editProductAsync,
-  fetchProductByIdAsync,
-  resetNewProduct,
-  selectProductById,
+  selectProductById
 } from "../../redux";
 
 function AdminProductDetailPage() {
-  const dispatch = useDispatch();
   const product = useSelector(selectProductById);
-  const params = useParams();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(fetchProductByIdAsync(params.id));
-  }, [dispatch, params.id]);
-
-  useEffect(() => {
-    dispatch(resetNewProduct());
-  }, [dispatch]);
-
-  const handleDelete = useCallback(async () => {
-    const oldProduct = { ...product };
-    oldProduct.deleted = true;
-    await dispatch(editProductAsync(oldProduct));
-    navigate("/admin");
-  }, [dispatch, navigate, product]);
+  const { handleDelete } = useAdminProductDetailHandler({ product });
 
   if (!product) return <Loader />;
 
@@ -43,24 +24,10 @@ function AdminProductDetailPage() {
     <section id="product-detail">
       <div className="flex items-center justify-between mb-2 ">
         <BackButton />
-        <div>
-          <button
-            className="p-2 block items-center rounded-md h-10 bg-customBlue dark:bg-blue-500 text-sm font-medium text-white bg-opacity-90 hover:bg-opactiy-100 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-customBlue dark:focus:ring-blue-600 focus:ring-offset-2"
-            onClick={() =>
-              navigate(
-                `/admin/edit-product-form/${product.id}?path=productPage`
-              )
-            }
-          >
-            Edit
-          </button>
-          <button
-            onClick={handleDelete}
-            className="p-2 ml-2 rounded-md h-10 bg-red-500 dark:bg-red-800  text-sm font-medium text-white bg-opacity-90 hover:bg-opactiy-100 dark:hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-customBlue dark:focus:ring-red-800 focus:ring-offset-2 "
-          >
-            Delete
-          </button>
-        </div>
+        <AdminProductDetailUpdateButtons
+          product={product}
+          handleDelete={handleDelete}
+        />
       </div>
 
       <div className="bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 rounded-md">

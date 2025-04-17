@@ -1,4 +1,3 @@
-export { default as AdminProductDetail } from "./admin/AdminProductDetail";
 export { default as AdminProductGrid } from "./admin/AdminProductGrid";
 export { default as Protected } from "./auth/Protected";
 export { default as BackButton } from "./common/BackButton";
