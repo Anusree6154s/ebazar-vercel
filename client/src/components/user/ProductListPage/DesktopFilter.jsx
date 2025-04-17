@@ -1,14 +1,12 @@
 import { Disclosure } from "@headlessui/react";
-import {
-    MinusIcon,
-    PlusIcon
-} from "@heroicons/react/solid";
+import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
 import React from "react";
+import { AdminProductFilers } from "../../../config/admin-product-filter";
 
-export function DesktopFilter({ filters, handleFilter, filter }) {
+export function DesktopFilter({  handleFilter, filter }) {
   return (
     <form className="hidden lg:block">
-      {filters.map((section) => (
+      {AdminProductFilers().map((section) => (
         <Disclosure
           as="div"
           key={section.id}

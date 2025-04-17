@@ -2,12 +2,12 @@ import { Dialog, Disclosure, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { FilterIcon, MinusIcon, PlusIcon } from "@heroicons/react/solid";
 import React, { Fragment } from "react";
+import { AdminProductFilers } from "../../../config/admin-product-filter";
 
 export function MobileFilterDialog({
   mobileFiltersOpen,
   setMobileFiltersOpen,
   handleFilter,
-  filters,
   filter,
 }) {
   return (
@@ -56,7 +56,7 @@ export function MobileFilterDialog({
 
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200 dark:border-gray-700 w-full">
-                {filters.map((section) => (
+                {AdminProductFilers().map((section) => (
                   <Disclosure
                     as="div"
                     key={section.id}
