@@ -8,7 +8,8 @@
     "build": "npm i && cd ../client && npm run build",
     "start": "node src/index",
     "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
-    "test:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --detectOpenHandles"
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --detectOpenHandles",
+    "test:debug": "node --inspect ./node_modules/jest/bin/jest.js --runInBand"
   },
   "jest": {
     "testPathIgnorePatterns": [
