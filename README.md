@@ -247,6 +247,8 @@ npm test
 - [ ] sort button not working
 - [ ] fix the naimation on the outline of the prodict cards while changing theme
 - [ ] providing your own ErrorBoundary or errorElement prop on your route.
+- [ ] provide error handling for all forms
+- [ ] erro boundary or error element prop
 
 
 <p align="center"> 
