@@ -1,9 +1,8 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { deleteItemFromCartAsync, updateCartAsync } from "../../../redux";
 
 export default function CheckoutPageCartList({ item }) {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const handleQuantity = (e, item) => {
     dispatch(
       updateCartAsync({
@@ -67,3 +66,4 @@ export default function CheckoutPageCartList({ item }) {
     </li>
   );
 }
+

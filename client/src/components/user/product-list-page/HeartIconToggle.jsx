@@ -1,5 +1,5 @@
-import { HeartIcon } from "@heroicons/react/outline";
-import { HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
+import { HeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import useWishlist from "../../../hooks/product-list-page/useWishlist";
 
 export default function HeartIconToggle({ product, user }) {

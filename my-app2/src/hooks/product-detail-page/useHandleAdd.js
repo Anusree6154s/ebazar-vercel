@@ -44,4 +44,4 @@ export default function useHandleAdd({ quantity, product }) {
   };
 
   return { handleAdd };
-};
+}

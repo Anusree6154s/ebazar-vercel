@@ -1,9 +1,9 @@
 import { Disclosure } from "@headlessui/react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { AdminProductFilers } from "../../../config";
 
-export function DesktopFilter({ handleFilter, filter }) {
+export default function DesktopFilter({ handleFilter, filter }) {
   return (
     <form className="hidden lg:block">
       {AdminProductFilers().map((section) => (

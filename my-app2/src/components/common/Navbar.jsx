@@ -1,5 +1,4 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/outline";
+import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +7,7 @@ import {
   selectLoggedInUser,
   selectWishListLength,
 } from "../../redux";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
 import MobileNavOptions from "./MobileNavOptions";
 
 function classNames(...classes) {
@@ -299,3 +299,4 @@ export default function Navbar({ children, name, preview }) {
     </div>
   );
 }
+

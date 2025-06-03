@@ -1,5 +1,4 @@
-import React from "react";
-import BackButton from "../../components/common/BackButton";
+import { BackButton } from "../../components";
 import WishListProductGrid from "../../components/user/WishListProductGrid";
 
 

@@ -1,28 +1,30 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "./RootLayout";
+import NavbarLayout from "./NavbarLayout";
+import ProtectedLayout from "./ProtectedLayout";
 import {
-  AddProductFormPage,
-  AdminOrdersPage,
-  AdminProductDetailPage,
-  AdminProductListPage,
-  AdminProfilePage,
+  ErrorFallbackPage,
+  ProductListPage,
+  WishListPage,
   CartPage,
   CheckoutPage,
-  EditProductFormPage,
-  ErrorFallbackPage,
-  ForgotPasswordPage,
-  LoginPage,
-  LogoutPage,
   NotFoundPage,
-  OrderSuccessPage,
-  ProductDetailPage,
-  ProductListPage,
+  LoginPage,
   SignupPage,
-  StripePaymentPage,
+  LogoutPage,
+  ForgotPasswordPage,
+  OrderSuccessPage,
   UserOrdersPage,
   UserProfilePage,
-  WishListPage,
+  AdminProductDetailPage,
+  AddProductFormPage,
+  EditProductFormPage,
+  AdminOrdersPage,
+  AdminProfilePage,
+  StripePaymentPage,
+  AdminProductListPage,
+  ProductDetailPage,
 } from "../pages";
-import RootLayout from "./RootLayout";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +41,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "product-detail/:id",
-            element: <ProductDetailPage />,
+            element: <ProductDetailPage  />,
           },
           {
             path: "wishlist",

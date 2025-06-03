@@ -1,18 +1,15 @@
-import React from "react";
 import { useSelector } from "react-redux";
+import { selectProductById } from "../../redux";
+import Loader from "../../components/common/Loader";
+import { useAdminProductDetailHandler } from "../../hooks";
 import {
+  AdminProductDetailUpdateButtons,
   BackButton,
   BreadCrumb,
-  Loader,
   ProductImages,
   ProductInfoDesktop,
   ProductInfoMobile,
 } from "../../components";
-import AdminProductDetailUpdateButtons from "../../components/admin/AdminProductDetailUpdateButtons";
-import useAdminProductDetailHandler from "../../hooks/Admin/useAdminProductDetailHandler";
-import {
-  selectProductById
-} from "../../redux";
 
 function AdminProductDetailPage() {
   const product = useSelector(selectProductById);

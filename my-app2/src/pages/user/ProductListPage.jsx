@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useFetchData, useFilters } from "../../hooks";
+import { selectPage } from "../../redux";
 import {
   DesktopFilter,
   MobileFilterButton,
@@ -7,9 +10,6 @@ import {
   ProductGrid,
   Sort,
 } from "../../components";
-import { useFetchData, useFilters } from "../../hooks";
-import { useSelector } from "react-redux";
-import { selectPage } from "../../redux";
 
 function ProductListPage() {
   const [sort, setSort] = useState({});

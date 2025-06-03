@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { selectAllProducts } from "../../redux";
+import { useAdminProductListHandler } from "../../hooks";
 import {
+  Sort,
   AdminProductGrid,
   DesktopFilter,
   MobileFilterButton,
   MobileFilterDialog,
   Pagination,
-  Sort,
 } from "../../components";
-import useAdminProductListHandler from "../../hooks/Admin/useAdminProductListHandler";
-import {
-  selectAllProducts
-} from "../../redux";
 
 function AdminProductListPage() {
   const products = useSelector(selectAllProducts);

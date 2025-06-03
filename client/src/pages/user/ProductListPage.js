@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   DesktopFilter,
   MobileFilterButton,
@@ -8,7 +9,6 @@ import {
   Sort,
 } from "../../components";
 import { useFetchData, useFilters } from "../../hooks";
-import { useSelector } from "react-redux";
 import { selectPage } from "../../redux";
 
 function ProductListPage() {
@@ -71,6 +71,7 @@ function ProductListPage() {
                 <ProductGrid products={products} />
               </div>
             </section>
+            
 
             {!filterFlag && <Pagination totalItems={totalItems} />}
           </main>

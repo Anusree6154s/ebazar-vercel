@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "../../common/Loader";
 import ProductCard from "./ProductCard";
 
-export function ProductGrid({ products }) {
+export default function ProductGrid({ products }) {
   if (!products)
     return (
       <div className="flex col-span-3 h-fit justify-center">

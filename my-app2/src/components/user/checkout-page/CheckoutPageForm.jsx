@@ -2,13 +2,10 @@ import { forwardRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { useCheckoutPageForm } from "../../../hooks";
 
-const CheckoutPageForm = ({
-  addressRef,
-  user,
-  selectedAddress,
-  setSelectedAddress,
-  setpaymentMethod,
-}, ref) => {
+const CheckoutPageForm = (
+  { addressRef, user, selectedAddress, setSelectedAddress, setpaymentMethod },
+  ref
+) => {
   const { handleSubmit, register } = useFormContext();
   const { submitHandler, handleAddress, handlePayment } = useCheckoutPageForm(
     setSelectedAddress,
@@ -194,114 +191,20 @@ const CheckoutPageForm = ({
         </div>
 
         <div className="mt-10 space-y-10">
-          {user.addresses.length !== 0 && (
-            <fieldset>
-              <legend className="text-lg font-semibold leading-7 text-gray-900 dark:text-gray-300">
-                Address
-              </legend>
-              <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
-                Choose from existing addresses
-              </p>
-              <div className="mt-6 space-y-6">
-                <ul key="0" className="flex flex-col gap-2">
-                  {user.addresses.map((address, index) => (
-                    <li
-                      key={index}
-                      className=" flex justify-between items-baseline border px-5 group cursor-pointer"
-                      onClick={() => handleAddress(address)}
-                    >
-                      <div className=" flex items-baseline gap-5 ">
-                        <input
-                          type="radio"
-                          name="address"
-                          checked={
-                            JSON.stringify(address) ===
-                            JSON.stringify(selectedAddress)
-                          }
-                          value={JSON.stringify(address)}
-                          className="border-gray-300 dark:border-gray-600 text-customBlue focus:ring-customBlue dark:bg-gray-800 dark:hover:bg-blue-600 dark:text-blue-500 dark:focus:ring-blue-600"
-                        />
-                        <label
-                          htmlFor=""
-                          className="flex justify-between gap-x-6 py-5  cursor-pointer"
-                        >
-                          <div className="flex min-w-0 gap-x-4">
-                            <div className="min-w-0 flex-auto">
-                              <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-300">
-                                {address.name}
-                              </p>
-                              <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
-                                {address.street}
-                              </p>
-                              <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
-                                {address.city}
-                              </p>
-                              <p className="mt-1 truncate text-xs leading-5 text-gray-500 dark:text-gray-400">
-                                {address.pincode}
-                              </p>
-                            </div>
-                          </div>
-                        </label>
-                      </div>
-
-                      <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                        <p className="text-sm leading-6 text-gray-900 dark:text-gray-300">
-                          {address.phone}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </fieldset>
-          )}
-          <fieldset>
-            <legend className=" font-semibold leading-7 text-gray-900 dark:text-gray-300 text-lg">
-              Payment
-            </legend>
-            <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400">
-              Choose One
-            </p>
-            <div className="mt-6 space-y-6">
-              <div className="flex items-center gap-x-3">
-                <input
-                  onChange={(e) => handlePayment(e)}
-                  defaultChecked="true"
-                  value="cash"
-                  id="cash"
-                  name="payment"
-                  type="radio"
-                  className="h-4 w-4 border-gray-300 dark:border-gray-600 text-customBlue focus:ring-customBlue dark:bg-gray-800 dark:hover:bg-blue-600 dark:text-blue-500 dark:focus:ring-blue-600"
-                />
-                <label
-                  htmlFor="push-everything"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
-                >
-                  Cash
-                </label>
-              </div>
-              <div className="flex items-center gap-x-3">
-                <input
-                  onChange={(e) => handlePayment(e)}
-                  value="card"
-                  id="card-payment"
-                  name="payment"
-                  type="radio"
-                  className="h-4 w-4 border-gray-300 dark:border-gray-600 text-customBlue focus:ring-customBlue dark:bg-gray-800 dark:hover:bg-blue-600 dark:text-blue-500 dark:focus:ring-blue-600"
-                />
-                <label
-                  htmlFor="push-email"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
-                >
-                  Card Payment
-                </label>
-              </div>
-            </div>
-          </fieldset>
+          <SelectAddressFormSection
+            user={user}
+            handleAddress={handleAddress}
+            selectedAddress={selectedAddress}
+          />
+          <SelectPaymentFormSection handlePayment={handlePayment} />
         </div>
       </div>
     </form>
   );
-}
+};
 
-export default forwardRef(CheckoutPageForm)
+export default forwardRef(CheckoutPageForm);
+
+import SelectAddressFormSection from "./SelectAddressForm";
+import SelectPaymentFormSection from "./SelectPaymentForm";
+

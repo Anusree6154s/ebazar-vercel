@@ -1,5 +1,4 @@
-import { StarIcon } from "@heroicons/react/solid";
-import React from "react";
+import { StarIcon } from "@heroicons/react/24/outline";
 import ProductButton from "./ProductButton";
 
 const highlights = [

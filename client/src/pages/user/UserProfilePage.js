@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { PencilIcon } from "@heroicons/react/solid";
+import { PencilIcon } from "@heroicons/react/24/solid";
 import { selectLoggedInUser, updateUserAsync } from "../../redux";
 import { BackButton, Loader } from "../../components";
 
@@ -83,9 +83,12 @@ function UserProfilePage() {
     }
   };
 
-  if (!user) return <div className="loader-wrapper">
-    <Loader />
-  </div>
+  if (!user)
+    return (
+      <div className="loader-wrapper">
+        <Loader />
+      </div>
+    );
 
   return (
     <section>
@@ -482,9 +485,7 @@ function UserProfilePage() {
                             handleEdit(data, index);
                             setVisibilityIndex(null);
                           })}
-                          className={
-                            visibilityIndex !== index ? "hidden" : ""
-                          }
+                          className={visibilityIndex !== index ? "hidden" : ""}
                         >
                           <div className="pt-6 border-b border-t border-gray-900/10 pb-12  grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-4">

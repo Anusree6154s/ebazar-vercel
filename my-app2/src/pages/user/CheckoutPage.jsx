@@ -2,9 +2,6 @@ import { useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { BackButton } from "../../components";
-import CheckoutPageCartList from "../../components/user/checkout-page/CheckoutPageCartList";
-import CheckoutPageForm from "../../components/user/checkout-page/CheckoutPageForm";
 import useCheckoutPage from "../../hooks/user/useCheckoutPage";
 import {
   selectCartItems,
@@ -14,6 +11,8 @@ import {
 import { getFormattedDate } from "../../util/format-date";
 import { getTotalCartItemsCount } from "../../util/total-cart-items";
 import { getTotalCartItemsPrice } from "../../util/total-cart-items-price";
+import { BackButton, CheckoutPageCartList, CheckoutPageForm } from "../../components";
+
 
 function CheckoutPage() {
   const methods = useForm({ mode: "onChange" });
@@ -66,6 +65,7 @@ function CheckoutPage() {
     <>
       <BackButton />
 
+
       {user && (
         <div className=" grid gap-10 max-w-7xl  lg:grid-cols-5">
           <div className="lg:col-span-3 px-4 py-6 sm:px-6 lg:px-8 bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900">
@@ -88,9 +88,9 @@ function CheckoutPage() {
                     key="1"
                     className="-my-6 divide-y divide-gray-200 dark:divide-gray-500"
                   >
-                    {items.map(item =>
-                      <CheckoutPageCartList item={item} />
-                    )}
+                    {items.map((item) => (
+                      <CheckoutPageCartList item={item} key={item.id} />
+                    ))}
                   </ul>
                 </div>
 

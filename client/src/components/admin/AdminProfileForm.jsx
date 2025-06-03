@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import useAddProfileForm from "../../hooks";
+import { useAddProfileForm } from "../../hooks";
 
 export default function AdminProfileForm({
   user,
@@ -208,13 +208,13 @@ export default function AdminProfileForm({
         <button
           type="button"
           onClick={() => setaddFormVisibility(!addFormVisibility)}
-          className="rounded-md border px-3 py-2 text-sm font-semibold dark:text-gray-100 dark:bg-gray-800 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+          className="rounded-md border px-3 py-2 text-sm font-semibold dark:text-gray-100 dark:bg-gray-800 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-gray-600"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue"
+          className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-customBlue"
         >
           Save
         </button>

@@ -3,7 +3,6 @@ import { addFormSections, FormFieldElementOptions } from "../../config";
 import { useAddProductForm } from "../../hooks";
 import FormField from "./FormField";
 
-
 export default function AddProductForm() {
   const methods = useForm();
   const { handleSubmit: remmy, reset } = methods;
@@ -39,7 +38,7 @@ export default function AddProductForm() {
 
           <button
             type="submit"
-            className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-90 hover:bg-opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue dark:focus-visible:outline-blue-500"
+            className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-90 hover:bg-opacity-100 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-customBlue dark:focus-visible:outline-blue-500"
           >
             Save
           </button>

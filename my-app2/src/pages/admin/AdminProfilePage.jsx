@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Loader } from "../../components";
-import AdminProfileCard from "../../components/admin/AdminProfileCard";
-import AdminProfileForm from "../../components/admin/AdminProfileForm";
-import BackButton from "../../components/common/BackButton";
 import { selectLoggedInUser } from "../../redux";
+import { AdminProfileCard, AdminProfileForm, BackButton, Loader } from "../../components";
+
 
 function AdminProfilePage() {
   const methods = useForm();
@@ -41,7 +39,7 @@ function AdminProfilePage() {
 
         <button
           onClick={handleForm}
-          className={`rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue ${
+          className={`rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-customBlue ${
             addFormVisibility ? "hidden mt-6" : ""
           }`}
         >

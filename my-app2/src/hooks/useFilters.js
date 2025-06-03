@@ -23,9 +23,9 @@ export default function useFilters() {
     setFilter(newFilter);
     setFilterFlag(
       (newFilter["brand"] && newFilter.brand.length !== 0) ||
-      (newFilter["category"] && newFilter.category.length !== 0)
+        (newFilter["category"] && newFilter.category.length !== 0)
     );
   };
 
   return { filter, setFilter, filterFlag, handleFilter };
-};
+}

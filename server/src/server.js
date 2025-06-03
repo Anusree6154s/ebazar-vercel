@@ -10,7 +10,12 @@ const morgan = require("morgan");
 
 const server = express();
 
-server.use(morgan("dev"));
+morgan.token('date', function() {
+  return new Date().toISOString();
+});
+
+server.use(morgan(':date :method :url :status :response-time ms'));
+
 server.use(cors({ origin: "http://localhost:3000", credentials: true }));
 server.use(express.static(path.resolve(__dirname, "../..", "client/build")));
 
