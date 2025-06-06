@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
+import { selectAuthStatus, selectLoggedInUser } from "../redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { Loader } from "../components";
-import { selectAuthStatus, selectLoggedInUser } from "../redux";
 
-export default function ProtectedLayout  ()  {
+export default function ProtectedLayout() {
   const user = useSelector(selectLoggedInUser);
   const authStatus = useSelector(selectAuthStatus);
 
@@ -19,4 +19,4 @@ export default function ProtectedLayout  ()  {
     if (user.role === "admin") return <Navigate to="/admin" replace={true} />;
   }
   return <Outlet />;
-};
+}

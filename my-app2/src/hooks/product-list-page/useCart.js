@@ -30,7 +30,6 @@ export default function useCart(product, user) {
   };
 
   useEffect(() => {
-    console.log("user", user);
     toggleCartIcon();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,4 +1,3 @@
-import React from "react";
 import ImageTransformer from "../../user/ImageTransformer";
 
 export default function ProductImages({ productImages }) {

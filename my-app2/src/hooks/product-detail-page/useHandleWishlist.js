@@ -26,4 +26,4 @@ export default function useHandleWishlist({ product }) {
   };
 
   return { handleWishList };
-};
+}

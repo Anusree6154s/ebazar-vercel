@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Elements } from "@stripe/react-stripe-js";
+import { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import "../../styles/Stripe.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +7,8 @@ import {
   selectClientSecret,
   selectCurrentOrder,
 } from "../../redux";
-import PaymentForm from "../../components/user/PaymentForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { PaymentForm } from "../../components";
 
 function StripePaymentPage() {
   const stripePromise = loadStripe(

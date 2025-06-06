@@ -1,6 +1,5 @@
-import { ShoppingCartIcon } from "@heroicons/react/outline";
-import React from "react";
 import useCart from "../../../hooks/product-list-page/useCart";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 export default function ShoppingCartIconToggle({ product, user }) {
   const { handleCart, isProductInCart } = useCart(product, user);
@@ -21,3 +20,4 @@ export default function ShoppingCartIconToggle({ product, user }) {
     </>
   );
 }
+

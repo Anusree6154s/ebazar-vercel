@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { useFormContext } from "react-hook-form";
-import useCheckoutPageForm from "../../../hooks";
+import { useCheckoutPageForm } from "../../../hooks";
 
 const CheckoutPageForm = ({
   addressRef,
@@ -187,7 +187,7 @@ const CheckoutPageForm = ({
           </button>
           <button
             type="submit"
-            className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 dark:bg-opacity-100 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue"
+            className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 dark:bg-opacity-100 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-customBlue"
           >
             Add Address
           </button>

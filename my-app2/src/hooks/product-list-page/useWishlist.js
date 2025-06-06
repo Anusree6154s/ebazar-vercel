@@ -2,15 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-    addToWishListAsync,
-    addWishlistItemIDB,
-    deleteItemFromWishListAsync,
-    removeWishlistItemIDB,
+  addToWishListAsync,
+  addWishlistItemIDB,
+  deleteItemFromWishListAsync,
+  removeWishlistItemIDB,
 } from "../../redux";
 import {
-    addToWishlistIDB,
-    existsInWishlistIDB,
-    removeFromWishlistIDB,
+  addToWishlistIDB,
+  existsInWishlistIDB,
+  removeFromWishlistIDB,
 } from "../../indexedDB/wishlistDB";
 import { selectWishList } from "../../redux";
 
@@ -19,22 +19,19 @@ export default function useWishlist(product, user) {
   const wishList = useSelector(selectWishList);
   const [isProductInWishlist, setIsProductInWishlist] = useState(false);
 
-  const toggleHeartIcon = () => {
-    let localWishlistHasProduct, remoteWishlistHasProduct;
+  const toggleHeartIcon = async () => {
+    let localWishlistHasProduct, wishlistHasProduct;
     if (isLoggedIn) {
-      remoteWishlistHasProduct = wishList.some(
-        (item) => item.id === product.id
+      wishlistHasProduct = await wishList.some(
+        (item) => item.id === product.id,
       );
     } else {
-      const checkProductInWishlist = async () =>
-        await existsInWishlistIDB(product.id);
-      localWishlistHasProduct = checkProductInWishlist();
+      localWishlistHasProduct = await existsInWishlistIDB(product.id);
     }
-    setIsProductInWishlist(localWishlistHasProduct || remoteWishlistHasProduct);
+    setIsProductInWishlist(localWishlistHasProduct || wishlistHasProduct);
   };
 
   useEffect(() => {
-    console.log("user", user);
     toggleHeartIcon();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

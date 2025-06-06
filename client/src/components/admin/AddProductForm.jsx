@@ -1,8 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { addFormSections, FormFieldElementOptions } from "../../config";
-import { useAddProductForm } from "../../hooks";
 import FormField from "./FormField";
-
+import useAddProductForm from "../../hooks/Admin/useAddProductForm";
 
 export default function AddProductForm() {
   const methods = useForm();

@@ -34,7 +34,7 @@ function OrderSuccessPage() {
             <Link
               to="/"
               href="#"
-              className="rounded-md bg-customBlue dark:bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm bg-opacity-80 hover:bg-opacity-100  dark:hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue"
+              className="rounded-md bg-customBlue dark:bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm bg-opacity-80 hover:bg-opacity-100  dark:hover:bg-blue-700 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-customBlue"
             >
               Go back home
             </Link>

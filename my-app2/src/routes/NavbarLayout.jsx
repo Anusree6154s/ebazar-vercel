@@ -26,4 +26,4 @@ export default function NavbarLayout() {
       <Outlet />
     </Navbar>
   );
-};
+}

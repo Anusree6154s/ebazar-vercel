@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-import { BackButton } from "../../components";
-import AddProductForm from "../../components/admin/AddProductForm";
 import {
   selectNewProduct
 } from "../../redux";
+import { Navigate } from "react-router-dom";
+import { AddProductForm, BackButton } from "../../components";
 
 function AddProductFormPage() {
   const newProduct = useSelector(selectNewProduct);

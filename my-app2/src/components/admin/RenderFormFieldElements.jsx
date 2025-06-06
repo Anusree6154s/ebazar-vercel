@@ -1,20 +1,16 @@
 import { useFormContext } from "react-hook-form";
 import InputElement from "./InputElement";
 
-const RenderFormFieldElements = (
-  {
-    formFor,
-    registerOptions,
-    fieldOptions,
-    fieldType,
-    selectOptions,
-  },
-  ref
-) => {
+const RenderFormFieldElements = ({
+  formFor,
+  registerOptions,
+  fieldOptions,
+  fieldType,
+  selectOptions,
+}) => {
   const { register } = useFormContext();
   const baseProps = {
     ...fieldOptions,
-    // {...register(formFor, registerOptions)},
     id: formFor,
     autoComplete: formFor,
   };
@@ -24,7 +20,6 @@ const RenderFormFieldElements = (
       return (
         <InputElement
           baseProps={baseProps}
-          // register={register}
           formFor={formFor}
           registerOptions={registerOptions}
         />
@@ -41,12 +36,6 @@ const RenderFormFieldElements = (
               {option.label}
             </option>
           ))}
-          {/* <option value="">--- choose brand ---</option>
-          {brands.map((brand, index) => (
-            <option key={index} value={brand.label}>
-              {brand.label}
-            </option>
-          ))} */}
         </select>
       );
     default:

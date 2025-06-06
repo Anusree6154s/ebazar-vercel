@@ -1,11 +1,10 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { selectLoggedInUser } from "../../../redux";
-import ImageTransformer from "../ImageTransformer";
-import HeartIconToggle from "./HeartIconToggle";
 import RatingStars from "./RatingStars";
 import ShoppingCartIconToggle from "./ShoppingCartIconToggle";
+import HeartIconToggle from "./HeartIconToggle";
+import { Link } from "react-router-dom";
+import ImageTransformer from "../ImageTransformer";
 
 export default function ProductCard({ product }) {
   const user = useSelector(selectLoggedInUser);
@@ -63,3 +62,4 @@ export default function ProductCard({ product }) {
     </div>
   );
 }
+

@@ -1,13 +1,13 @@
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Sort({ setSort, setMobileFiltersOpgen }) {
-  console.log(setMobileFiltersOpgen)
+export default function Sort({ setSort, setMobileFiltersOpen }) {
+  console.log("🚀 ~ Sort ~ setMobileFiltersOpen:", setMobileFiltersOpen);
   const [sortOptions, setSortOptions] = useState([
     { name: "Best Rating", sorts: "rating", order: "desc", current: false },
     {
@@ -71,7 +71,7 @@ export default function Sort({ setSort, setMobileFiltersOpgen }) {
                         ? "font-medium text-gray-900 dark:text-gray-100"
                         : "text-gray-500 dark:text-gray-300",
                       active && "bg-gray-100 dark:bg-gray-600 w-full",
-                      "block px-4 py-2 text-sm cursor-pointer w-full text-left"
+                      "block px-4 py-2 text-sm cursor-pointer w-full text-left",
                     )}
                     onClick={() => handleSort(option)}
                   >

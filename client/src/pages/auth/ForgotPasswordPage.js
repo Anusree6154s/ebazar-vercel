@@ -2,9 +2,9 @@ import {
   ArrowLeftIcon,
   CheckCircleIcon,
   KeyIcon,
-  XIcon,
-} from "@heroicons/react/solid";
-import { PaperAirplaneIcon } from "@heroicons/react/outline";
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -114,7 +114,7 @@ const Alerts = ({
 
   useEffect(() => {
     const action = (snackbarId) => (
-      <XIcon onClick={() => closeSnackbar(snackbarId)} />
+      <XMarkIcon onClick={() => closeSnackbar(snackbarId)} />
     );
     const snackbarProps = {
       anchorOrigin: { vertical: "top", horizontal: "center" },

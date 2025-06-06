@@ -2,7 +2,7 @@ import {
   HeartIcon as HeartIconSolid,
   ExclamationCircleIcon,
   CheckCircleIcon,
-} from "@heroicons/react/solid";
+} from "@heroicons/react/24/solid";
 import { forwardRef } from "react";
 
 const CustomSnackbar = forwardRef(({ id, message, variant }, ref) => {

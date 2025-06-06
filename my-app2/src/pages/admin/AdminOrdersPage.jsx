@@ -1,6 +1,10 @@
-import { BackButton, Loader, Pagination } from "../../components";
-import OrdersDashboard from "../../components/admin/OrdersDashboard";
-import useOrders from "../../hooks/Admin/useOrders";
+import {
+  BackButton,
+  Loader,
+  OrdersDashboard,
+  Pagination,
+} from "../../components";
+import { useOrders } from "../../hooks";
 
 function AdminOrdersPage() {
   const { orders, setPage, setSort, sort, page } = useOrders();

@@ -1,6 +1,4 @@
-import { PencilIcon, XIcon } from "@heroicons/react/outline";
-import { StarIcon } from "@heroicons/react/solid";
-import React from "react";
+import { PencilIcon, StarIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 export default function AdminProductGrid({ products, handleDelete }) {
@@ -23,10 +21,10 @@ export default function AdminProductGrid({ products, handleDelete }) {
                   >
                     <PencilIcon className="absolute top-4 right-16 inline p-2 z-20 items-center rounded-md h-10  text-sm font-medium text-white bg-opacity-50 bg-black border border-white  hover:bg-opacity-60"></PencilIcon>
                   </Link>
-                  <XIcon
+                  <XMarkIcon
                     onClick={() => handleDelete(product)}
                     className="absolute top-4 right-4 inline p-2 z-20 rounded-md h-10 text-sm font-medium  text-white bg-opacity-50 bg-black border border-white cursor-pointer hover:bg-opacity-60"
-                  ></XIcon>
+                  />
                   <Link
                     to={`/admin/product-detail/${product.id}`}
                     className="absolute inset-0"

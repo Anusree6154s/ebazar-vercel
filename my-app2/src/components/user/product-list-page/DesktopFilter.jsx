@@ -1,7 +1,6 @@
-import { Disclosure } from "@headlessui/react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
-import React from "react";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { AdminProductFilers } from "../../../config";
+import { Disclosure } from "@headlessui/react";
 
 export default function DesktopFilter({ handleFilter, filter }) {
   return (

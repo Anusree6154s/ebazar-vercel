@@ -34,7 +34,7 @@ export default function useWishlist(product, user) {
   };
 
   useEffect(() => {
-    console.log("user", user);
+    // console.log("user", user);
     toggleHeartIcon();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

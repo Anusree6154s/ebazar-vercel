@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { BackButton } from "../../components";
-import EditProductForm from "../../components/admin/EditProductForm";
 import { selectNewProduct } from "../../redux";
 import { FormProvider, useForm } from "react-hook-form";
+import { BackButton, EditProductForm } from "../../components";
 
 function EditProductFormPage() {
   const newProduct = useSelector(selectNewProduct);

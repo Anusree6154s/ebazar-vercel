@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { selectAuthStatus, selectLoggedInUser } from "../../redux";
+import { Navigate } from "react-router-dom";
 import Loader from "../common/Loader";
 
 function Protected({ children }) {

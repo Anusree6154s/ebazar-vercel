@@ -1,11 +1,11 @@
 import {
-  HeartIcon as HeartIconSolid,
-  ExclamationCircleIcon,
   CheckCircleIcon,
-} from "@heroicons/react/solid";
+  ExclamationCircleIcon,
+  HeartIcon as HeartIconSolid,
+} from "@heroicons/react/24/solid";
 import { forwardRef } from "react";
 
-const CustomSnackbar = forwardRef(({ id, message, variant }, ref) => {
+const CustomSnackbar = forwardRef(({ message, variant }, ref) => {
   const backgroundColors = {
     AddedToWishlist: "dark:bg-pink-400 bg-pink-600",
     AlreadyInWishlist: "dark:bg-yellow-400 bg-yellow-600",
@@ -17,6 +17,7 @@ const CustomSnackbar = forwardRef(({ id, message, variant }, ref) => {
     AlreadyInWishlist: <CheckCircleIcon className="w-8 h-8" />,
     AddedtoCart: <ExclamationCircleIcon className="w-8 h-8" />,
   };
+
   return (
     <div
       ref={ref}
@@ -27,4 +28,6 @@ const CustomSnackbar = forwardRef(({ id, message, variant }, ref) => {
     </div>
   );
 });
+
+CustomSnackbar.displayName = "CustomSnackbar";
 export default CustomSnackbar;

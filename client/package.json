@@ -50,19 +50,6 @@
     "styled-components": "^6.1.17",
     "web-vitals": "^4.2.4"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "plugins": [
-      "unused-imports"
-    ],
-    "rules": {
-      "no-console": "warn",
-      "unused-imports/no-unused-imports": "warn"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",

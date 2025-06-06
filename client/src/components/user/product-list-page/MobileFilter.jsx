@@ -1,6 +1,6 @@
 import { Dialog, Disclosure, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
-import { FilterIcon, MinusIcon, PlusIcon } from "@heroicons/react/solid";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { FunnelIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import React, { Fragment } from "react";
 import { AdminProductFilers } from "../../../config/admin-product-filter";
 
@@ -50,7 +50,7 @@ export function MobileFilterDialog({
                   onClick={() => setMobileFiltersOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
-                  <XIcon className="h-6 w-6" aria-hidden="true" />
+                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
 
@@ -139,7 +139,7 @@ export function MobileFilterButton({ setMobileFiltersOpen }) {
       onClick={() => setMobileFiltersOpen(true)}
     >
       <span className="sr-only">Filters</span>
-      <FilterIcon className="h-5 w-5" aria-hidden="true" />
+      <FunnelIcon className="h-5 w-5" aria-hidden="true" />
     </button>
   );
 }

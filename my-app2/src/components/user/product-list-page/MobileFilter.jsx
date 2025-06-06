@@ -1,8 +1,7 @@
-import { Dialog, Disclosure, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
-import { FilterIcon, MinusIcon, PlusIcon } from "@heroicons/react/solid";
-import React, { Fragment } from "react";
-import { AdminProductFilers } from "../../../config/admin-product-filter";
+import { FunnelIcon, MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Fragment } from "react";
+import { Dialog, DialogPanel, Disclosure, Transition, TransitionChild } from "@headlessui/react";
+import { AdminProductFilers } from "../../../config";
 
 export function MobileFilterDialog({
   mobileFiltersOpen,
@@ -17,7 +16,7 @@ export function MobileFilterDialog({
         className="relative z-40 lg:hidden"
         onClose={setMobileFiltersOpen}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="transition-opacity ease-linear duration-300"
           enterFrom="opacity-0"
@@ -27,10 +26,10 @@ export function MobileFilterDialog({
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className="fixed inset-0 z-40 flex">
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="transition ease-in-out duration-300 transform"
             enterFrom="translate-x-full"
@@ -39,7 +38,7 @@ export function MobileFilterDialog({
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-gray-800 py-4 pb-12 shadow-xl">
+            <DialogPanel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-gray-800 py-4 pb-12 shadow-xl">
               <div className="flex items-center justify-between px-4">
                 <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                   Filters
@@ -50,7 +49,7 @@ export function MobileFilterDialog({
                   onClick={() => setMobileFiltersOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
-                  <XIcon className="h-6 w-6" aria-hidden="true" />
+                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
 
@@ -123,8 +122,8 @@ export function MobileFilterDialog({
                   </Disclosure>
                 ))}
               </form>
-            </Dialog.Panel>
-          </Transition.Child>
+            </DialogPanel>
+          </TransitionChild>
         </div>
       </Dialog>
     </Transition.Root>
@@ -139,7 +138,7 @@ export function MobileFilterButton({ setMobileFiltersOpen }) {
       onClick={() => setMobileFiltersOpen(true)}
     >
       <span className="sr-only">Filters</span>
-      <FilterIcon className="h-5 w-5" aria-hidden="true" />
+      <FunnelIcon className="h-5 w-5" aria-hidden="true" />
     </button>
   );
 }

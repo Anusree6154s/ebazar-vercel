@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import {
-  BackButton,
-  BreadCrumb,
-  ProductImages,
-  ProductInfoDesktop,
-  ProductInfoMobile,
-} from "../../components";
+import { useState } from "react";
+
+
 import {
   useHandleAdd,
   useHandleBuy,
   useHandleWishlist,
   useProductDetail,
 } from "../../hooks";
+import { BackButton, BreadCrumb, ProductImages, ProductInfoDesktop, ProductInfoMobile } from "../../components";
 
 function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);

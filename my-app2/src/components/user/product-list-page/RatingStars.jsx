@@ -1,9 +1,5 @@
-import {
-    StarIcon as StarIconOutline
-} from "@heroicons/react/outline";
-import {
-    StarIcon as StarIconSolid
-} from "@heroicons/react/solid";
+import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
+import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 
 export default function RatingStars({ rating }) {
   return (
@@ -23,3 +19,4 @@ export default function RatingStars({ rating }) {
     </>
   );
 }
+

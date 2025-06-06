@@ -1,7 +1,7 @@
-import { ArrowDownIcon, ArrowUpIcon, PencilIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllOrders, updateOrderAsync } from "../../redux";
+import { ArrowDownIcon, ArrowUpIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 export default function OrdersDashboard({ sort, setSort, page }) {
   const dispatch = useDispatch();

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import {
-  PaymentElement,
-  useStripe,
-  useElements
-} from "@stripe/react-stripe-js";
+import { useEffect, useState } from "react";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector } from "react-redux";
-import { BASE_URL_PAYMENT } from '../../app/constants';
+import { BASE_URL_PAYMENT } from "../../app/constants";
 import { selectCurrentOrder } from "../../redux";
+import { PaymentElement } from "@stripe/react-stripe-js";
 
 export default function PaymentForm() {
   const stripe = useStripe();
@@ -14,8 +11,7 @@ export default function PaymentForm() {
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const currentOrder = useSelector(selectCurrentOrder)
-
+  const currentOrder = useSelector(selectCurrentOrder);
 
   useEffect(() => {
     if (!stripe) {
@@ -48,7 +44,6 @@ export default function PaymentForm() {
     });
   }, [stripe]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -74,12 +69,15 @@ export default function PaymentForm() {
   };
 
   const paymentElementOptions = {
-    layout: "tabs"
-  }
+    layout: "tabs",
+  };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit} className="dark:bg-gray-100">
-
+    <form
+      id="payment-form"
+      onSubmit={handleSubmit}
+      className="dark:bg-gray-100"
+    >
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
@@ -90,6 +88,3 @@ export default function PaymentForm() {
     </form>
   );
 }
-
-
-

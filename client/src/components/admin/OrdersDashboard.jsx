@@ -1,4 +1,8 @@
-import { ArrowDownIcon, ArrowUpIcon, PencilIcon } from "@heroicons/react/solid";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  PencilIcon,
+} from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllOrders, updateOrderAsync } from "../../redux";

@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./styles/App.css";
-import { RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { router } from "./routes/router";
 import {
   checkAuthAsync,
   fetchItemsByUserIdAsync,
+  fetchLoggedInUserAsync,
   fetchWishListByUserIdAsync,
   selectLoggedInUser,
   setWishlistItemsIDB,
 } from "./redux";
-import { SnackbarProvider } from "notistack";
-import { CustomSnackbar } from "./components";
 import { getWishlistItemsIDB } from "./indexedDB/wishlistDB";
+import { SnackbarProvider } from "notistack";
+import { RouterProvider } from "react-router-dom";
+import { CustomSnackbar } from "./components";
+import { router } from "./routes/router";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function App() {
   }, [user, dispatch]);
 
   useEffect(() => {
-    // dispatch(fetchLoggedInUserAsync());
+    dispatch(fetchLoggedInUserAsync());
     dispatch(checkAuthAsync());
   }, [dispatch]);
 

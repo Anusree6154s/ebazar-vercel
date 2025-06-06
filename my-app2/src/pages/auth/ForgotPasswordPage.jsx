@@ -1,10 +1,5 @@
-import {
-  ArrowLeftIcon,
-  CheckCircleIcon,
-  KeyIcon,
-  XIcon,
-} from "@heroicons/react/solid";
-import { PaperAirplaneIcon } from "@heroicons/react/outline";
+
+
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,7 +15,8 @@ import {
   selectUserId,
   sendOTPAsync,
 } from "../../redux";
-import Loader from "../../components/common/Loader";
+import { ArrowLeftIcon, CheckCircleIcon, KeyIcon, PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Loader } from "../../components";
 
 function ForgotPasswordPage() {
   const otp_sent_status = useSelector(selectOTPSentStatus);
@@ -114,7 +110,7 @@ const Alerts = ({
 
   useEffect(() => {
     const action = (snackbarId) => (
-      <XIcon onClick={() => closeSnackbar(snackbarId)} />
+      <XMarkIcon onClick={() => closeSnackbar(snackbarId)} />
     );
     const snackbarProps = {
       anchorOrigin: { vertical: "top", horizontal: "center" },
