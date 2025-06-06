@@ -18,7 +18,7 @@ import { router } from "./routes/router";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
-  console.log(user);
+
   useEffect(() => {
     if (user && !user.error) {
       dispatch(fetchItemsByUserIdAsync());

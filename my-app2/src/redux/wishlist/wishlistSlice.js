@@ -17,11 +17,10 @@ export const wishListSlice = createSlice({
     setWishlistItemsIDB(state, action) {
       state.items = action.payload;
     },
-    addWishlistItemIDB(state, action){
-        state.items= [...state.items, action.payload];
+    addWishlistItemIDB(state, action) {
+      state.items = [...state.items, action.payload];
     },
     removeWishlistItemIDB(state, action) {
-      console.log("action", action);
       const index = state.items.findIndex((item) => item.id === action.payload);
       state.items.splice(index, 1);
     },
@@ -51,13 +50,17 @@ export const wishListSlice = createSlice({
       .addCase(deleteItemFromWishListAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id
+          (item) => item.id === action.payload.id,
         );
         state.items.splice(index, 1);
       });
   },
 });
 
-export const { setWishlistItemsIDB, removeWishlistItemIDB, clearWishlistIDB, addWishlistItemIDB } =
-  wishListSlice.actions;
+export const {
+  setWishlistItemsIDB,
+  removeWishlistItemIDB,
+  clearWishlistIDB,
+  addWishlistItemIDB,
+} = wishListSlice.actions;
 export default wishListSlice.reducer;

@@ -3,30 +3,40 @@ import react from "@vitejs/plugin-react";
 // eslint-disable-next-line import/no-unresolved
 import tailwindcss from "@tailwindcss/vite";
 import eslint from "vite-plugin-eslint";
-import Terminal from "vite-plugin-terminal";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    Terminal({
-      console: "terminal",
-      output: ["terminal", "console"],
-    }),
     eslint({
-      overrideConfigFile: ".eslintrc.cjs", // tell it where your config is
-      include: ["src/**/*.{js,jsx,ts,tsx}"], // or whatever is relevant to your project
-      exclude: ["../client/**"], // explicitly exclude the client folder
+      overrideConfigFile: ".eslintrc.cjs",
+      include: ["src/**/*.{js,jsx,ts,tsx}"],
+      exclude: ["../client/**"],
     }),
   ],
-   server: {
+  server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:8081', // your backend server
+      "/api": {
+        target: "http://localhost:8081",
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  }
+      },
+    },
+  },
+  theme: {
+    extend: {
+      gridTemplateRows: {
+        "[auto,auto,1fr]": "auto auto 1fr",
+      },
+      colors: {
+        customBlue: "#21AAF3",
+        customDarkBlue: "#0b31bf",
+        primary: "#21AAF3",
+        "primary-hover": "#2196F3",
+        "primary-hover-dark": "#2183f3",
+        "primary-light": "#70cafbed",
+        warning: "#F04646",
+      },
+    },
+  },
 });

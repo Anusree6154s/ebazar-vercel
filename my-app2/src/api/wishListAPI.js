@@ -1,5 +1,4 @@
-import { BASE_URL } from '../app/constants';
-
+import { BASE_URL } from "../app/constants";
 
 export function addToWishList(item) {
   // return new Promise(async (resolve) => {
@@ -14,15 +13,14 @@ export function addToWishList(item) {
   //   resolve({ data });
   // });
 
-  return fetch(BASE_URL + '/wishlist', {
-    method: 'POST',
+  return fetch(BASE_URL + "/wishlist", {
+    method: "POST",
     body: JSON.stringify(item),
-    headers: { 'content-type': 'application/json' },
-    credentials: 'include',
+    headers: { "content-type": "application/json" },
+    credentials: "include",
   })
-    .then(response => response.json())
-    .then(data => {
-      console.log('wishlist api data', data);
+    .then((response) => response.json())
+    .then((data) => {
       return { data };
     });
 }
@@ -33,14 +31,13 @@ export function fetchWishListByUserId() {
   //   console.log('wishlit data', data)
   //   resolve({ data })
   // });
-  return fetch(BASE_URL + '/wishlist', { credentials: 'include' })
-    .then(response => response.json())
-    .then(data => {
-      console.log('wishlist data', data);
+  return fetch(BASE_URL + "/wishlist", { credentials: "include" })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("wishlist data", data);
       return { data };
     });
 }
-
 
 export function deleteItemFromWishList(itemId) {
   // return new Promise(async (resolve) => {
@@ -52,11 +49,11 @@ export function deleteItemFromWishList(itemId) {
   //   const data = await response.json();
   //   resolve({ data });
   // });
-  return fetch(BASE_URL + '/wishlist/' + itemId, {
-    method: 'DELETE',
-    headers: { 'content-type': 'application/json' },
-    credentials: 'include',
+  return fetch(BASE_URL + "/wishlist/" + itemId, {
+    method: "DELETE",
+    headers: { "content-type": "application/json" },
+    credentials: "include",
   })
-    .then(response => response.json())
-    .then(data => ({ data }));
+    .then((response) => response.json())
+    .then((data) => ({ data }));
 }

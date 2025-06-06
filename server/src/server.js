@@ -10,14 +10,14 @@ const morgan = require("morgan");
 
 const server = express();
 
-morgan.token('date', function() {
+morgan.token("date", function () {
   return new Date().toISOString();
 });
 
-server.use(morgan(':date :method :url :status :response-time ms'));
+server.use(morgan(":date :method :url :status :response-time ms"));
 
 server.use(cors({ origin: "http://localhost:3000", credentials: true }));
-server.use(express.static(path.resolve(__dirname, "../..", "client/build")));
+server.use(express.static(path.resolve(__dirname, "../..", "my-app2/dist")));
 
 server.use(cookieParser());
 
@@ -37,7 +37,7 @@ passport.use("jwt", jwtStrategy);
 
 server.use("/api", routes);
 server.get("*", (req, res) =>
-  res.sendFile(path.resolve(__dirname, "../..", "client/build", "index.html"))
+  res.sendFile(path.resolve(__dirname, "../..", "my-app2/dist", "index.html"))
 );
 
 server.use(errorHandler);

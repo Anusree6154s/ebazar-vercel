@@ -7,7 +7,6 @@ function classNames(...classes) {
 }
 
 export default function Sort({ setSort, setMobileFiltersOpen }) {
-  console.log(setMobileFiltersOpen)
   const [sortOptions, setSortOptions] = useState([
     { name: "Best Rating", sorts: "rating", order: "desc", current: false },
     {
@@ -71,7 +70,7 @@ export default function Sort({ setSort, setMobileFiltersOpen }) {
                         ? "font-medium text-gray-900 dark:text-gray-100"
                         : "text-gray-500 dark:text-gray-300",
                       active && "bg-gray-100 dark:bg-gray-600 w-full",
-                      "block px-4 py-2 text-sm cursor-pointer w-full text-left"
+                      "block px-4 py-2 text-sm cursor-pointer w-full text-left",
                     )}
                     onClick={() => handleSort(option)}
                   >
@@ -86,5 +85,3 @@ export default function Sort({ setSort, setMobileFiltersOpen }) {
     </Menu>
   );
 }
-
-

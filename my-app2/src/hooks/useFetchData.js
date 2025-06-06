@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearWishlistIDB,
-  getWishlistItemsIDB
-} from "../indexedDB/wishlistDB";
+import { clearWishlistIDB, getWishlistItemsIDB } from "../indexedDB/wishlistDB";
 import {
   addToWishListAsync,
   fetchBrandsAsync,
@@ -14,9 +11,8 @@ import {
   selectAllCategories,
   selectAllProducts,
   selectLoggedInUser,
-  selectTotalItems
+  selectTotalItems,
 } from "../redux";
-
 
 export default function useFetchData(filter, sort, page) {
   const dispatch = useDispatch();
@@ -27,10 +23,10 @@ export default function useFetchData(filter, sort, page) {
   const categoriesUnsorted = useSelector(selectAllCategories);
 
   const brands = [...brandsUnsorted].sort((a, b) =>
-    a.label.localeCompare(b.label)
+    a.label.localeCompare(b.label),
   );
   const categories = [...categoriesUnsorted].sort((a, b) =>
-    a.label.localeCompare(b.label)
+    a.label.localeCompare(b.label),
   );
 
   useEffect(() => {
@@ -38,7 +34,6 @@ export default function useFetchData(filter, sort, page) {
     dispatch(fetchCategoriesAsync());
     dispatch(fetchProductCountAsync());
   }, [dispatch]);
-  // console.log("user in useFetchData", user);
 
   useEffect(() => {
     if (user?.role === "user") {
@@ -55,7 +50,7 @@ export default function useFetchData(filter, sort, page) {
         const wishlistItemsIDB = await fetchWishlistItemsIDB();
         if (wishlistItemsIDB.length > 0) {
           wishlistItemsIDB.forEach((item) =>
-            dispatch(addToWishListAsync(item))
+            dispatch(addToWishListAsync(item)),
           );
           await clearWishlistIDB();
         }
@@ -74,10 +69,9 @@ export default function useFetchData(filter, sort, page) {
         filter,
         sort,
         pagination,
-      })
+      }),
     );
   }, [user, filter, sort, page, dispatch]);
 
   return { products, totalItems, brands, categories, user };
 }
-

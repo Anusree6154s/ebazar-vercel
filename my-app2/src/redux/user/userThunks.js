@@ -8,10 +8,10 @@ export const fetchLoggedInUserAsync = createAsyncThunk(
       const response = await fetchLoggedInUser();
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.error(error);
       rejectWithValue({});
     }
-  }
+  },
 );
 
 export const fetchLoggedInUserOrdersAsync = createAsyncThunk(
@@ -19,5 +19,5 @@ export const fetchLoggedInUserOrdersAsync = createAsyncThunk(
   async (userId) => {
     const response = await fetchLoggedInUserOrders(userId);
     return response.data;
-  }
+  },
 );

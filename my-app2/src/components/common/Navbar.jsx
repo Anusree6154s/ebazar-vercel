@@ -74,12 +74,12 @@ export default function Navbar({ children, name, preview }) {
       <Disclosure as="nav" className="bg-gray-800 dark:bg-gray-900">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex justify-center">
-              <div className="flex h-16 items-center justify-between w-[90%]">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-[90%]">
+              <div className="flex h-16 items-center justify-between">
                 <Link to={"/"}>
                   {/* <Link to={user.role === "user" ? "/" : "/admin"}> */}
                   <h1 className="text-white text-2xl flex gap-2 ">
-                    <img className="h-8 w-100" src="/favicon2.ico" alt="" />
+                    <img className="h-8" src="/favicon2.ico" alt="" />
                   </h1>
                 </Link>
 
@@ -208,7 +208,7 @@ export default function Navbar({ children, name, preview }) {
                                           : "dark:bg-gray-700",
                                         "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300",
                                         "hover:bg-gray-100 dark:hover:bg-gray-600", // Adding hover colors
-                                        "transition-colors ease-in-out duration-150" // Adding transition effect
+                                        "transition-colors ease-in-out duration-150", // Adding transition effect
                                       )}
                                     >
                                       {item.name}
@@ -299,4 +299,3 @@ export default function Navbar({ children, name, preview }) {
     </div>
   );
 }
-

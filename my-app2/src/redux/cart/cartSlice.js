@@ -23,7 +23,6 @@ export const cartSlice = createSlice({
       state.items = [...state.items, action.payload];
     },
     removeCartItemIDB(state, action) {
-      console.log("action", action);
       const index = state.items.findIndex((item) => item.id === action.payload);
       state.items.splice(index, 1);
     },
@@ -53,7 +52,7 @@ export const cartSlice = createSlice({
       .addCase(updateCartAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id
+          (item) => item.id === action.payload.id,
         );
         state.items[index] = action.payload;
       })
@@ -63,7 +62,7 @@ export const cartSlice = createSlice({
       .addCase(deleteItemFromCartAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id
+          (item) => item.id === action.payload.id,
         );
         state.items.splice(index, 1);
       })
@@ -77,6 +76,10 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { setCartItemsIDB, removeCartItemIDB, clearCartIDB, addCartItemIDB } =
-  cartSlice.actions;
+export const {
+  setCartItemsIDB,
+  removeCartItemIDB,
+  clearCartIDB,
+  addCartItemIDB,
+} = cartSlice.actions;
 export default cartSlice.reducer;

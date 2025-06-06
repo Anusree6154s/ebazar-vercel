@@ -5,8 +5,10 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon --trace-warnings src/index",
+    "dev:local": "cross-env NODE_ENV=local nodemon --trace-warnings src/index",
     "build": "npm i && cd ../client && npm run build",
     "start": "node src/index",
+    "start:local": "cross-env NODE_ENV=local node src/index",
     "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --detectOpenHandles",
     "test:debug": "node --inspect ./node_modules/jest/bin/jest.js --runInBand"
