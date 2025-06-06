@@ -7,6 +7,7 @@ function classNames(...classes) {
 }
 
 export default function Sort({ setSort, setMobileFiltersOpen }) {
+  console.log("🚀 ~ Sort ~ setMobileFiltersOpen:", setMobileFiltersOpen);
   const [sortOptions, setSortOptions] = useState([
     { name: "Best Rating", sorts: "rating", order: "desc", current: false },
     {
