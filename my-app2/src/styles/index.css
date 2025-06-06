@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --color-customBlue: #21AAF3;
+  --color-customDarkBlue: #0b31bf;
+  --color-primary: #21AAF3;
+  --color-primary-hover: #2196F3;
+  --color-primary-hover-dark: #2183f3;
+  --color-primary-light: #70cafbed;
+  --color-warning: #F04646;
+
+  --grid-rows-[auto-auto-1fr]: auto auto 1fr;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* transition: all 0.3s ease; */
+  * {
+    transition: width 0.3s ease, height 0.3s ease, max-width 0.3s ease,
+      max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease,
+      transform 0.3s ease, opacity 0.3s ease, border-width 0.3s ease,
+      box-shadow 0.3s ease, letter-spacing 0.3s ease, line-height 0.3s ease;
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.font-allison {
+  font-family: "Allison", cursive;
+}
+
+.font-montserrat {
+  font-family: "Montserrat", sans-serif;
+}

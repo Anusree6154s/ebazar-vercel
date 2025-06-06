@@ -2,10 +2,8 @@
  * Loads environment variables from a `.env` file into `process.env` and exports constant values for use across the application.
  * @module config/env.config
  */
-
-require("dotenv").config();
-
-
+const path = require("path");
+require("dotenv").config({ path: path.join(process.cwd(), "..", ".env") });
 
 /**
  * @module config/env.config
@@ -30,21 +28,20 @@ require("dotenv").config();
  */
 
 exports.env = {
-    jwt: {
-        jwt_secret_key: process.env.JWT_SECRET_KEY,
-    },
-    mongoose: {
-        uri_test: process.env.URI_TEST,
-    },
-    stripe: {
-        stripe_secret_key: process.env.STRIPE_SECRET_KEY,
-    },
-    email: {
-        senders_gmail: process.env.SENDERS_GMAIL,
-        senders_gmail_app_password: process.env.SENDERS_GMAIL_APP_PASSWORD,
-    },
-    server: {
-        port: process.env.PORT,
-    }
-
+  jwt: {
+    jwt_secret_key: process.env.JWT_SECRET_KEY,
+  },
+  mongoose: {
+    uri_test: process.env.URI_TEST,
+  },
+  stripe: {
+    stripe_secret_key: process.env.STRIPE_SECRET_KEY,
+  },
+  email: {
+    senders_gmail: process.env.SENDERS_GMAIL,
+    senders_gmail_app_password: process.env.SENDERS_GMAIL_APP_PASSWORD,
+  },
+  server: {
+    port: process.env.PORT,
+  },
 };

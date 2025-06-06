@@ -1,10 +1,10 @@
 import { Disclosure } from "@headlessui/react";
 import {
+  Bars3Icon,
   HeartIcon,
-  MenuIcon,
   ShoppingCartIcon,
-  XIcon,
-} from "@heroicons/react/outline";
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -93,9 +93,9 @@ export default function MobileNavOptions({ handleTheme, dark, open }) {
         <span className="absolute -inset-0.5" />
         <span className="sr-only">Open main menu</span>
         {open ? (
-          <XIcon className="block h-6 w-6" aria-hidden="true" />
+          <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
         ) : (
-          <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+          <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
         )}
       </Disclosure.Button>
     </div>

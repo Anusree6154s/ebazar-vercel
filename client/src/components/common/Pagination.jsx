@@ -1,7 +1,7 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import React, { useEffect, useState } from "react";
-import { ITEMS_PER_PAGE } from "../../app/constants";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ITEMS_PER_PAGE } from "../../app/constants";
 import { selectPage, setPage } from "../../redux";
 
 export default function Pagination({ totalItems }) {

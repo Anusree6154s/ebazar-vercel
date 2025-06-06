@@ -70,7 +70,7 @@ export const cartSlice = createSlice({
       .addCase(resetCartAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(resetCartAsync.fulfilled, (state, action) => {
+      .addCase(resetCartAsync.fulfilled, (state) => {
         state.status = "idle";
         state.items = [];
       });

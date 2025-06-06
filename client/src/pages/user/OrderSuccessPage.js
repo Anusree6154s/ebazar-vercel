@@ -10,9 +10,10 @@ function OrderSuccessPage() {
     dispatch(resetOrder());
   }, [dispatch]);
 
+  if (!params.id) return <Navigate to="/" replace={true}></Navigate>
+
   return (
     <div className="px-24 py-8 sm:py-24 lg:px-24 sm:px-6 ">
-      {!params.id && <Navigate to="/" replace={true}></Navigate>}
       <main className=" min-h-full place-items-center bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:to-gray-800 px-6 py-24 sm:py-32 lg:px-8 sm:px-6 ">
         <div className="text-center">
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-customBlue dark:text-blue-500 sm:text-5xl">
@@ -20,10 +21,9 @@ function OrderSuccessPage() {
           </h1>
           <br />
           <p className="mt-4 text-base font-bold tracking-tight text-gray-900 dark:text-gray-300 sm:text-lg">
-            {" "}
             <span className="text-gray-700 dark:text-gray-500 sm:text-lg">
-              Order Number
-            </span>{" "}
+              Order Number 
+            </span>
             #{params.id}
           </p>
           <br />

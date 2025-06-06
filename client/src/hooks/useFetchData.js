@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearWishlistIDB,
+  getWishlistItemsIDB
+} from "../indexedDB/wishlistDB";
+import {
   addToWishListAsync,
   fetchBrandsAsync,
   fetchCategoriesAsync,
@@ -10,16 +14,8 @@ import {
   selectAllCategories,
   selectAllProducts,
   selectLoggedInUser,
-  selectTotalItems,
-  selectWishList,
-  setWishlistItemsIDB,
+  selectTotalItems
 } from "../redux";
-import {
-  clearWishlistIDB,
-  getWishlistItemsCountIDB,
-  getWishlistItemsIDB,
-  removeFromWishlistIDB,
-} from "../indexedDB/wishlistDB";
 
 export const useFetchData = (filter, sort, page) => {
   const dispatch = useDispatch();
