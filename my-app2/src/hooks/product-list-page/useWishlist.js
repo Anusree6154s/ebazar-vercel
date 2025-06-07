@@ -1,66 +1,48 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   addToWishListAsync,
-  addWishlistItemIDB,
+  addToWishListIDBAsync,
   deleteItemFromWishListAsync,
-  removeWishlistItemIDB,
+  deleteItemFromWishListIDBAsync,
+  selectWishList,
 } from "../../redux";
-import {
-  addToWishlistIDB,
-  existsInWishlistIDB,
-  removeFromWishlistIDB,
-} from "../../indexedDB/wishlistDB";
-import { selectWishList } from "../../redux";
 
 export default function useWishlist(product, user) {
   const isLoggedIn = !!user;
   const wishList = useSelector(selectWishList);
   const [isProductInWishlist, setIsProductInWishlist] = useState(false);
 
-  const toggleHeartIcon = async () => {
-    let localWishlistHasProduct, wishlistHasProduct;
-    if (isLoggedIn) {
-      wishlistHasProduct = await wishList.some(
-        (item) => item.id === product.id,
-      );
-    } else {
-      localWishlistHasProduct = await existsInWishlistIDB(product.id);
-    }
-    setIsProductInWishlist(localWishlistHasProduct || wishlistHasProduct);
-  };
+  const toggleHeartIcon = useCallback(async () => {
+    const wishlistHasProduct = await wishList.some(
+      (item) => item.id === product.id,
+    );
+    setIsProductInWishlist(wishlistHasProduct);
+  }, [product.id, wishList]);
 
   useEffect(() => {
     toggleHeartIcon();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [toggleHeartIcon]);
 
   const dispatch = useDispatch();
-  const handleWishlist = useCallback(() => {
+  const handleWishlist = useCallback((wishlistHasProduct) => {
     const toggleProductInLocalWishlist = async () => {
-      try {
-        const localWishlistHasProduct = await existsInWishlistIDB(product.id);
-        if (localWishlistHasProduct) {
-          await removeFromWishlistIDB(product.id);
-          dispatch(removeWishlistItemIDB(product.id));
-          setIsProductInWishlist(false);
-        } else {
-          await addToWishlistIDB(product);
-          dispatch(addWishlistItemIDB({ product }));
-          setIsProductInWishlist(true);
-        }
-      } catch (error) {
-        console.error(error);
+      if (wishlistHasProduct) {
+        dispatch(deleteItemFromWishListIDBAsync(product.id));
+        setIsProductInWishlist(false);
+      } else {
+        dispatch(addToWishListIDBAsync(product));
+        setIsProductInWishlist(true);
       }
     };
 
     const toggleProductInRemoteWishlist = () => {
-      const isProductInWishlist = wishList.some((item) => item === product);
-      if (isProductInWishlist) {
-        dispatch(addToWishListAsync({ product: product.id, user: user.id }));
-      } else {
+      if (wishlistHasProduct) {
         dispatch(deleteItemFromWishListAsync(product.id));
+        setIsProductInWishlist(false);
+      } else {
+        dispatch(addToWishListAsync({ product: product.id, user: user.id }));
+        setIsProductInWishlist(true);
       }
     };
 

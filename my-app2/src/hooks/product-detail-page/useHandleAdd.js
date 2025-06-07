@@ -14,7 +14,7 @@ export default function useHandleAdd({ quantity, product }) {
 
   const handleAdd = () => {
     const productInCart = cartItems.find(
-      (item) => item.product.title === product.title
+      (item) => item.title === product.title,
     );
 
     if (product.stock !== 0) {
@@ -28,7 +28,7 @@ export default function useHandleAdd({ quantity, product }) {
             ...productInCart,
             product: productInCart.product.id,
             quantity: newQuantity,
-          })
+          }),
         );
       } else {
         dispatch(
@@ -36,7 +36,7 @@ export default function useHandleAdd({ quantity, product }) {
             product: product.id,
             quantity: quantity,
             user: user.id,
-          })
+          }),
         );
       }
       enqueueSnackbar("Added to Cart!", { variant: "AddedToCart" });

@@ -1,14 +1,21 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { selectCartItems, selectCartStatus } from "../../redux";
+import BackButton from "../../components/common/BackButton";
+import CartItem from "../../components/user/cart-page/CartItem";
+import {
+  selectCartItems,
+  selectCartStatus,
+  selectLoggedInUser,
+} from "../../redux";
 import { getTotalCartItemsCount } from "../../util/total-cart-items";
 import { getTotalCartItemsPrice } from "../../util/total-cart-items-price";
-import { BackButton, CartItem } from "../../components";
 
 function CartPage() {
   const items = useSelector(selectCartItems);
   const status = useSelector(selectCartStatus);
+  const user = useSelector(selectLoggedInUser);
   const navigate = useNavigate();
+  const isLoggedIn = !!user;
 
   const totalPrice = getTotalCartItemsPrice(items);
   const totalItems = getTotalCartItemsCount(items);
@@ -40,27 +47,29 @@ function CartPage() {
           <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
             Shipping and taxes calculated at checkout.
           </p>
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col gap-3 justify-center text-center text-sm text-gray-500 dark:text-gray-300">
             <Link
-              to="/checkout"
-              className="flex items-center justify-center rounded-md border border-transparent bg-customBlue dark:bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:bg-opacity-100 dark:hover:bg-opacity-80"
+              to={isLoggedIn ? "/checkout" : "/login"}
+              className="flex items-center justify-center rounded-md border
+              border-transparent bg-customBlue dark:bg-blue-600 px-6 py-3
+              text-base font-medium text-white shadow-sm bg-opacity-80
+              hover:bg-opacity-100 dark:bg-opacity-100 dark:hover:bg-opacity-80"
             >
-              Checkout
+              {isLoggedIn ? "Checkout" : "Login to Checkout"}
             </Link>
-          </div>
-          <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-300">
-            <p>
-              or{" "}
-              <Link to="/">
-                <button
-                  type="button"
-                  className="font-medium text-customBlue dark:text-blue-400"
-                >
-                  Continue Shopping
-                  <span aria-hidden="true"> &rarr;</span>
-                </button>
-              </Link>
-            </p>
+            <span>or</span>
+            <Link to="/">
+              <button
+                type="button"
+                className="font-medium text-customBlue dark:text-blue-400"
+              >
+                <span aria-hidden="true" className="mr-2 text-lg">
+                  {" "}
+                  &larr;
+                </span>
+                Continue Shopping
+              </button>
+            </Link>
           </div>
         </div>
       </div>

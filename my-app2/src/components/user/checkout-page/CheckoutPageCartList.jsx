@@ -7,9 +7,9 @@ export default function CheckoutPageCartList({ item }) {
     dispatch(
       updateCartAsync({
         ...item,
-        product: item.product.id,
+        product: item.id,
         quantity: +e.target.value,
-      })
+      }),
     );
   };
   const handleDelete = (item) => dispatch(deleteItemFromCartAsync(item.id));
@@ -18,8 +18,8 @@ export default function CheckoutPageCartList({ item }) {
     <li key={item.id} className="flex py-6">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
         <img
-          src={item.product.thumbnail}
-          alt={item.product.title}
+          src={item.thumbnail}
+          alt={item.title}
           className="h-full w-full object-cover object-center"
         />
       </div>
@@ -28,10 +28,10 @@ export default function CheckoutPageCartList({ item }) {
         <div>
           <div className="flex justify-between text-base font-medium text-gray-900 dark:text-gray-300">
             <h3>
-              <a href={item.product.id}>{item.product.title}</a>
+              <a href={item.id}>{item.title}</a>
             </h3>
             <p className="ml-4 whitespace-nowrap">
-              ₹ {item.product.price * item.quantity}
+              ₹ {item.price * item.quantity}
             </p>
           </div>
         </div>
@@ -66,4 +66,3 @@ export default function CheckoutPageCartList({ item }) {
     </li>
   );
 }
-

@@ -1,40 +1,54 @@
-import { useEffect } from "react";
-import "./styles/App.css";
+import { SnackbarProvider } from "notistack";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import { CustomSnackbar } from "./components";
+import { getCartItemsIDB } from "./indexedDB/cartDB";
 import {
   checkAuthAsync,
   fetchItemsByUserIdAsync,
   fetchLoggedInUserAsync,
   fetchWishListByUserIdAsync,
+  fetchWishListIDBAsync,
   selectLoggedInUser,
-  setWishlistItemsIDB,
+  setCartItemsIDB,
 } from "./redux";
-import { getWishlistItemsIDB } from "./indexedDB/wishlistDB";
-import { SnackbarProvider } from "notistack";
-import { RouterProvider } from "react-router-dom";
-import { CustomSnackbar } from "./components";
 import { router } from "./routes/router";
+import "./styles/App.css";
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
+
+  // const fetchWishlistItemsIDB = useCallback(async () => {
+  //   try {
+  //     const wishlistItems = await getWishlistItemsIDB();
+  //     dispatch(setWishlistItemsIDB(wishlistItems));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, [dispatch]);
+
+  const fetchCartItemsIDB = useCallback(async () => {
+    try {
+      const cartItems = await getCartItemsIDB();
+      dispatch(setCartItemsIDB(cartItems));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (user && !user.error) {
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchWishListByUserIdAsync());
     } else {
-      const fetchWishlistItemsIDB = async () => {
-        try {
-          const wishlistItems = await getWishlistItemsIDB();
-          dispatch(setWishlistItemsIDB(wishlistItems));
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      fetchWishlistItemsIDB();
+      // dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchWishListIDBAsync());
+      // fetchWishlistItemsIDB();
+      // fetchCartItemsIDB();
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, fetchCartItemsIDB]);
 
   useEffect(() => {
     dispatch(fetchLoggedInUserAsync());

@@ -22,6 +22,14 @@ export const cartSlice = createSlice({
     addCartItemIDB(state, action) {
       state.items = [...state.items, action.payload];
     },
+    updateCartItemIDB(state, action) {
+      const index = state.items.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+      const cartItems = [...state.items];
+      cartItems.splice(index, 1, action.payload);
+      state.items = cartItems;
+    },
     removeCartItemIDB(state, action) {
       const index = state.items.findIndex((item) => item.id === action.payload);
       state.items.splice(index, 1);

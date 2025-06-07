@@ -25,10 +25,11 @@ import {
   AdminProductListPage,
   ProductDetailPage,
 } from "../pages";
+import { pathnames } from "./pathnames";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: pathnames.HOME,
     element: <RootLayout />,
     errorElement: <ErrorFallbackPage />,
     children: [
@@ -40,43 +41,43 @@ export const router = createBrowserRouter([
             element: <ProductListPage />,
           },
           {
-            path: "product-detail/:id",
-            element: <ProductDetailPage  />,
+            path: pathnames.PRODUCT_DETAIL,
+            element: <ProductDetailPage />,
           },
           {
-            path: "wishlist",
+            path: pathnames.WISHLIST,
             element: <WishListPage />,
           },
           {
-            path: "cart",
+            path: pathnames.CART,
             element: <CartPage />,
           },
 
           {
-            path: "checkout",
+            path: pathnames.CHECKOUT,
             element: <CheckoutPage />,
           },
           {
-            path: "*",
+            path: pathnames.NOT_FOUND,
             element: <NotFoundPage />,
           },
         ],
       },
 
       {
-        path: "login",
+        path: pathnames.LOGOUT,
         element: <LoginPage />,
       },
       {
-        path: "signup",
+        path: pathnames.SIGNUP,
         element: <SignupPage />,
       },
       {
-        path: "/logout",
+        path: pathnames.LOGOUT,
         element: <LogoutPage />,
       },
       {
-        path: "/forgot-password",
+        path: pathnames.FORGOT_PASSWORD,
         element: <ForgotPasswordPage />,
       },
     ],
@@ -85,46 +86,46 @@ export const router = createBrowserRouter([
     element: <ProtectedLayout />,
     children: [
       {
-        path: "order-success/:id",
+        path: pathnames.ORDER_SUCCESS,
         element: <OrderSuccessPage />,
       },
       {
         element: <NavbarLayout />,
         children: [
           {
-            path: "my-orders",
+            path: pathnames.MY_ORDERS,
             element: <UserOrdersPage />,
           },
           {
-            path: "profile",
+            path: pathnames.PROFILE,
             element: <UserProfilePage />,
           },
           {
-            path: "/admin/product-detail/:id",
+            path: pathnames.ADMIN_PRODUCT_DETAIL,
             element: <AdminProductDetailPage />,
           },
           {
-            path: "/admin/product-form",
+            path: pathnames.ADMIN_PRODUCT_FORM,
             element: <AddProductFormPage />,
           },
           {
-            path: "/admin/edit-product-form/:id",
+            path: pathnames.ADMIN_EDIT_PRODUCT_FORM,
             element: <EditProductFormPage />,
           },
           {
-            path: "/admin/orders",
+            path: pathnames.ADMIN_ORDERS,
             element: <AdminOrdersPage />,
           },
           {
-            path: "/admin/profile",
+            path: pathnames.ADMIN_PROFILE,
             element: <AdminProfilePage />,
           },
           {
-            path: "/stripe-payment/:id",
+            path: pathnames.STRIPE_PAYMENT,
             element: <StripePaymentPage />,
           },
           {
-            path: "/admin",
+            path: pathnames.ADMIN,
             element: <AdminProductListPage />,
           },
         ],

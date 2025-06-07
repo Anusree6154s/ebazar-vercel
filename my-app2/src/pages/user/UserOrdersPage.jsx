@@ -15,9 +15,12 @@ function UserOrdersPage() {
     dispatch(fetchLoggedInUserOrdersAsync(user.id));
   }, [dispatch, user.id]);
 
-  if (!orders.length) return <div className="text-center text-gray-400 text-lg w-full">
-    My Orders is Empty
-  </div>
+  if (!orders.length)
+    return (
+      <div className="text-center text-gray-400 text-lg w-full">
+        My Orders is Empty
+      </div>
+    );
 
   return (
     <section>
@@ -48,8 +51,8 @@ function UserOrdersPage() {
                   <li key={index} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md ">
                       <img
-                        src={item.product.thumbnail}
-                        alt={item.product.title}
+                        src={item.thumbnail}
+                        alt={item.title}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -57,21 +60,22 @@ function UserOrdersPage() {
                     <div className="ml-4 flex flex-1 flex-col">
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900 dark:text-gray-100">
-                          <h3>{item.product.title}</h3>
+                          <h3>{item.title}</h3>
                           <p className="ml-4">
-                            ₹ {item.product.price * item.quantity}
+                            ₹ {item.price * (item.quantity || 1)}
                           </p>
                         </div>
                         <p className="dark:text-gray-300">
-                          Qty: {item.product.quantity}
+                          Qty: {item.quantity || 1}
                         </p>
                         <p
-                          className={`mt-1 text-sm ${order.status === "Pending"
-                            ? "text-red-700 dark:text-orange-500"
-                            : order.status === "Dispatched"
-                              ? "text-yellow-600"
-                              : "text-green-600"
-                            } `}
+                          className={`mt-1 text-sm ${
+                            order.status === "Pending"
+                              ? "text-red-700 dark:text-orange-500"
+                              : order.status === "Dispatched"
+                                ? "text-yellow-600"
+                                : "text-green-600"
+                          } `}
                         >
                           Order Status: {order.status}
                         </p>
@@ -81,8 +85,9 @@ function UserOrdersPage() {
                             Delivery Expected By:
                             <span className="font-bold dark:text-gray-300 ">
                               {" "}
-                              {`${parseInt(order.date.split("-")[0]) + 7
-                                }-${order.date.substring(3)}`}
+                              {`${
+                                parseInt(order.date.split("-")[0]) + 7
+                              }-${order.date.substring(3)}`}
                             </span>
                           </p>
                         )}
@@ -108,9 +113,7 @@ function UserOrdersPage() {
           {order.selectedAddress && (
             <div className="border dark:border-gray-500 mt-6 space-y-2 items-baseline p-5 px-4 py-6 sm:px-6">
               <p className="text-gray-900 dark:text-gray-300 font-bold text-lg">
-                {order.status !== "Delivered"
-                  ? "Shipping to:"
-                  : "Shipped To:"}
+                {order.status !== "Delivered" ? "Shipping to:" : "Shipped To:"}
               </p>
               <div className=" flex justify-between   ">
                 <div className="hidden shrink-0 sm:flex sm:flex-col  ">

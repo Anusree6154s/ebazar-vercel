@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllOrders, updateOrderAsync } from "../../redux";
-import { ArrowDownIcon, ArrowUpIcon, PencilIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  PencilIcon,
+} from "@heroicons/react/24/outline";
 
 export default function OrdersDashboard({ sort, setSort, page }) {
   const dispatch = useDispatch();
@@ -78,11 +82,11 @@ export default function OrdersDashboard({ sort, setSort, page }) {
                   <div className="mr-2 ">
                     <img
                       className="w-6 h-6 rounded-full"
-                      src={item.product.thumbnail}
-                      alt={item.product.title}
+                      src={item.thumbnail}
+                      alt={item.title}
                     />
                   </div>
-                  <span className="max-w-sm">{item.product.title}</span>
+                  <span className="max-w-sm">{item.title}</span>
                 </div>
               ))}
             </td>
@@ -128,8 +132,8 @@ export default function OrdersDashboard({ sort, setSort, page }) {
                     order.status === "Pending"
                       ? "bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs"
                       : order.status === "Dispatched"
-                      ? "bg-yellow-200 text-yellow-900 py-1 px-3 rounded-full text-xs"
-                      : "bg-green-200 text-green-900 py-1 px-3 rounded-full text-xs"
+                        ? "bg-yellow-200 text-yellow-900 py-1 px-3 rounded-full text-xs"
+                        : "bg-green-200 text-green-900 py-1 px-3 rounded-full text-xs"
                   }`}
                 >
                   {order.status}

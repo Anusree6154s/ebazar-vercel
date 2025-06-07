@@ -16,7 +16,7 @@ export const addToCartIDB = async (item) => {
 };
 
 // Get all cart items
-export async function getCartItems() {
+export async function getCartItemsIDB() {
   try {
     const store = await getTransaction(CART_STORE_NAME, "readonly");
     return new Promise((resolve, reject) => {

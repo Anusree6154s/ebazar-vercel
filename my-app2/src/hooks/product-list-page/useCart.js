@@ -7,24 +7,21 @@ import {
 } from "../../indexedDB/cartDB";
 import {
   addCartItemIDB,
-  addToWishListAsync,
-  deleteItemFromWishListAsync,
   removeCartItemIDB,
+  selectCartItems,
 } from "../../redux";
-import { selectCartItems } from "../../redux";
 
 export default function useCart(product, user) {
   const isLoggedIn = !!user;
   const cart = useSelector(selectCartItems);
   const [isProductInCart, setIsProductInCart] = useState(false);
 
-  const toggleCartIcon = () => {
+  const toggleCartIcon = async () => {
     let localCartHasProduct, remoteCartHasProduct;
     if (isLoggedIn) {
-      remoteCartHasProduct = cart.some((item) => item.id === product.id);
+      remoteCartHasProduct = await cart.some((item) => item.id === product.id);
     } else {
-      const checkProductInCart = async () => await existsInCartIDB(product.id);
-      localCartHasProduct = checkProductInCart();
+      localCartHasProduct = await existsInCartIDB(product.id);
     }
     setIsProductInCart(localCartHasProduct || remoteCartHasProduct);
   };
@@ -36,7 +33,10 @@ export default function useCart(product, user) {
 
   const dispatch = useDispatch();
   const handleCart = useCallback(() => {
-    const toggleProductInLocalCart = async () => {
+    if (!isLoggedIn) toggleProductInLocalCart();
+    else toggleProductInRemoteCart();
+
+    async function toggleProductInLocalCart() {
       try {
         const localCartHasProduct = await existsInCartIDB(product.id);
         if (localCartHasProduct) {
@@ -51,19 +51,21 @@ export default function useCart(product, user) {
       } catch (error) {
         console.error(error);
       }
-    };
+    }
 
-    const toggleProductInRemoteCart = () => {
+    async function toggleProductInRemoteCart() {
       const isProductInCart = cart.some((item) => item === product);
+      console.log("🚀 ~ toggleProductInRemoteCart ~ product:", product);
+      console.log(
+        "🚀 ~ toggleProductInRemoteCart ~ isProductInCart:",
+        isProductInCart,
+      );
       if (isProductInCart) {
-        dispatch(addToWishListAsync({ product: product.id, user: user.id }));
+        dispatch(addCartItemIDB({ product }));
       } else {
-        dispatch(deleteItemFromWishListAsync(product.id));
+        dispatch(removeCartItemIDB(product.id));
       }
-    };
-
-    if (!isLoggedIn) toggleProductInLocalCart();
-    else toggleProductInRemoteCart();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

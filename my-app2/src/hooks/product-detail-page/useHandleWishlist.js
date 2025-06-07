@@ -13,7 +13,7 @@ export default function useHandleWishlist({ product }) {
 
   const handleWishList = () => {
     const productExistsInWishlist = wishList.some(
-      (item) => item.product.title === product.title
+      (item) => item.title === product.title,
     );
     console.log(product.id);
 
