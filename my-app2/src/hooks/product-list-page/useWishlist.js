@@ -25,32 +25,33 @@ export default function useWishlist(product, user) {
   }, [toggleHeartIcon]);
 
   const dispatch = useDispatch();
-  const handleWishlist = useCallback((wishlistHasProduct) => {
-    const toggleProductInLocalWishlist = async () => {
-      if (wishlistHasProduct) {
-        dispatch(deleteItemFromWishListIDBAsync(product.id));
-        setIsProductInWishlist(false);
-      } else {
-        dispatch(addToWishListIDBAsync(product));
-        setIsProductInWishlist(true);
-      }
-    };
+  const handleWishlist = useCallback(
+    (wishlistHasProduct) => {
+      const toggleProductInLocalWishlist = async () => {
+        if (wishlistHasProduct) {
+          dispatch(deleteItemFromWishListIDBAsync(product.id));
+          setIsProductInWishlist(false);
+        } else {
+          dispatch(addToWishListIDBAsync(product));
+          setIsProductInWishlist(true);
+        }
+      };
 
-    const toggleProductInRemoteWishlist = () => {
-      if (wishlistHasProduct) {
-        dispatch(deleteItemFromWishListAsync(product.id));
-        setIsProductInWishlist(false);
-      } else {
-        dispatch(addToWishListAsync({ product: product.id, user: user.id }));
-        setIsProductInWishlist(true);
-      }
-    };
+      const toggleProductInRemoteWishlist = () => {
+        if (wishlistHasProduct) {
+          dispatch(deleteItemFromWishListAsync(product.id));
+          setIsProductInWishlist(false);
+        } else {
+          dispatch(addToWishListAsync({ product: product.id, user: user.id }));
+          setIsProductInWishlist(true);
+        }
+      };
 
-    if (!isLoggedIn) toggleProductInLocalWishlist();
-    else toggleProductInRemoteWishlist();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      if (!isLoggedIn) toggleProductInLocalWishlist();
+      else toggleProductInRemoteWishlist();
+    },
+    [dispatch, isLoggedIn, product, user],
+  );
 
   return { handleWishlist, isProductInWishlist };
 }

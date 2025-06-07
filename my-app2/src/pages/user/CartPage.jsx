@@ -9,6 +9,7 @@ import {
 } from "../../redux";
 import { getTotalCartItemsCount } from "../../util/total-cart-items";
 import { getTotalCartItemsPrice } from "../../util/total-cart-items-price";
+import { pathnames } from "../../routes/pathnames";
 
 function CartPage() {
   const items = useSelector(selectCartItems);
@@ -24,7 +25,7 @@ function CartPage() {
 
   return (
     <section id="cart">
-      <BackButton />
+      <BackButton path={pathnames.HOME} />
 
       <div className="flex flex-col bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex-1 px-4 py-6 sm:px-6 flow-root">
@@ -67,7 +68,7 @@ function CartPage() {
                   {" "}
                   &larr;
                 </span>
-                Continue Shopping
+                Back to Shopping
               </button>
             </Link>
           </div>

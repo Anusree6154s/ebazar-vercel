@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addToCartAsync,
+  addToCartIDBAsync,
   deleteItemFromCartAsync,
-  fetchItemsByUserIdAsync,
+  deleteItemFromCartIDBAsync,
+  fetchCartByUserIdAsync,
+  fetchCartIDBAsync,
   resetCartAsync,
   updateCartAsync,
+  updateCartIDBAsync,
 } from "./cartThunks";
 
 const initialState = {
@@ -47,10 +51,24 @@ export const cartSlice = createSlice({
         state.status = "idle";
         state.items.push(action.payload);
       })
-      .addCase(fetchItemsByUserIdAsync.pending, (state) => {
+      .addCase(addToCartIDBAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchItemsByUserIdAsync.fulfilled, (state, action) => {
+      .addCase(addToCartIDBAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.items.push(action.payload);
+      })
+      .addCase(fetchCartByUserIdAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchCartByUserIdAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.items = action.payload ? action.payload : [];
+      })
+      .addCase(fetchCartIDBAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchCartIDBAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.items = action.payload ? action.payload : [];
       })
@@ -64,6 +82,16 @@ export const cartSlice = createSlice({
         );
         state.items[index] = action.payload;
       })
+      .addCase(updateCartIDBAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateCartIDBAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload.id,
+        );
+        state.items[index] = action.payload;
+      })
       .addCase(deleteItemFromCartAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -71,6 +99,16 @@ export const cartSlice = createSlice({
         state.status = "idle";
         const index = state.items.findIndex(
           (item) => item.id === action.payload.id,
+        );
+        state.items.splice(index, 1);
+      })
+      .addCase(deleteItemFromCartIDBAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteItemFromCartIDBAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload,
         );
         state.items.splice(index, 1);
       })

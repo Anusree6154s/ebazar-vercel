@@ -2,8 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   deleteItemFromCartAsync,
+  deleteItemFromCartIDBAsync,
   selectLoggedInUser,
   updateCartAsync,
+  updateCartIDBAsync,
 } from "../../../redux";
 
 export default function CartItem({ item }) {
@@ -45,7 +47,13 @@ export default function CartItem({ item }) {
                     }),
                   );
                 } else {
-                  dispatch();
+                  dispatch(
+                    updateCartIDBAsync({
+                      ...item,
+                      product: item.id,
+                      quantity: +e.target.value,
+                    }),
+                  );
                 }
               }}
               className="py-0 rounded-md dark:text-gray-200 dark:bg-gray-700 focus:outline-none"
@@ -63,7 +71,13 @@ export default function CartItem({ item }) {
         <div className="flex flex-col justify-between items-end">
           <p className="ml-4">₹ {item.price * (item.quantity || 1)}</p>
           <button
-            onClick={() => dispatch(deleteItemFromCartAsync(item.id))}
+            onClick={() =>
+              dispatch(
+                user
+                  ? deleteItemFromCartAsync(item.id)
+                  : deleteItemFromCartIDBAsync(item.id),
+              )
+            }
             type="button"
             className="font-medium text-customBlue dark:text-blue-400 text-sm "
           >

@@ -124,7 +124,7 @@ function CheckoutPage() {
                         <span aria-hidden="true" className="mr-2 text-lg">
                           &larr;
                         </span>
-                        Continue Shopping
+                        Back to Shopping
                         <span aria-hidden="true"> &rarr;</span>
                       </button>
                     </Link>

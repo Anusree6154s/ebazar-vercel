@@ -1,17 +1,16 @@
 import { SnackbarProvider } from "notistack";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { CustomSnackbar } from "./components";
-import { getCartItemsIDB } from "./indexedDB/cartDB";
 import {
   checkAuthAsync,
-  fetchItemsByUserIdAsync,
+  fetchCartByUserIdAsync,
+  fetchCartIDBAsync,
   fetchLoggedInUserAsync,
   fetchWishListByUserIdAsync,
   fetchWishListIDBAsync,
   selectLoggedInUser,
-  setCartItemsIDB,
 } from "./redux";
 import { router } from "./routes/router";
 import "./styles/App.css";
@@ -20,35 +19,15 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
 
-  // const fetchWishlistItemsIDB = useCallback(async () => {
-  //   try {
-  //     const wishlistItems = await getWishlistItemsIDB();
-  //     dispatch(setWishlistItemsIDB(wishlistItems));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, [dispatch]);
-
-  const fetchCartItemsIDB = useCallback(async () => {
-    try {
-      const cartItems = await getCartItemsIDB();
-      dispatch(setCartItemsIDB(cartItems));
-    } catch (error) {
-      console.error(error);
-    }
-  }, [dispatch]);
-
   useEffect(() => {
     if (user && !user.error) {
-      dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchCartByUserIdAsync());
       dispatch(fetchWishListByUserIdAsync());
     } else {
-      // dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchWishListIDBAsync());
-      // fetchWishlistItemsIDB();
-      // fetchCartItemsIDB();
+      dispatch(fetchCartIDBAsync());
     }
-  }, [user, dispatch, fetchCartItemsIDB]);
+  }, [user, dispatch]);
 
   useEffect(() => {
     dispatch(fetchLoggedInUserAsync());
