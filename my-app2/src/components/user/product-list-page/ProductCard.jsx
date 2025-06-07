@@ -1,18 +1,17 @@
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import {
   deleteItemFromWishListAsync,
-  removeWishlistItemIDB,
+  deleteItemFromWishListIDBAsync,
   selectLoggedInUser,
 } from "../../../redux";
+import { pathnames } from "../../../routes/pathnames";
+import ImageTransformer from "../ImageTransformer";
+import HeartIconToggle from "./HeartIconToggle";
 import RatingStars from "./RatingStars";
 import ShoppingCartIconToggle from "./ShoppingCartIconToggle";
-import HeartIconToggle from "./HeartIconToggle";
-import { Link, useLocation } from "react-router-dom";
-import ImageTransformer from "../ImageTransformer";
-import { pathnames } from "../../../routes/pathnames";
-import { removeFromWishlistIDB } from "../../../indexedDB/wishlistDB";
-import { useCallback } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function ProductCard({ product }) {
   const user = useSelector(selectLoggedInUser);
@@ -24,8 +23,7 @@ export default function ProductCard({ product }) {
       if (user) {
         dispatch(deleteItemFromWishListAsync(id));
       } else {
-        dispatch(removeWishlistItemIDB(id));
-        await removeFromWishlistIDB(id);
+        dispatch(deleteItemFromWishListIDBAsync(id));
       }
     },
     [dispatch, user],
@@ -36,21 +34,22 @@ export default function ProductCard({ product }) {
       className="group relative border-[1.5px] border-gray-200 dark:border-gray-700  rounded-md p-2 flex flex-col justify-between dark:hover:bg-gradient-to-b dark:hover:from-gray-900 dark:hover:to-transparent transition duration-300 "
       id="product-grid-card"
     >
-      {location.pathname === pathnames.WISHLIST && (
-        <span className="absolute z-10 inset-0 hover:opacity-100 opacity-0">
-          <XMarkIcon
-            onClick={() => handleDelete(product.id)}
-            className="absolute z-20 top-4 right-4 p-2 text-gray-700 bg-gray-50 border-gray-300 border rounded-full w-10 h-10 text-center hover:bg-white hover:text-black hover:border-gray-500 cursor-pointer"
-          />
-        </span>
-      )}
       <div className="aspect-[1/1] w-full min-h-auto overflow-hidden rounded-md  group-hover:opacity-75 dark:opacity-95  dark:group-hover:opacity-100 bg-gray-50 flex-1 transition-opacity duration-300">
         <ImageTransformer src={product.thumbnail} className={""} />
       </div>
       <div className="mt-4 flex-1">
-        <Link to={`/product-detail/${product.id}`}>
-          <span aria-hidden="true" className="absolute inset-0" />
-        </Link>
+        <span className="absolute z-10 inset-0 hover:opacity-100 opacity-0">
+          {location.pathname === pathnames.WISHLIST && (
+            <XMarkIcon
+              onClick={() => handleDelete(product.id)}
+              className="absolute z-20 top-4 right-4 p-2 text-gray-700 bg-gray-50 border-gray-300 border rounded-full w-10 h-10 text-center hover:bg-white hover:text-black hover:border-gray-500 cursor-pointer"
+            />
+          )}
+          <Link
+            to={`/product-detail/${product.id}`}
+            className="absolute inset-0"
+          />
+        </span>
         <div className="flex flex-col gap-2 justify-between h-full">
           <div>
             <span className="text-sm sm:text-xs text-gray-400 font-bold uppercase">

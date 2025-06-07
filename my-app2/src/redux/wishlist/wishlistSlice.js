@@ -67,7 +67,7 @@ export const wishListSlice = createSlice({
       .addCase(deleteItemFromWishListIDBAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id,
+          (item) => item.id === action.payload,
         );
         state.items.splice(index, 1);
       });
