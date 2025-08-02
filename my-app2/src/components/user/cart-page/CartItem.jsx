@@ -44,7 +44,7 @@ export default function CartItem({ item }) {
                       ...item,
                       product: item.id,
                       quantity: +e.target.value,
-                    }),
+                    })
                   );
                 } else {
                   dispatch(
@@ -52,7 +52,7 @@ export default function CartItem({ item }) {
                       ...item,
                       product: item.id,
                       quantity: +e.target.value,
-                    }),
+                    })
                   );
                 }
               }}
@@ -69,13 +69,15 @@ export default function CartItem({ item }) {
           </p>
         </div>
         <div className="flex flex-col justify-between items-end">
-          <p className="ml-4">₹ {item.price * (item.quantity || 1)}</p>
+          <p className="ml-4">
+            ₹ {(item.price * (item.quantity || 1)).toFixed(2)}
+          </p>
           <button
             onClick={() =>
               dispatch(
                 user
                   ? deleteItemFromCartAsync(item.id)
-                  : deleteItemFromCartIDBAsync(item.id),
+                  : deleteItemFromCartIDBAsync(item.id)
               )
             }
             type="button"
