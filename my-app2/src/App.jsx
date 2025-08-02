@@ -1,19 +1,19 @@
-import { useEffect } from "react";
-import "./styles/App.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  checkAuthAsync,
-  fetchItemsByUserIdAsync,
-  fetchLoggedInUserAsync,
-  fetchWishListByUserIdAsync,
-  selectLoggedInUser,
-  setWishlistItemsIDB,
-} from "./redux";
-import { getWishlistItemsIDB } from "./indexedDB/wishlistDB";
 import { SnackbarProvider } from "notistack";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { CustomSnackbar } from "./components";
+import {
+  checkAuthAsync,
+  fetchCartByUserIdAsync,
+  fetchCartIDBAsync,
+  fetchLoggedInUserAsync,
+  fetchWishListByUserIdAsync,
+  fetchWishListIDBAsync,
+  selectLoggedInUser,
+} from "./redux";
 import { router } from "./routes/router";
+import "./styles/App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,18 +21,11 @@ function App() {
 
   useEffect(() => {
     if (user && !user.error) {
-      dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchCartByUserIdAsync());
       dispatch(fetchWishListByUserIdAsync());
     } else {
-      const fetchWishlistItemsIDB = async () => {
-        try {
-          const wishlistItems = await getWishlistItemsIDB();
-          dispatch(setWishlistItemsIDB(wishlistItems));
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      fetchWishlistItemsIDB();
+      dispatch(fetchWishListIDBAsync());
+      dispatch(fetchCartIDBAsync());
     }
   }, [user, dispatch]);
 

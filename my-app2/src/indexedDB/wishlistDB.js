@@ -6,7 +6,7 @@ export const addToWishlistIDB = async (item) => {
     const store = await getTransaction(WISHLIST_STORE_NAME, "readwrite");
     return new Promise((resolve, reject) => {
       const request = store.put(item);
-      request.onsuccess = () => resolve("Item added to wishlist successfully");
+      request.onsuccess = () => resolve(item);
 
       request.onerror = () => reject("Failed to add item");
     });
@@ -52,8 +52,7 @@ export async function removeFromWishlistIDB(itemId) {
     const store = await getTransaction(WISHLIST_STORE_NAME, "readwrite");
     return new Promise((resolve, reject) => {
       const request = store.delete(itemId);
-      request.onsuccess = () =>
-        resolve("Item removed from wishlist successfully");
+      request.onsuccess = () => resolve(itemId);
 
       request.onerror = () => reject("Failed to remove item from wishlist");
     });

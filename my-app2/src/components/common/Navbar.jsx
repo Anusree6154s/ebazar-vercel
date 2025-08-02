@@ -70,8 +70,11 @@ export default function Navbar({ children, name, preview }) {
   }, [user]);
 
   return (
-    <div className="min-h-full">
-      <Disclosure as="nav" className="bg-gray-800 dark:bg-gray-900">
+    <div className="min-h-full relative">
+      <Disclosure
+        as="nav"
+        className="bg-gray-800 dark:bg-gray-900 sticky top-0 left-0 z-100"
+      >
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-[90%]">
@@ -84,7 +87,7 @@ export default function Navbar({ children, name, preview }) {
                 </Link>
 
                 <div className="hidden md:block">
-                  <div className="ml-4 flex gap-2 items-center md:ml-6 ">
+                  <div className="ml-4 flex gap-2 items-center md:ml-6">
                     <button
                       onClick={() => navigate("/login")}
                       className="p-1 w-32 text-center rounded-sm bg-orange-500 text-white font-medium"
@@ -102,7 +105,7 @@ export default function Navbar({ children, name, preview }) {
                       id="theme-toggle"
                       onClick={handleTheme}
                       type="button"
-                      className="flex items-center text-gray-400  hover:text-gray-100  focus:outline-none focus:ring-4 focus:ring-transparent rounded-lg text-sm p-2.5 dark:border-gray-600"
+                      className="flex items-center text-gray-400  hover:text-gray-100  focus:outline-none focus:ring-4 focus:ring-transparent rounded-lg text-sm p-2.5 dark:border-gray-600 min-w-[122px]"
                     >
                       {dark ? "Light Mode" : "Dark Mode"}
                       <svg
@@ -138,7 +141,10 @@ export default function Navbar({ children, name, preview }) {
                         className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
                       >
                         <span className="sr-only">View WishList</span>
-                        <HeartIcon className="h-6 w-6" aria-hidden="true" />
+                        <HeartIcon
+                          className="h-6 w-6 cursor-pointer"
+                          aria-hidden="true"
+                        />
                         {wishlistLength > 0 && (
                           <span className="absolute items-center rounded-md bg-pink-50 -mt-10 px-2 py-1 text-xs font-medium text-pink-500 ring-1 ring-inset ring-pink-600/10 ">
                             {wishlistLength}
@@ -158,7 +164,7 @@ export default function Navbar({ children, name, preview }) {
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">View cart</span>
                         <ShoppingCartIcon
-                          className="h-6 w-6"
+                          className="h-6 w-6 cursor-pointer"
                           aria-hidden="true"
                         />
                         {cartItems.length > 0 && (
@@ -278,7 +284,7 @@ export default function Navbar({ children, name, preview }) {
       </Disclosure>
 
       {name && (
-        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-customBlue shadow ">
+        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-customBlue shadow sticky top-16 left-0 z-100">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8  w-[90%]">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
               <span>{name}</span>

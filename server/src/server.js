@@ -7,11 +7,12 @@ const routes = require("./routes");
 const passport = require("passport");
 const cors = require("cors");
 const morgan = require("morgan");
+const { format } = require("date-fns");
 
 const server = express();
 
 morgan.token("date", function () {
-  return new Date().toISOString();
+  return format(new Date(), "dd-MMMM-yyyy-hh:mm:ss a");
 });
 
 server.use(morgan(":date :method :url :status :response-time ms"));

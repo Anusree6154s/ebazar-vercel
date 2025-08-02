@@ -1,72 +1,56 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addToCartIDB,
-  existsInCartIDB,
-  removeFromCartIDB,
-} from "../../indexedDB/cartDB";
-import {
-  addCartItemIDB,
-  addToWishListAsync,
-  deleteItemFromWishListAsync,
-  removeCartItemIDB,
+  addToCartAsync,
+  addToCartIDBAsync,
+  deleteItemFromCartAsync,
+  deleteItemFromCartIDBAsync,
+  selectCartItems,
 } from "../../redux";
-import { selectCartItems } from "../../redux";
 
 export default function useCart(product, user) {
   const isLoggedIn = !!user;
   const cart = useSelector(selectCartItems);
   const [isProductInCart, setIsProductInCart] = useState(false);
 
-  const toggleCartIcon = () => {
-    let localCartHasProduct, remoteCartHasProduct;
-    if (isLoggedIn) {
-      remoteCartHasProduct = cart.some((item) => item.id === product.id);
-    } else {
-      const checkProductInCart = async () => await existsInCartIDB(product.id);
-      localCartHasProduct = checkProductInCart();
-    }
-    setIsProductInCart(localCartHasProduct || remoteCartHasProduct);
-  };
+  const toggleCartIcon = useCallback(async () => {
+    const cartHasProduct = await cart.some((item) => item.id === product.id);
+    setIsProductInCart(cartHasProduct);
+  }, [product.id, cart]);
 
   useEffect(() => {
     toggleCartIcon();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [toggleCartIcon]);
 
   const dispatch = useDispatch();
-  const handleCart = useCallback(() => {
-    const toggleProductInLocalCart = async () => {
-      try {
-        const localCartHasProduct = await existsInCartIDB(product.id);
-        if (localCartHasProduct) {
-          await removeFromCartIDB(product.id);
-          dispatch(removeCartItemIDB(product.id));
+  const handleCart = useCallback(
+    (cartHasProduct) => {
+      console.log("🚀 ~ useCart ~ cartHasProduct:", cartHasProduct);
+      if (!isLoggedIn) toggleProductInLocalCart();
+      else toggleProductInRemoteCart();
+
+      async function toggleProductInLocalCart() {
+        if (cartHasProduct) {
+          dispatch(deleteItemFromCartIDBAsync(product.id));
           setIsProductInCart(false);
         } else {
-          await addToCartIDB(product);
-          dispatch(addCartItemIDB({ product }));
+          dispatch(addToCartIDBAsync(product));
           setIsProductInCart(true);
         }
-      } catch (error) {
-        console.error(error);
       }
-    };
 
-    const toggleProductInRemoteCart = () => {
-      const isProductInCart = cart.some((item) => item === product);
-      if (isProductInCart) {
-        dispatch(addToWishListAsync({ product: product.id, user: user.id }));
-      } else {
-        dispatch(deleteItemFromWishListAsync(product.id));
+      async function toggleProductInRemoteCart() {
+        if (cartHasProduct) {
+          dispatch(deleteItemFromCartAsync(product.id));
+          setIsProductInCart(false);
+        } else {
+          dispatch(addToCartAsync({ product }));
+          setIsProductInCart(true);
+        }
       }
-    };
-
-    if (!isLoggedIn) toggleProductInLocalCart();
-    else toggleProductInRemoteCart();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    },
+    [dispatch, isLoggedIn, product],
+  );
 
   return { handleCart, isProductInCart };
 }

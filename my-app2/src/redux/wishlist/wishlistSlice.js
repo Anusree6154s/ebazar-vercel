@@ -3,6 +3,9 @@ import {
   addToWishListAsync,
   fetchWishListByUserIdAsync,
   deleteItemFromWishListAsync,
+  addToWishListIDBAsync,
+  deleteItemFromWishListIDBAsync,
+  fetchWishListIDBAsync,
 } from "./wishlistThunks";
 
 const initialState = {
@@ -14,16 +17,6 @@ export const wishListSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    setWishlistItemsIDB(state, action) {
-      state.items = action.payload;
-    },
-    addWishlistItemIDB(state, action) {
-      state.items = [...state.items, action.payload];
-    },
-    removeWishlistItemIDB(state, action) {
-      const index = state.items.findIndex((item) => item.id === action.payload);
-      state.items.splice(index, 1);
-    },
     clearWishlistIDB(state) {
       state.items = [];
     },
@@ -37,10 +30,24 @@ export const wishListSlice = createSlice({
         state.status = "idle";
         state.items.push(action.payload);
       })
+      .addCase(addToWishListIDBAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addToWishListIDBAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.items.push(action.payload);
+      })
       .addCase(fetchWishListByUserIdAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchWishListByUserIdAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.items = action.payload ? action.payload : [];
+      })
+      .addCase(fetchWishListIDBAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchWishListIDBAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.items = action.payload ? action.payload : [];
       })
@@ -50,7 +57,17 @@ export const wishListSlice = createSlice({
       .addCase(deleteItemFromWishListAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id,
+          (item) => item.id === action.payload,
+        );
+        state.items.splice(index, 1);
+      })
+      .addCase(deleteItemFromWishListIDBAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteItemFromWishListIDBAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload,
         );
         state.items.splice(index, 1);
       });

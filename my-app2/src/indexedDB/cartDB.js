@@ -5,8 +5,22 @@ export const addToCartIDB = async (item) => {
   try {
     const store = await getTransaction(CART_STORE_NAME, "readwrite");
     return new Promise((resolve, reject) => {
+      const request = store.add(item);
+      request.onsuccess = () => resolve(item);
+      request.onerror = () => reject("Failed to add item");
+    });
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    throw error;
+  }
+};
+
+export const updateCartIDB = async (item) => {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readwrite");
+    return new Promise((resolve, reject) => {
       const request = store.put(item);
-      request.onsuccess = () => resolve("Item added successfully");
+      request.onsuccess = () => resolve(item);
       request.onerror = () => reject("Failed to add item");
     });
   } catch (error) {
@@ -16,7 +30,7 @@ export const addToCartIDB = async (item) => {
 };
 
 // Get all cart items
-export async function getCartItems() {
+export async function getCartItemsIDB() {
   try {
     const store = await getTransaction(CART_STORE_NAME, "readonly");
     return new Promise((resolve, reject) => {
@@ -36,7 +50,7 @@ export async function removeFromCartIDB(itemId) {
     const store = await getTransaction(CART_STORE_NAME, "readwrite");
     return new Promise((resolve, reject) => {
       const request = store.delete(itemId);
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = () => resolve(itemId);
       request.onerror = () => reject("Failed to remove item from cart");
     });
   } catch (error) {

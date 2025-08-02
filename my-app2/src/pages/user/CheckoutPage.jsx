@@ -11,8 +11,11 @@ import {
 import { getFormattedDate } from "../../util/format-date";
 import { getTotalCartItemsCount } from "../../util/total-cart-items";
 import { getTotalCartItemsPrice } from "../../util/total-cart-items-price";
-import { BackButton, CheckoutPageCartList, CheckoutPageForm } from "../../components";
-
+import {
+  BackButton,
+  CheckoutPageCartList,
+  CheckoutPageForm,
+} from "../../components";
 
 function CheckoutPage() {
   const methods = useForm({ mode: "onChange" });
@@ -22,7 +25,7 @@ function CheckoutPage() {
   const user = useSelector(selectLoggedInUser);
   const currentOrder = useSelector(selectCurrentOrder);
   const [selectedAddress, setSelectedAddress] = useState(
-    user.addresses[0] || null
+    user.addresses[0] || null,
   );
   const [paymentMethod, setpaymentMethod] = useState("cash");
   const addressRef = useRef();
@@ -45,7 +48,7 @@ function CheckoutPage() {
     selectedAddress,
     addressRef,
     order,
-    user
+    user,
   );
 
   if (currentOrder) {
@@ -64,7 +67,6 @@ function CheckoutPage() {
   return (
     <>
       <BackButton />
-
 
       {user && (
         <div className=" grid gap-10 max-w-7xl  lg:grid-cols-5">
@@ -106,27 +108,26 @@ function CheckoutPage() {
                   <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-300">
                     Shipping and taxes calculated at checkout.
                   </p>
-                  <div className="mt-6">
+                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-300">
                     <Link
                       onClick={handleOrder}
                       className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-customBlue dark:bg-blue-500 px-6 py-3 text-base font-medium text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600"
                     >
                       Order Now
                     </Link>
-                  </div>
-                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-300">
-                    <p>
-                      or{" "}
-                      <Link to="/">
-                        <button
-                          type="button"
-                          className="font-medium text-customBlue hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-600"
-                        >
-                          Continue Shopping
-                          <span aria-hidden="true"> &rarr;</span>
-                        </button>
-                      </Link>
-                    </p>
+                    <span>or</span>
+                    <Link to="/">
+                      <button
+                        type="button"
+                        className="font-medium text-customBlue dark:text-blue-400"
+                      >
+                        <span aria-hidden="true" className="mr-2 text-lg">
+                          &larr;
+                        </span>
+                        Back to Shopping
+                        <span aria-hidden="true"> &rarr;</span>
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

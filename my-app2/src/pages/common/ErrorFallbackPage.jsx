@@ -17,7 +17,7 @@ export default function ErrorFallbackPage() {
             <h1 className="font-bold text-2xl">Oops! Error</h1>
             <h6>There seems to be a server issue. </h6>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
               onClick={() => navigate("/")}
             >
               Back Home

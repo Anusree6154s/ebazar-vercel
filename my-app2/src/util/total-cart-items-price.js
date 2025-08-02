@@ -3,10 +3,10 @@ export const getTotalCartItemsPrice = (items) => {
     ? Number(
         items
           .reduce(
-            (amount, item) => item.product.price * item.quantity + amount,
-            0
+            (amount, item) => item.price * (item.quantity || 1) + amount,
+            0,
           )
-          .toFixed(2)
+          .toFixed(2),
       )
     : 0;
 };
