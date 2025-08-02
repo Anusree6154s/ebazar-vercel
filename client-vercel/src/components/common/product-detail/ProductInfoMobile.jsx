@@ -1,5 +1,6 @@
 import { StarIcon } from "@heroicons/react/24/outline";
 import ProductButton from "./ProductButton";
+import RatingStars from "../../user/product-list-page/RatingStars";
 
 const highlights = [
   "Premium Quality - Built to last with top-grade materials.",
@@ -52,7 +53,7 @@ export default function ProductInfoMobile({
           <h3 className="sr-only">Reviews</h3>
           <div className="flex items-center">
             <div className="flex items-center">
-              {[0, 1, 2, 3, 4].map((rating) => (
+              {/* {[0, 1, 2, 3, 4].map((rating) => (
                 <StarIcon
                   key={rating}
                   className={classNames(
@@ -63,7 +64,8 @@ export default function ProductInfoMobile({
                   )}
                   aria-hidden="true"
                 />
-              ))}
+              ))} */}
+              <RatingStars rating={product.rating} />
             </div>
             <p className="sr-only">{product.rating} out of 5 stars</p>
           </div>
