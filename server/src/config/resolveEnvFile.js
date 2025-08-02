@@ -11,7 +11,6 @@ function resolveEnvFile() {
     case "test":
       return path.resolve(__dirname, "../../../.env.test");
     case "local":
-      console.log(path.resolve(__dirname, "../../../.env.local"));
       return path.resolve(__dirname, "../../../.env.local");
     default:
       return path.resolve(__dirname, "../../../.env");
