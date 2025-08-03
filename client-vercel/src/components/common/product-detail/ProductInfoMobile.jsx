@@ -1,6 +1,5 @@
-import { StarIcon } from "@heroicons/react/24/outline";
-import ProductButton from "./ProductButton";
 import RatingStars from "../../user/product-list-page/RatingStars";
+import ProductButton from "./ProductButton";
 
 const highlights = [
   "Premium Quality - Built to last with top-grade materials.",
@@ -8,10 +7,6 @@ const highlights = [
   "User-Friendly - Easy to use for everyone.",
   "Fast Delivery - Quick and reliable shipping.",
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function ProductInfoMobile({
   product,

@@ -16,7 +16,6 @@ export { default as InputField } from "./auth/InputField";
 
 // common
 export { default as BackButton } from "./common/BackButton";
-export { default as CustomSnackbar } from "./common/CustomSnackbar";
 export { default as LandingBanner } from "./common/LandingBanner";
 export { default as Loader } from "./common/Loader";
 export { default as Navbar } from "./common/Navbar";
@@ -47,7 +46,10 @@ export { default as ProductDetailBreadCrumb } from "./user/product-detail-page/B
 
 // user/product-list-page
 export { default as DesktopFilter } from "./user/product-list-page/DesktopFilter";
-export { MobileFilterButton, MobileFilterDialog } from "./user/product-list-page/MobileFilter";
+export {
+  MobileFilterButton,
+  MobileFilterDialog,
+} from "./user/product-list-page/MobileFilter";
 export { default as ProductGrid } from "./user/product-list-page/ProductGrid";
 export { default as Sort } from "./user/product-list-page/Sort";
 export { default as HeartIconToggle } from "./user/product-list-page/HeartIconToggle";

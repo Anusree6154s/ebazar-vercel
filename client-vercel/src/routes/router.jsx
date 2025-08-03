@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: pathnames.LOGOUT,
+        path: pathnames.LOGIN,
         element: <LoginPage />,
       },
       {

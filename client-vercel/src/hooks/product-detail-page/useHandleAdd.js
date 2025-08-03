@@ -11,11 +11,14 @@ export default function useHandleAdd({ quantity, product }) {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const user = useSelector(selectLoggedInUser);
-
+  
   const handleAdd = () => {
+    console.log("🚀 ~ handleAdd ~ handleAdd:")
+    console.log("🚀 ~ useHandleAdd ~ product:", product)
     const productInCart = cartItems.find(
       (item) => item.title === product.title,
     );
+    console.log("🚀 ~ handleAdd ~ productInCart:", productInCart)
 
     if (product.stock !== 0) {
       if (productInCart) {

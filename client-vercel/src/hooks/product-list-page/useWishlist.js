@@ -15,7 +15,7 @@ export default function useWishlist(product, user) {
 
   const toggleHeartIcon = useCallback(async () => {
     const wishlistHasProduct = await wishList.some(
-      (item) => item.id === product.id,
+      (item) => item.id === product.id
     );
     setIsProductInWishlist(wishlistHasProduct);
   }, [product.id, wishList]);
@@ -50,7 +50,7 @@ export default function useWishlist(product, user) {
       if (!isLoggedIn) toggleProductInLocalWishlist();
       else toggleProductInRemoteWishlist();
     },
-    [dispatch, isLoggedIn, product, user],
+    [dispatch, isLoggedIn, product, user]
   );
 
   return { handleWishlist, isProductInWishlist };

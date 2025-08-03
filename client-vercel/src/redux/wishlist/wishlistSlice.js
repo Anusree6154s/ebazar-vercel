@@ -6,11 +6,13 @@ import {
   addToWishListIDBAsync,
   deleteItemFromWishListIDBAsync,
   fetchWishListIDBAsync,
+  isWishListIDBEmptyAsync,
 } from "./wishlistThunks";
 
 const initialState = {
   items: [],
   status: null,
+  isWishlistIDBEmpty: true,
 };
 
 export const wishListSlice = createSlice({
@@ -57,7 +59,7 @@ export const wishListSlice = createSlice({
       .addCase(deleteItemFromWishListAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload,
+          (item) => item.id === action.payload
         );
         state.items.splice(index, 1);
       })
@@ -67,9 +69,16 @@ export const wishListSlice = createSlice({
       .addCase(deleteItemFromWishListIDBAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload,
+          (item) => item.id === action.payload
         );
         state.items.splice(index, 1);
+      })
+      .addCase(isWishListIDBEmptyAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(isWishListIDBEmptyAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.isWishlistIDBEmpty = action.payload;
       });
   },
 });

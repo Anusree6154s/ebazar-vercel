@@ -6,6 +6,7 @@ import {
 } from "../../api";
 import {
   addToWishlistIDB,
+  getWishlistItemsCountIDB,
   getWishlistItemsIDB,
   removeFromWishlistIDB,
 } from "../../indexedDB/wishlistDB";
@@ -15,7 +16,7 @@ export const addToWishListAsync = createAsyncThunk(
   async (item) => {
     const response = await addToWishList(item);
     return response.data;
-  },
+  }
 );
 
 export const addToWishListIDBAsync = createAsyncThunk(
@@ -23,7 +24,7 @@ export const addToWishListIDBAsync = createAsyncThunk(
   async (item) => {
     const response = await addToWishlistIDB(item);
     return response;
-  },
+  }
 );
 
 export const fetchWishListByUserIdAsync = createAsyncThunk(
@@ -31,7 +32,7 @@ export const fetchWishListByUserIdAsync = createAsyncThunk(
   async () => {
     const response = await fetchWishListByUserId();
     return response.data;
-  },
+  }
 );
 
 export const fetchWishListIDBAsync = createAsyncThunk(
@@ -39,7 +40,7 @@ export const fetchWishListIDBAsync = createAsyncThunk(
   async () => {
     const response = await getWishlistItemsIDB();
     return response;
-  },
+  }
 );
 
 export const deleteItemFromWishListAsync = createAsyncThunk(
@@ -47,7 +48,7 @@ export const deleteItemFromWishListAsync = createAsyncThunk(
   async (itemId) => {
     const response = await deleteItemFromWishList(itemId);
     return response.data;
-  },
+  }
 );
 
 export const deleteItemFromWishListIDBAsync = createAsyncThunk(
@@ -55,5 +56,21 @@ export const deleteItemFromWishListIDBAsync = createAsyncThunk(
   async (itemId) => {
     const response = await removeFromWishlistIDB(itemId);
     return response;
-  },
+  }
+);
+
+export const isWishListIDBEmptyAsync = createAsyncThunk(
+  "wishlist/isWishListIDBEmpty",
+  async () => {
+    const wishlistIDBCount = await getWishlistItemsCountIDB();
+    return !!wishlistIDBCount;
+  }
+);
+
+export const moveWishListFromIDBToRemoteAsync = createAsyncThunk(
+  "wishlist/moveWishListFromIDBToRemote",
+  async () => {
+    // const wishlistItemsIDB = await getWishlistItemsIDB();
+    // await addToWishList(item);
+  }
 );
