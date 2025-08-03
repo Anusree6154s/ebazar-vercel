@@ -88,19 +88,23 @@ export default function Navbar({ children, name, preview }) {
 
                 <div className="hidden md:block">
                   <div className="ml-4 flex gap-2 items-center md:ml-6">
-                    <button
-                      onClick={() => navigate("/login")}
-                      className="p-1 w-32 text-center rounded-sm bg-orange-500 text-white font-medium"
-                    >
-                      Login
-                    </button>
+                    {!user && (
+                      <>
+                        <button
+                          onClick={() => navigate("/login")}
+                          className="p-1 w-32 text-center rounded-sm bg-orange-500 text-white font-medium"
+                        >
+                          Login
+                        </button>
+                        <button
+                          onClick={() => navigate("/signup")}
+                          className="p-1 w-32 text-center rounded-sm  text-orange-400  border border-orange-400 font-medium"
+                        >
+                          Register
+                        </button>
+                      </>
+                    )}
 
-                    <button
-                      onClick={() => navigate("/signup")}
-                      className="p-1 w-32 text-center rounded-sm  text-orange-400  border border-orange-400 font-medium"
-                    >
-                      Register
-                    </button>
                     <button
                       id="theme-toggle"
                       onClick={handleTheme}
@@ -214,7 +218,7 @@ export default function Navbar({ children, name, preview }) {
                                           : "dark:bg-gray-700",
                                         "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300",
                                         "hover:bg-gray-100 dark:hover:bg-gray-600", // Adding hover colors
-                                        "transition-colors ease-in-out duration-150", // Adding transition effect
+                                        "transition-colors ease-in-out duration-150" // Adding transition effect
                                       )}
                                     >
                                       {item.name}
