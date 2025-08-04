@@ -25,6 +25,7 @@ export default function WishListProductGrid() {
             <ProductCard
               product={loggedIn ? product.product : product}
               key={product.id}
+              itemId={loggedIn ? product.id : null}
             />
           ))}
         </div>

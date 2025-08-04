@@ -62,10 +62,10 @@ exports.addToWishListMany = catchAsyncUtil.catchAsync(async (req, res) => {
 
   // Insert many wishlist items
   const wishLists = await WishList.insertMany(req.body);
-  console.log("🚀 ~ wishLists:", wishLists)
+  console.log("🚀 ~ wishLists:", wishLists);
   // Populate 'product' for all created wishlist items
   const populated = await WishList.populate(wishLists, { path: "product" });
-  console.log("🚀 ~ populated:", populated)
+  console.log("🚀 ~ populated:", populated);
   res.status(status.OK).json(populated);
 
   // Use .populate('field') on a single document.
@@ -102,8 +102,11 @@ exports.fetchWishListByUser = catchAsyncUtil.catchAsync(async (req, res) => {
 exports.deleteFromWishList = catchAsyncUtil.catchAsync(async (req, res) => {
   const { id } = req.params;
   let data = await WishList.findByIdAndDelete(id);
+  console.log("🚀 ~ data:", data);
   if (!data) {
     throw new apiUtil.ApiError(status.NOT_FOUND, "Wishlist item not found");
   }
-  res.status(status.OK).json("Product deleted from wishlist.");
+  res
+    .status(status.OK)
+    .json({ message: "Product deleted from wishlist.", data });
 });

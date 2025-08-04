@@ -13,7 +13,7 @@ import HeartIconToggle from "./HeartIconToggle";
 import RatingStars from "./RatingStars";
 import ShoppingCartIconToggle from "./ShoppingCartIconToggle";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, itemId = null }) {
   const user = useSelector(selectLoggedInUser);
   const location = useLocation();
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function ProductCard({ product }) {
         dispatch(deleteItemFromWishListIDBAsync(id));
       }
     },
-    [dispatch, user],
+    [dispatch, user]
   );
 
   return (
@@ -41,7 +41,7 @@ export default function ProductCard({ product }) {
         <span className="absolute z-10 inset-0 hover:opacity-100 opacity-0">
           {location.pathname === pathnames.WISHLIST && (
             <XMarkIcon
-              onClick={() => handleDelete(product.id)}
+              onClick={() => handleDelete(user ? itemId : product.id)}
               className="absolute z-20 top-4 right-4 p-2 text-gray-700 bg-gray-50 border-gray-300 border rounded-full w-10 h-10 text-center hover:bg-white hover:text-black hover:border-gray-500 cursor-pointer"
             />
           )}
