@@ -25,7 +25,6 @@ export default function useCart(product, user) {
   const dispatch = useDispatch();
   const handleCart = useCallback(
     (cartHasProduct) => {
-      console.log("🚀 ~ useCart ~ cartHasProduct:", cartHasProduct);
       if (!isLoggedIn) toggleProductInLocalCart();
       else toggleProductInRemoteCart();
 

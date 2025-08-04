@@ -1,6 +1,4 @@
-
-export default function InputField({ register, errors, name }) {
-  console.log(name)
+export default function InputField({ register, errors }) {
   return (
     <>
       <input

@@ -1,18 +1,6 @@
 import { BASE_URL } from "../app/constants";
 
-export function addToWishList(item) {
-  // return new Promise(async (resolve) => {
-  //   const response = await fetch(BASE_URL + '/wishlist', {
-  //     method: 'POST',
-  //     body: JSON.stringify(item),
-  //     headers: { 'content-type': 'application/json' },
-  //     credentials: 'include',
-  //   });
-  //   const data = await response.json();
-  //   console.log('wishlist api data', data)
-  //   resolve({ data });
-  // });
-
+export async function addToWishList(item) {
   return fetch(BASE_URL + "/wishlist", {
     method: "POST",
     body: JSON.stringify(item),
@@ -24,31 +12,29 @@ export function addToWishList(item) {
       return { data };
     });
 }
-export function fetchWishListByUserId() {
-  // return new Promise(async (resolve) => {
-  //   const response = await fetch(BASE_URL + '/wishlist', { credentials: 'include', })
-  //   const data = await response.json()
-  //   console.log('wishlit data', data)
-  //   resolve({ data })
-  // });
-  return fetch(BASE_URL + "/wishlist", { credentials: "include" })
+
+export async function addToWishListMany(items) {
+  return fetch(BASE_URL + "/wishlist/many", {
+    method: "POST",
+    body: JSON.stringify(items),
+    headers: { "content-type": "application/json" },
+    credentials: "include",
+  })
     .then((response) => response.json())
     .then((data) => {
-      console.log("wishlist data", data);
       return { data };
     });
 }
 
-export function deleteItemFromWishList(itemId) {
-  // return new Promise(async (resolve) => {
-  //   const response = await fetch(BASE_URL + '/wishlist/' + itemId, {
-  //     method: 'DELETE',
-  //     headers: { 'content-type': 'application/json' },
-  //     credentials: 'include',
-  //   });
-  //   const data = await response.json();
-  //   resolve({ data });
-  // });
+export async function fetchWishListByUserId() {
+  return fetch(BASE_URL + "/wishlist", { credentials: "include" })
+    .then((response) => response.json())
+    .then((data) => {
+      return { data };
+    });
+}
+
+export async function deleteItemFromWishList(itemId) {
   return fetch(BASE_URL + "/wishlist/" + itemId, {
     method: "DELETE",
     headers: { "content-type": "application/json" },

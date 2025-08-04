@@ -3,9 +3,11 @@ import {
   addToWishList,
   fetchWishListByUserId,
   deleteItemFromWishList,
+  addToWishListMany,
 } from "../../api";
 import {
   addToWishlistIDB,
+  clearWishlistIDB,
   getWishlistItemsCountIDB,
   getWishlistItemsIDB,
   removeFromWishlistIDB,
@@ -63,14 +65,36 @@ export const isWishListIDBEmptyAsync = createAsyncThunk(
   "wishlist/isWishListIDBEmpty",
   async () => {
     const wishlistIDBCount = await getWishlistItemsCountIDB();
-    return !!wishlistIDBCount;
+    return !wishlistIDBCount;
   }
 );
 
 export const moveWishListFromIDBToRemoteAsync = createAsyncThunk(
   "wishlist/moveWishListFromIDBToRemote",
-  async () => {
-    // const wishlistItemsIDB = await getWishlistItemsIDB();
-    // await addToWishList(item);
+  async (userID) => {
+    const wishlistItemsIDB = await getWishlistItemsIDB();
+
+    if (wishlistItemsIDB.length > 0) {
+      const wishlistItemsRemote = await fetchWishListByUserId();
+      const wishlistItemsRemoteIds = new Set(
+        wishlistItemsRemote.data.map((item) => item.product.id)
+      );
+
+      const addToWishListManyPayload = wishlistItemsIDB
+        .filter((product) => !wishlistItemsRemoteIds.has(product.id))
+        .map((product) => ({
+          product: product.id,
+          user: userID,
+        }));
+
+      let wishlistRes;
+      if (addToWishListManyPayload.length > 0) {
+        wishlistRes = await addToWishListMany(addToWishListManyPayload);
+      }
+
+      await clearWishlistIDB();
+
+      return wishlistRes.data;
+    }
   }
 );

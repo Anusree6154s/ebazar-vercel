@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearWishlistIDB, getWishlistItemsIDB } from "../indexedDB/wishlistDB";
 import {
-  addToWishListAsync,
   fetchBrandsAsync,
   fetchCategoriesAsync,
   fetchProductCountAsync,
@@ -23,43 +21,17 @@ export default function useFetchData(filter, sort, page) {
   const categoriesUnsorted = useSelector(selectAllCategories);
 
   const brands = [...brandsUnsorted].sort((a, b) =>
-    a.label.localeCompare(b.label),
+    a.label.localeCompare(b.label)
   );
   const categories = [...categoriesUnsorted].sort((a, b) =>
-    a.label.localeCompare(b.label),
+    a.label.localeCompare(b.label)
   );
 
   useEffect(() => {
     dispatch(fetchBrandsAsync());
     dispatch(fetchCategoriesAsync());
     dispatch(fetchProductCountAsync());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (user?.role === "user") {
-      const fetchWishlistItemsIDB = async () => {
-        try {
-          const wishlistItemsIDB = await getWishlistItemsIDB();
-          return wishlistItemsIDB;
-        } catch (error) {
-          console.error("Error fetching IDB wishlist length: ", error);
-        }
-      };
-
-      const StoreIDBWishlistToDB = async () => {
-        const wishlistItemsIDB = await fetchWishlistItemsIDB();
-        if (wishlistItemsIDB.length > 0) {
-          wishlistItemsIDB.forEach((item) =>
-            dispatch(addToWishListAsync(item)),
-          );
-          await clearWishlistIDB();
-        }
-      };
-
-      StoreIDBWishlistToDB();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, user?.role]);
 
   useEffect(() => {
     const pagination = { _page: page };
@@ -69,7 +41,7 @@ export default function useFetchData(filter, sort, page) {
         filter,
         sort,
         pagination,
-      }),
+      })
     );
   }, [user, filter, sort, page, dispatch]);
 

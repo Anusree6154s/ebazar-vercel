@@ -18,7 +18,6 @@ export default function useHandleWishlist({ product }) {
     const productExistsInWishlist = wishList.some(
       (item) => item.title === product.title
     );
-    console.log(product.id);
 
     if (productExistsInWishlist) {
       enqueueSnackbar("Already in Wishlist!", {
