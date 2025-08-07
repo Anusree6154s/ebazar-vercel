@@ -14,11 +14,11 @@ export default function useWishlist(product, user) {
   const [isProductInWishlist, setIsProductInWishlist] = useState(false);
 
   const toggleHeartIcon = useCallback(async () => {
-    const wishlistHasProduct = await wishList.some(
-      (item) => item.id === product.id
+    const wishlistHasProduct = await wishList.some((item) =>
+      isLoggedIn ? item.product.id === product.id : item.id === product.id
     );
     setIsProductInWishlist(wishlistHasProduct);
-  }, [product.id, wishList]);
+  }, [product.id, wishList, isLoggedIn]);
 
   useEffect(() => {
     toggleHeartIcon();
