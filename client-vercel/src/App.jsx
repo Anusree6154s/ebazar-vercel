@@ -52,6 +52,7 @@ function App() {
         vertical: "top",
         horizontal: "right",
       }}
+      autoHideDuration={3000}
     >
       <RouterProvider router={router} />
     </SnackbarProvider>

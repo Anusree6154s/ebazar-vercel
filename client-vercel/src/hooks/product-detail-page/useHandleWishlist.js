@@ -15,8 +15,8 @@ export default function useHandleWishlist({ product }) {
   const isLoggedIn = !!user;
 
   const handleWishList = () => {
-    const productExistsInWishlist = wishList.some(
-      (item) => item.title === product.title
+    const productExistsInWishlist = wishList.some((item) =>
+      isLoggedIn ? item.product.id === product.id : item.id === product.id
     );
 
     if (productExistsInWishlist) {
@@ -27,10 +27,8 @@ export default function useHandleWishlist({ product }) {
     }
 
     if (!isLoggedIn) {
-      // local wishlist
       dispatch(addToWishListIDBAsync(product));
     } else {
-      // remote wishlist
       dispatch(addToWishListAsync({ product: product.id, user: user.id }));
     }
     enqueueSnackbar("Added to Wishlist!", {
