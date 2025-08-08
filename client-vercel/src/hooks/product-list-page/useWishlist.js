@@ -11,13 +11,13 @@ import {
 export default function useWishlist(product, user) {
   const isLoggedIn = !!user;
   const wishList = useSelector(selectWishList);
-  const [isProductInWishlist, setIsProductInWishlist] = useState(false);
-
+  const [productInWishlist, setProductInWishlist] = useState(false);
+  
   const toggleHeartIcon = useCallback(async () => {
-    const wishlistHasProduct = await wishList.some((item) =>
+    const wishlistItem = await wishList.find((item) =>
       isLoggedIn ? item.product.id === product.id : item.id === product.id
     );
-    setIsProductInWishlist(wishlistHasProduct);
+    setProductInWishlist(wishlistItem);
   }, [product.id, wishList, isLoggedIn]);
 
   useEffect(() => {
@@ -26,24 +26,24 @@ export default function useWishlist(product, user) {
 
   const dispatch = useDispatch();
   const handleWishlist = useCallback(
-    (wishlistHasProduct) => {
+    (itemInWishlist) => {
       const toggleProductInLocalWishlist = async () => {
-        if (wishlistHasProduct) {
-          dispatch(deleteItemFromWishListIDBAsync(product.id));
-          setIsProductInWishlist(false);
+        if (itemInWishlist) {
+          dispatch(deleteItemFromWishListIDBAsync(itemInWishlist.id));
+          setProductInWishlist(null);
         } else {
           dispatch(addToWishListIDBAsync(product));
-          setIsProductInWishlist(true);
+          setProductInWishlist(itemInWishlist);
         }
       };
-
+      
       const toggleProductInRemoteWishlist = () => {
-        if (wishlistHasProduct) {
-          dispatch(deleteItemFromWishListAsync(product.id));
-          setIsProductInWishlist(false);
+        if (itemInWishlist) {
+          dispatch(deleteItemFromWishListAsync(itemInWishlist.id));
+          setProductInWishlist(null);
         } else {
           dispatch(addToWishListAsync({ product: product.id, user: user.id }));
-          setIsProductInWishlist(true);
+          setProductInWishlist(itemInWishlist);
         }
       };
 
@@ -53,5 +53,5 @@ export default function useWishlist(product, user) {
     [dispatch, isLoggedIn, product, user]
   );
 
-  return { handleWishlist, isProductInWishlist };
+  return { handleWishlist, productInWishlist };
 }

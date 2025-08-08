@@ -82,7 +82,7 @@ export default function ProductCard({ product, itemId = null }) {
           {location.pathname === pathnames.HOME && (
             <div className="flex justify-center gap-5 z-10 cursor-pointer">
               <ShoppingCartIconToggle product={product} user={user} />
-              <HeartIconToggle product={product} user={user} />
+              <HeartIconToggle product={product} user={user}/>
             </div>
           )}
         </div>
