@@ -1,4 +1,4 @@
-import { SnackbarProvider } from "notistack";
+import { closeSnackbar, SnackbarProvider } from "notistack";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
@@ -16,6 +16,7 @@ import {
 } from "./redux";
 import { router } from "./routes/router";
 import "./styles/App.css";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +54,15 @@ function App() {
         horizontal: "right",
       }}
       autoHideDuration={3000}
+      action={(snackbarId) => (
+        <button
+          onClick={() => closeSnackbar(snackbarId)}
+          className="p-1 text-white hover:text-gray-300"
+          aria-label="close"
+        >
+          <XMarkIcon className="h-5 w-5" />
+        </button>
+      )}
     >
       <RouterProvider router={router} />
     </SnackbarProvider>
