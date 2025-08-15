@@ -31,7 +31,12 @@ function CartPage() {
         <div className="flex-1 px-4 py-6 sm:px-6 flow-root">
           <ul className="-my-6 divide-y divide-gray-200 dark:divide-gray-500">
             {items.map((item) => (
-              <CartItem item={isLoggedIn ? item.product : item} key={item.id} quantity={item.quantity}/>
+              <CartItem
+                item={isLoggedIn ? item.product : item}
+                key={item.id}
+                quantity={item.quantity}
+                itemId={isLoggedIn ? item.id : null}
+              />
             ))}
           </ul>
         </div>

@@ -9,7 +9,7 @@ import {
 } from "../../../redux";
 import { getDiscountedPrice } from "../../../util/discounted-price";
 
-export default function CartItem({ item, quantity }) {
+export default function CartItem({ item, quantity, itemId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectLoggedInUser);
@@ -42,9 +42,10 @@ export default function CartItem({ item, quantity }) {
                 if (user) {
                   dispatch(
                     updateCartAsync({
-                      ...item,
+                      id: itemId,
                       product: item.id,
                       quantity: +e.target.value,
+                      user: user.id,
                     })
                   );
                 } else {
@@ -79,7 +80,7 @@ export default function CartItem({ item, quantity }) {
               ).toFixed(2)}
             </p>
             <p className=" text-gray-400 line-through text-sm">
-              ₹{item.price * quantity.toFixed(2)}
+              ₹{(item.price * quantity).toFixed(2)}
             </p>
           </div>
           <button
