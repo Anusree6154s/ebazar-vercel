@@ -18,7 +18,7 @@ function CartPage() {
   const navigate = useNavigate();
   const isLoggedIn = !!user;
 
-  const totalPrice = getTotalCartItemsPrice(items);
+  const totalPrice = getTotalCartItemsPrice(items, isLoggedIn);
   const totalItems = getTotalCartItemsCount(items);
 
   if (!items.length && status === "idle") navigate("/", { replace: true });
@@ -31,7 +31,7 @@ function CartPage() {
         <div className="flex-1 px-4 py-6 sm:px-6 flow-root">
           <ul className="-my-6 divide-y divide-gray-200 dark:divide-gray-500">
             {items.map((item) => (
-              <CartItem item={item} key={item.id} />
+              <CartItem item={isLoggedIn ? item.product : item} key={item.id} quantity={item.quantity}/>
             ))}
           </ul>
         </div>
@@ -65,7 +65,6 @@ function CartPage() {
                 className="font-medium text-customBlue dark:text-blue-400"
               >
                 <span aria-hidden="true" className="mr-2 text-lg">
-                  {" "}
                   &larr;
                 </span>
                 Back to Shopping

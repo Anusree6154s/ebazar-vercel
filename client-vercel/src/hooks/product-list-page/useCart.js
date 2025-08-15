@@ -6,17 +6,23 @@ import {
   deleteItemFromCartAsync,
   deleteItemFromCartIDBAsync,
   selectCartItems,
+  selectLoggedInUser,
 } from "../../redux";
 
-export default function useCart(product, user) {
+export default function useCart(product) {
+  const user = useSelector(selectLoggedInUser);
   const isLoggedIn = !!user;
   const cart = useSelector(selectCartItems);
-  const [isProductInCart, setIsProductInCart] = useState(false);
+  const [productInCart, setProductInCart] = useState(false);
 
   const toggleCartIcon = useCallback(async () => {
-    const cartHasProduct = await cart.some((item) => item.id === product.id);
-    setIsProductInCart(cartHasProduct);
-  }, [product.id, cart]);
+    const productInCart = await cart.find((item) => {
+      return isLoggedIn
+        ? item.product.id === product.id
+        : item.id === product.id;
+    });
+    setProductInCart(productInCart);
+  }, [product.id, cart, isLoggedIn]);
 
   useEffect(() => {
     toggleCartIcon();
@@ -24,32 +30,34 @@ export default function useCart(product, user) {
 
   const dispatch = useDispatch();
   const handleCart = useCallback(
-    (cartHasProduct) => {
+    (cartItem) => {
       if (!isLoggedIn) toggleProductInLocalCart();
       else toggleProductInRemoteCart();
 
       async function toggleProductInLocalCart() {
-        if (cartHasProduct) {
+        if (cartItem) {
           dispatch(deleteItemFromCartIDBAsync(product.id));
-          setIsProductInCart(false);
+          setProductInCart(null);
         } else {
           dispatch(addToCartIDBAsync(product));
-          setIsProductInCart(true);
+          setProductInCart(true);
         }
       }
 
       async function toggleProductInRemoteCart() {
-        if (cartHasProduct) {
-          dispatch(deleteItemFromCartAsync(product.id));
-          setIsProductInCart(false);
+        if (cartItem) {
+          dispatch(deleteItemFromCartAsync(cartItem.id));
+          setProductInCart(null);
         } else {
-          dispatch(addToCartAsync({ product }));
-          setIsProductInCart(true);
+          dispatch(
+            addToCartAsync({ product: product.id, user: user.id, quantity: 1 })
+          );
+          setProductInCart(true);
         }
       }
     },
-    [dispatch, isLoggedIn, product],
+    [dispatch, isLoggedIn, product, user?.id]
   );
 
-  return { handleCart, isProductInCart };
+  return { handleCart, productInCart };
 }

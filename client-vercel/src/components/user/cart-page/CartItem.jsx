@@ -7,8 +7,9 @@ import {
   updateCartAsync,
   updateCartIDBAsync,
 } from "../../../redux";
+import { getDiscountedPrice } from "../../../util/discounted-price";
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, quantity }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectLoggedInUser);
@@ -57,7 +58,7 @@ export default function CartItem({ item }) {
                 }
               }}
               className="py-0 rounded-md dark:text-gray-200 dark:bg-gray-700 focus:outline-none"
-              value={item.quantity}
+              value={quantity}
               name=""
               id=""
             >
@@ -69,9 +70,18 @@ export default function CartItem({ item }) {
           </p>
         </div>
         <div className="flex flex-col justify-between items-end">
-          <p className="ml-4">
-            ₹ {(item.price * (item.quantity || 1)).toFixed(2)}
-          </p>
+          <div className="flex flex-col text-right">
+            <p className="">
+              <span>₹</span>
+              {(
+                getDiscountedPrice(item.price, item.discountPercentage) *
+                (quantity || 1)
+              ).toFixed(2)}
+            </p>
+            <p className=" text-gray-400 line-through text-sm">
+              ₹{item.price * quantity.toFixed(2)}
+            </p>
+          </div>
           <button
             onClick={() =>
               dispatch(

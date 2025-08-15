@@ -12,6 +12,7 @@ import ImageTransformer from "../ImageTransformer";
 import HeartIconToggle from "./HeartIconToggle";
 import RatingStars from "./RatingStars";
 import ShoppingCartIconToggle from "./ShoppingCartIconToggle";
+import { getDiscountedPrice } from "../../../util/discounted-price";
 
 export default function ProductCard({ product, itemId = null }) {
   const user = useSelector(selectLoggedInUser);
@@ -62,14 +63,11 @@ export default function ProductCard({ product, itemId = null }) {
           <div className="flex flex-col">
             <p className=" font-medium text-4xl sm:text-2xl lg:text-xl text-gray-900 dark:text-gray-100">
               <span className="mr-1">₹</span>
-              {(
-                product.price -
-                product.price * (product.discountPercentage / 100)
-              ).toFixed(2)}
+              {getDiscountedPrice(product.price, product.discountPercentage)}
             </p>
             <div className="flex gap-2 text-sm">
               <p className="text-lg sm:text-base lg:text-sm font-medium line-through text-gray-400 dark:text-gray-500 ">
-                ${product.price}
+                ₹{product.price}
               </p>
               <p className="text-lg sm:text-base lg:text-sm text-green-600 dark:text-green-600 font-medium  ">
                 {product.discountPercentage}% off
@@ -82,7 +80,7 @@ export default function ProductCard({ product, itemId = null }) {
           {location.pathname === pathnames.HOME && (
             <div className="flex justify-center gap-5 z-10 cursor-pointer">
               <ShoppingCartIconToggle product={product} user={user} />
-              <HeartIconToggle product={product} user={user}/>
+              <HeartIconToggle product={product} user={user} />
             </div>
           )}
         </div>

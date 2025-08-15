@@ -11,13 +11,23 @@ export default function useHandleAdd({ quantity, product }) {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const user = useSelector(selectLoggedInUser);
+  const isLoggedIn = !!user;
 
   const handleAdd = () => {
-    const productInCart = cartItems.find(
-      (item) => item.title === product.title
+    const productInCart = cartItems.find((item) =>
+      isLoggedIn
+        ? item.product.title === product.title
+        : item.title === product.title
     );
 
-    if (product.stock !== 0) {
+    if (product.stock == 0) return;
+
+    if (isLoggedIn) addToCartRemote();
+    else addToCartIDB();
+
+    enqueueSnackbar("Added to Cart!", { variant: "success" });
+
+    function addToCartRemote() {
       if (productInCart) {
         const newQuantity =
           productInCart.quantity + quantity <= 4
@@ -39,9 +49,11 @@ export default function useHandleAdd({ quantity, product }) {
           })
         );
       }
-      enqueueSnackbar("Added to Cart!", { variant: "AddedToCart" });
     }
+
+    function addToCartIDB() {}
   };
+  `1`;
 
   return { handleAdd };
 }
