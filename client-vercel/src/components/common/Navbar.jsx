@@ -288,7 +288,7 @@ export default function Navbar({ children, name, preview }) {
       </Disclosure>
 
       {name && (
-        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-customBlue shadow sticky top-16 left-0 z-100">
+        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-customBlue shadow sticky top-16 left-0 z-40">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8  w-[90%]">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
               <span>{name}</span>

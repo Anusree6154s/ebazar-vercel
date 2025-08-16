@@ -5,7 +5,8 @@ export default function SelectAddressFormSection({
   handleAddress,
   selectedAddress,
 }) {
-  if (!user?.address?.length) return null;
+  if (!user?.addresses?.length) return null;
+  
   return (
     <fieldset>
       <legend className="text-lg font-semibold leading-7 text-gray-900 dark:text-gray-300">
@@ -19,7 +20,7 @@ export default function SelectAddressFormSection({
           {user.addresses.map((address, index) => (
             <li
               key={index}
-              className=" flex justify-between items-baseline border px-5 group cursor-pointer"
+              className=" flex justify-between items-baseline border-[1.5px] px-5 group cursor-pointer border-gray-200 rounded-md hover:border-customBlue"
               onClick={() => handleAddress(address)}
             >
               <div className=" flex items-baseline gap-5 ">
@@ -30,7 +31,7 @@ export default function SelectAddressFormSection({
                     JSON.stringify(address) === JSON.stringify(selectedAddress)
                   }
                   value={JSON.stringify(address)}
-                  className="border-gray-300 dark:border-gray-600 text-customBlue focus:ring-customBlue dark:bg-gray-800 dark:hover:bg-blue-600 dark:text-blue-500 dark:focus:ring-blue-600"
+                  className="cursor-pointer  border-gray-300 dark:border-gray-600 text-customBlue focus:ring-customBlue dark:bg-gray-800 dark:hover:bg-blue-600 dark:text-blue-500 dark:focus:ring-blue-600"
                 />
                 <label
                   htmlFor=""
@@ -67,4 +68,3 @@ export default function SelectAddressFormSection({
     </fieldset>
   );
 }
-

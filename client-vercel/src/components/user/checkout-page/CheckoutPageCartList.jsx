@@ -1,22 +1,30 @@
-import { useDispatch } from "react-redux";
-import { deleteItemFromCartAsync, updateCartAsync } from "../../../redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteItemFromCartAsync,
+  selectLoggedInUser,
+  updateCartAsync,
+} from "../../../redux";
+import { getDiscountedPrice } from "../../../util/discounted-price";
+import CustomSelect from "../../common/CustomSelect";
 
-export default function CheckoutPageCartList({ item }) {
+export default function CheckoutPageCartList({ item, quantity, itemId }) {
   const dispatch = useDispatch();
-  const handleQuantity = (e, item) => {
+  const user = useSelector(selectLoggedInUser);
+  const handleQuantity = (value) => {
     dispatch(
       updateCartAsync({
-        ...item,
+        id: itemId,
         product: item.id,
-        quantity: +e.target.value,
-      }),
+        quantity: +value,
+        user: user.id,
+      })
     );
   };
   const handleDelete = (item) => dispatch(deleteItemFromCartAsync(item.id));
 
   return (
-    <li key={item.id} className="flex py-6">
-      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
+    <li key={item.id} className="flex py-6 items=stretch">
+      <div className="w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
         <img
           src={item.thumbnail}
           alt={item.title}
@@ -24,33 +32,35 @@ export default function CheckoutPageCartList({ item }) {
         />
       </div>
 
-      <div className="ml-4 flex flex-1 flex-col">
+      <div className="ml-4 flex flex-1 flex-col gap-4 sm:gap-0 lg:gap-4 ">
         <div>
-          <div className="flex justify-between text-base font-medium text-gray-900 dark:text-gray-300">
-            <h3>
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-4 sm:gap-0 lg:gap-4 justify-between text-base font-medium text-gray-900 dark:text-gray-300">
+            <h3 className="flex flex-col">
               <a href={item.id}>{item.title}</a>
+              <span className="text-gray-400 uppercase text-xs font-bold">
+                {item.brand || "No Brand"}
+              </span>
             </h3>
-            <p className="ml-4 whitespace-nowrap">
-              ₹ {item.price * item.quantity}
+            <p className="flex gap-4 sm:gap-0 lg:gap-4 sm:flex-col lg:flex-row sm:text-right lg:text-left whitespace-nowrap items-center">
+              <span>
+                ₹
+                {getDiscountedPrice(
+                  item.price,
+                  item.discountPercentage,
+                  quantity
+                )}
+              </span>
+              <span className="text-sm text-gray-400/80 line-through">
+                ₹ {(item.price * quantity).toFixed(2)}
+              </span>
             </p>
           </div>
         </div>
         <div className="flex flex-1 items-end justify-between  text-sm ">
-          <p className="text-gray-500 dark:text-gray-300 ">
+          <div className="text-gray-500 dark:text-gray-300 inline-block">
             <label className="mr-3 ">Qty</label>
-            <select
-              onChange={(e) => handleQuantity(e, item)}
-              className="py-0 rounded-md dark:bg-gray-800"
-              value={item.quantity}
-              name=""
-              id=""
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </p>
+            <CustomSelect options={[1, 2, 3, 4]} onClickFn={handleQuantity} />
+          </div>
 
           <div className="flex">
             <button

@@ -23,14 +23,15 @@ function CheckoutPage() {
 
   const items = useSelector(selectCartItems);
   const user = useSelector(selectLoggedInUser);
+  const isLoggedIn = !!user;
   const currentOrder = useSelector(selectCurrentOrder);
   const [selectedAddress, setSelectedAddress] = useState(
-    user.addresses[0] || null,
+    user.addresses[0] || null
   );
   const [paymentMethod, setpaymentMethod] = useState("cash");
   const addressRef = useRef();
 
-  const totalPrice = getTotalCartItemsPrice(items);
+  const totalPrice = getTotalCartItemsPrice(items, isLoggedIn);
   const totalItems = getTotalCartItemsCount(items);
   const order = {
     items,
@@ -48,7 +49,7 @@ function CheckoutPage() {
     selectedAddress,
     addressRef,
     order,
-    user,
+    user
   );
 
   if (currentOrder) {
@@ -82,53 +83,53 @@ function CheckoutPage() {
             </FormProvider>
           </div>
 
-          <div className="lg:col-span-2 ">
-            <div className="bg-white px-4 sm:px-6 lg:px-8 dark:bg-gradient-to-b dark:from-gray-700 dark:to-gray-800">
-              <div className="flex flex-col max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex-1 px-4 py-6 sm:px-6 flow-root">
-                  <ul
-                    key="1"
-                    className="-my-6 divide-y divide-gray-200 dark:divide-gray-500"
-                  >
-                    {items.map((item) => (
-                      <CheckoutPageCartList item={item} key={item.id} />
-                    ))}
-                  </ul>
-                </div>
+          <div className="lg:col-span-2">
+            <div className="bg-white px-4 sm:px-6 lg:px-8 dark:bg-gradient-to-b dark:from-gray-700 dark:to-gray-800 flex flex-col">
+              <ul
+                key="1"
+                className="divide-y divide-gray-200 dark:divide-gray-500"
+              >
+                {items.map((item) => (
+                  <CheckoutPageCartList
+                    item={isLoggedIn ? item.product : item}
+                    key={item.id}
+                    quantity={item.quantity}
+                    itemId={isLoggedIn? item.id: null}
+                  />
+                ))}
+              </ul>
 
-                <div className="border-t border-gray-200  dark:border-gray-400  px-4 py-6 sm:px-6">
-                  <div className="flex justify-between text-base  font-medium text-gray-900 dark:text-gray-300">
-                    <p>Subtotal</p>
-                    <p>₹ {totalPrice}</p>
-                  </div>
-                  <div className="flex justify-between text-base my-4 font-medium text-gray-900 dark:text-gray-300">
-                    <p>Total number of Items</p>
-                    <p>{totalItems} Items</p>
-                  </div>
-                  <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-300">
-                    Shipping and taxes calculated at checkout.
-                  </p>
-                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-300">
-                    <Link
-                      onClick={handleOrder}
-                      className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-customBlue dark:bg-blue-500 px-6 py-3 text-base font-medium text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600"
+              <div className="border-t border-gray-200  dark:border-gray-400 py-4">
+                <div className="flex justify-between text-base  font-medium text-gray-900 dark:text-gray-300">
+                  <p>Subtotal</p>
+                  <p>₹ {totalPrice}</p>
+                </div>
+                <div className="flex justify-between text-base my-4 font-medium text-gray-900 dark:text-gray-300">
+                  <p>Total number of Items</p>
+                  <p>{totalItems} Items</p>
+                </div>
+                <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-300">
+                  Shipping and taxes calculated at checkout.
+                </p>
+                <div className="mt-6 flex flex-col justify-center text-center text-sm text-gray-500 dark:text-gray-300">
+                  <Link
+                    onClick={handleOrder}
+                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-customBlue dark:bg-blue-500 px-6 py-3 text-base font-medium text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600"
+                  >
+                    Order Now
+                  </Link>
+                  <span>or</span>
+                  <Link to="/">
+                    <button
+                      type="button"
+                      className="font-medium text-customBlue dark:text-blue-400"
                     >
-                      Order Now
-                    </Link>
-                    <span>or</span>
-                    <Link to="/">
-                      <button
-                        type="button"
-                        className="font-medium text-customBlue dark:text-blue-400"
-                      >
-                        <span aria-hidden="true" className="mr-2 text-lg">
-                          &larr;
-                        </span>
-                        Back to Shopping
-                        <span aria-hidden="true"> &rarr;</span>
-                      </button>
-                    </Link>
-                  </div>
+                      <span aria-hidden="true" className="mr-2 text-lg">
+                        &larr;
+                      </span>
+                      Back to Shopping
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

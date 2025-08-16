@@ -8,11 +8,33 @@ import {
   updateCartIDBAsync,
 } from "../../../redux";
 import { getDiscountedPrice } from "../../../util/discounted-price";
+import CustomSelect from "../../common/CustomSelect";
 
 export default function CartItem({ item, quantity, itemId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectLoggedInUser);
+
+  const handleClick = (value) => {
+    if (user) {
+      dispatch(
+        updateCartAsync({
+          id: itemId,
+          product: item.id,
+          quantity: +value,
+          user: user.id,
+        })
+      );
+    } else {
+      dispatch(
+        updateCartIDBAsync({
+          ...item,
+          product: item.id,
+          quantity: +value,
+        })
+      );
+    }
+  };
 
   return (
     <li className="flex py-6">
@@ -32,12 +54,12 @@ export default function CartItem({ item, quantity, itemId }) {
               <a href={item.href}>{item.title}</a>
             </h3>
             <h5 className="text-gray-400 font-bold text-xs uppercase">
-              <a href={item.href}>{item.brand}</a>
+              <a href={item.href}>{item.brand || "No Brand"}</a>
             </h5>
           </div>
-          <p className="text-gray-500 text-sm">
+          <div className="text-gray-500 text-sm inline-block">
             <label className="mr-3 dark:text-gray-300">Qty</label>
-            <select
+            {/* <select
               onChange={(e) => {
                 if (user) {
                   dispatch(
@@ -67,19 +89,21 @@ export default function CartItem({ item, quantity, itemId }) {
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-            </select>
-          </p>
+            </select> */}
+            <CustomSelect options={[1, 2, 3, 4]} onClickFn={handleClick} />
+          </div>
         </div>
         <div className="flex flex-col justify-between items-end">
           <div className="flex flex-col text-right">
             <p className="">
               <span>₹</span>
-              {(
-                getDiscountedPrice(item.price, item.discountPercentage) *
-                (quantity || 1)
-              ).toFixed(2)}
+              {getDiscountedPrice(
+                item.price,
+                item.discountPercentage,
+                quantity
+              )}
             </p>
-            <p className=" text-gray-400 line-through text-sm">
+            <p className="text-gray-400 line-through text-sm">
               ₹{(item.price * quantity).toFixed(2)}
             </p>
           </div>

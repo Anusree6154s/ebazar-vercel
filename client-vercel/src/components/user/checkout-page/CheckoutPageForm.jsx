@@ -1,17 +1,21 @@
 import { forwardRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { useCheckoutPageForm } from "../../../hooks";
+import SelectAddressFormSection from "./SelectAddressForm";
+import SelectPaymentFormSection from "./SelectPaymentForm";
 
 const CheckoutPageForm = (
   { addressRef, user, selectedAddress, setSelectedAddress, setpaymentMethod },
   ref
 ) => {
   const { handleSubmit, register } = useFormContext();
-  const { submitHandler, handleAddress, handlePayment } = useCheckoutPageForm(
-    setSelectedAddress,
-    setpaymentMethod,
-    user
-  );
+  const {
+    submitHandler,
+    handleAddress,
+    handlePayment,
+    inputRef,
+    preventScrollAndArrows,
+  } = useCheckoutPageForm(setSelectedAddress, setpaymentMethod, user);
 
   return (
     <form ref={ref} noValidate onSubmit={handleSubmit(submitHandler)}>
@@ -24,8 +28,8 @@ const CheckoutPageForm = (
             Use a permanent address where you can receive mail.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-4">
+          <div className="mt-10 grid grid-cols-1 sm:gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="col-span-full md:col-span-3 lg:col-span-full">
               <label
                 htmlFor="full-name"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
@@ -39,12 +43,12 @@ const CheckoutPageForm = (
                   ref={addressRef}
                   id="full-name"
                   autoComplete="given-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none"
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-4">
+            <div className="col-span-full md:col-span-3 lg:col-span-full">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
@@ -57,38 +61,17 @@ const CheckoutPageForm = (
                   {...register("email", { required: "required" })}
                   type="email"
                   autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none"
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="country"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
-              >
-                Country
-              </label>
-              <div className="mt-2">
-                <select
-                  id="country"
-                  {...register("country", { required: "required" })}
-                  autoComplete="country-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
-                >
-                  <option>India</option>
-                  <option>China</option>
-                  <option>Mexico</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-span-full">
+            <div className="col-span-3 md:col-span-2 lg:col-span-3">
               <label
                 htmlFor="street-address"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
               >
-                Street address
+                Street
               </label>
               <div className="mt-2">
                 <input
@@ -96,12 +79,12 @@ const CheckoutPageForm = (
                   {...register("street", { required: "required" })}
                   id="street-address"
                   autoComplete="street-address"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none"
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-2 sm:col-start-1">
+            <div className="col-span-3 md:col-span-2 lg:col-span-3">
               <label
                 htmlFor="city"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
@@ -114,12 +97,12 @@ const CheckoutPageForm = (
                   {...register("city", { required: "required" })}
                   id="city"
                   autoComplete="address-level2"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none"
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="col-span-3 md:col-span-2 lg:col-span-3">
               <label
                 htmlFor="region"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
@@ -132,12 +115,33 @@ const CheckoutPageForm = (
                   {...register("state", { required: "required" })}
                   id="region"
                   autoComplete="address-level1"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none"
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="col-span-3 md:col-span-2 lg:col-span-3">
+              <label
+                htmlFor="country"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
+              >
+                Country
+              </label>
+              <div className="mt-2">
+                <select
+                  id="country"
+                  {...register("country", { required: "required" })}
+                  autoComplete="country-name"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 mr-6 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none"
+                >
+                  <option>India</option>
+                  <option>China</option>
+                  <option>Mexico</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="col-span-3 md:col-span-2 lg:col-span-3">
               <label
                 htmlFor="postal-code"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
@@ -146,29 +150,35 @@ const CheckoutPageForm = (
               </label>
               <div className="mt-2">
                 <input
-                  type="text"
+                  type="number"
                   {...register("pincode", { required: "required" })}
                   id="postal-code"
                   autoComplete="postal-code"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]"
+                  // ref={inputRef}
+                  onWheel={preventScrollAndArrows}
+                  onKeyDown={preventScrollAndArrows}
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-2">
+            <div className="col-span-3 md:col-span-2 lg:col-span-3">
               <label
-                htmlFor="postal-code"
+                htmlFor="phone"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
               >
                 Phone
               </label>
               <div className="mt-2">
                 <input
-                  type="text"
+                  type="number"
                   {...register("phone", { required: "required" })}
                   id="phone"
                   autoComplete="phone"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800"
+                  className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]"
+                  // ref={inputRef}
+                  onWheel={preventScrollAndArrows}
+                  onKeyDown={preventScrollAndArrows}
                 />
               </div>
             </div>
@@ -184,7 +194,7 @@ const CheckoutPageForm = (
           </button>
           <button
             type="submit"
-            className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 dark:bg-opacity-100 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-customBlue"
+            className="rounded-md bg-customBlue dark:bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm bg-opacity-80 dark:bg-opacity-100 hover:bg-opacity-100 dark:hover:bg-blue-600 focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-customBlue focus-visible:outline-none"
           >
             Add Address
           </button>
@@ -204,7 +214,4 @@ const CheckoutPageForm = (
 };
 
 export default forwardRef(CheckoutPageForm);
-
-import SelectAddressFormSection from "./SelectAddressForm";
-import SelectPaymentFormSection from "./SelectPaymentForm";
 
