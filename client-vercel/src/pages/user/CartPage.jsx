@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import BackButton from "../../components/common/BackButton";
 import CartItem from "../../components/user/cart-page/CartItem";
 import {
@@ -15,14 +15,12 @@ function CartPage() {
   const items = useSelector(selectCartItems);
   const status = useSelector(selectCartStatus);
   const user = useSelector(selectLoggedInUser);
-  const navigate = useNavigate();
   const isLoggedIn = !!user;
 
   const totalPrice = getTotalCartItemsPrice(items, isLoggedIn);
   const totalItems = getTotalCartItemsCount(items);
 
-  if (!items.length && status === "idle") navigate("/", { replace: true });
-
+  if (!items.length && status === "idle") return <Navigate to="/" replace />;
   return (
     <section id="cart">
       <BackButton path={pathnames.HOME} />
