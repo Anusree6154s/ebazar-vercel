@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useCheckoutPage from "../../hooks/user/useCheckoutPage";
 import {
   selectCartItems,
@@ -22,6 +22,7 @@ function CheckoutPage() {
   const navigate = useNavigate();
 
   const items = useSelector(selectCartItems);
+  console.log("🚀 ~ CheckoutPage ~ items:", items);
   const user = useSelector(selectLoggedInUser);
   const isLoggedIn = !!user;
   const currentOrder = useSelector(selectCurrentOrder);
@@ -89,32 +90,46 @@ function CheckoutPage() {
                 key="1"
                 className="divide-y divide-gray-200 dark:divide-gray-500"
               >
-                {items.map((item) => (
-                  <CheckoutPageCartList
-                    item={isLoggedIn ? item.product : item}
-                    key={item.id}
-                    quantity={item.quantity}
-                    itemId={isLoggedIn? item.id: null}
-                  />
-                ))}
+                {items.length ? (
+                  items.map((item) => (
+                    <CheckoutPageCartList
+                      item={isLoggedIn ? item.product : item}
+                      key={item.id}
+                      quantity={item.quantity}
+                      itemId={isLoggedIn ? item.id : null}
+                    />
+                  ))
+                ) : (
+                  <p className="p-4 text-center dark:text-gray-400">
+                    No Items to Order
+                  </p>
+                )}
               </ul>
 
               <div className="border-t border-gray-200  dark:border-gray-400 py-4">
-                <div className="flex justify-between text-base  font-medium text-gray-900 dark:text-gray-300">
-                  <p>Subtotal</p>
-                  <p>₹ {totalPrice}</p>
-                </div>
-                <div className="flex justify-between text-base my-4 font-medium text-gray-900 dark:text-gray-300">
-                  <p>Total number of Items</p>
-                  <p>{totalItems} Items</p>
-                </div>
-                <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-300">
-                  Shipping and taxes calculated at checkout.
-                </p>
+                {items.length > 0 && (
+                  <>
+                    <div className="flex justify-between text-base  font-medium text-gray-900 dark:text-gray-300">
+                      <p>Subtotal</p>
+                      <p>₹ {totalPrice}</p>
+                    </div>
+                    <div className="flex justify-between text-base my-4 font-medium text-gray-900 dark:text-gray-300">
+                      <p>Total number of Items</p>
+                      <p>{totalItems} Items</p>
+                    </div>
+                    <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-300">
+                      Shipping and taxes calculated at checkout.
+                    </p>
+                  </>
+                )}
                 <div className="mt-6 flex flex-col justify-center text-center text-sm text-gray-500 dark:text-gray-300">
                   <Link
-                    onClick={handleOrder}
-                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-customBlue dark:bg-blue-500 px-6 py-3 text-base font-medium text-white shadow-sm bg-opacity-80 hover:bg-opacity-100 dark:hover:bg-blue-600"
+                    onClick={items.length ? handleOrder : undefined}
+                    className={`flex  items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm ${
+                      items.length>0
+                        ? "bg-customBlue cursor-pointer dark:bg-blue-500 hover:bg-opacity-100 dark:hover:bg-blue-600 bg-opacity-80"
+                        : "bg-gray-400"
+                    }`}
                   >
                     Order Now
                   </Link>

@@ -86,7 +86,7 @@ export default function CartItem({ item, quantity, itemId }) {
             onClick={() =>
               dispatch(
                 user
-                  ? deleteItemFromCartAsync(item.id)
+                  ? deleteItemFromCartAsync(itemId)
                   : deleteItemFromCartIDBAsync(item.id)
               )
             }

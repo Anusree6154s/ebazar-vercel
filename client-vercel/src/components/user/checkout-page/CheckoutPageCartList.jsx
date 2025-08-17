@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import {
   deleteItemFromCartAsync,
+  deleteItemFromCartIDBAsync,
   selectLoggedInUser,
   updateCartAsync,
 } from "../../../redux";
 import { getDiscountedPrice } from "../../../util/discounted-price";
 import CustomSelect from "../../common/CustomSelect";
-import { Link, useNavigate } from "react-router-dom";
 
 export default function CheckoutPageCartList({ item, quantity, itemId }) {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export default function CheckoutPageCartList({ item, quantity, itemId }) {
       })
     );
   };
-  const handleDelete = (item) => dispatch(deleteItemFromCartAsync(item.id));
+  const handleDelete = () => dispatch(deleteItemFromCartAsync(itemId));
 
   return (
     <li key={item.id} className="flex py-6 items=stretch">
@@ -71,7 +72,7 @@ export default function CheckoutPageCartList({ item, quantity, itemId }) {
 
           <div className="flex">
             <button
-              onClick={() => handleDelete(item)}
+              onClick={handleDelete}
               type="button"
               className="font-medium text-customBlue opacity-80 hover:opacity-100"
             >
