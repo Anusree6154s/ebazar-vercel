@@ -49,6 +49,7 @@ const sendEmail = (email, OTP, id) => {
 
       transporter.sendMail(mail_configs, function (error, info) {
         if (error) {
+          console.error('Error sending mail',error)
           return reject({ message: `Error occurred in sending email`, statusCode: httpStatus.INTERNAL_SERVER_ERROR });
         }
         return resolve({ id });
