@@ -34,9 +34,9 @@ function SignupPage() {
     return <Navigate to="/admin" replace={true}></Navigate>;
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center h-screen overflow-hidden">
-      <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-        <div className="flex-1 bg-[#afe3ffed] text-center hidden lg:flex justify-center">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white flex justify-center h-screen overflow-hidden">
+      <div className="max-w-screen-xl m-0 sm:m-10 bg-white dark:bg-gray-800 shadow sm:rounded-lg flex justify-center flex-1">
+        <div className="flex-1 bg-[#364153] text-center hidden lg:flex justify-center">
           <img src="/images/signup-image.png" alt="" />
         </div>
         <div className="lg:w-1/2 xl:w-5/12 ">
@@ -67,7 +67,7 @@ function SignupPage() {
                         message: "Invalid email format ",
                       },
                     })}
-                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-700"
                     type="email"
                     placeholder="Email"
                     autoComplete="true"
@@ -91,7 +91,7 @@ function SignupPage() {
                         return true;
                       },
                     })}
-                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
+                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-700 mt-2"
                     type="password"
                     placeholder="Password"
                     autoComplete="true"
@@ -101,7 +101,7 @@ function SignupPage() {
                   <p className="text-warning text-xs mt-1">
                     {errors?.password?.message}
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     {passwordFocus &&
                       "Must be at least 8 characters, including a letter and number."}
                   </p>
@@ -112,7 +112,7 @@ function SignupPage() {
                         value === formValues.password ||
                         "Password not matching",
                     })}
-                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
+                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-700 mt-2"
                     type="password"
                     placeholder="Confirm Password"
                     autoComplete="true"
@@ -125,7 +125,7 @@ function SignupPage() {
                     {...register("role", {
                       required: "Role is required",
                     })}
-                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-2"
+                    className="w-full px-8 py-2 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-700 mt-2"
                     name="role"
                     id="role"
                   >
@@ -155,7 +155,7 @@ function SignupPage() {
                     <span className="ml-3">Sign Up</span>
                   </button>
                 </form>
-                <p className="mt-6 text-xs text-gray-600 text-center">
+                <p className="mt-6 text-xs text-gray-600 dark:text-gray-400 text-center">
                   <span>Already a member? </span>
                   <button
                     onClick={() => navigate("/login")}

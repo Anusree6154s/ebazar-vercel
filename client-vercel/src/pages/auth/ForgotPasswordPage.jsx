@@ -36,9 +36,9 @@ function ForgotPasswordPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center h-screen overflow-hidden">
-      <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-        <div className="flex-1 bg-[#afe3ffed] text-center hidden lg:flex justify-center">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white flex justify-center h-screen overflow-hidden">
+      <div className="max-w-screen-xl m-0 sm:m-10 bg-white dark:bg-gray-800 shadow sm:rounded-lg flex justify-center flex-1">
+        <div className="flex-1 bg-[#364153] text-center hidden lg:flex justify-center">
           <img src="/images/forgot-password-image.png" alt="" />
         </div>
         <div className="lg:w-1/2 xl:w-5/12 ">
@@ -81,7 +81,7 @@ function ForgotPasswordPage() {
                 showForm={showForm}
               />
 
-              <p className="mt-6 text-xs text-gray-600 text-center">
+              <p className="mt-6 text-xs text-gray-600 dark:text-gray-400 text-center">
                 <span>Go back to </span>
                 <button
                   onClick={() => navigate("/login")}
@@ -176,7 +176,8 @@ const Form1 = ({ setOTP, dispatch, auth_status, showForm }) => {
     const otp = Math.floor(Math.random() * 9000 + 1000);
     if (otp) {
       setOTP(otp);
-      dispatch(sendOTPAsync({ email: data.email, OTP: otp }));
+      const ecryptedData = btoa(JSON.stringify({ email: data.email, OTP: otp }))
+      dispatch(sendOTPAsync({data: ecryptedData}));
     }
   };
 
@@ -195,7 +196,7 @@ const Form1 = ({ setOTP, dispatch, auth_status, showForm }) => {
             message: "Email not valid",
           },
         })}
-        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-700"
         type="email"
         placeholder="Email"
       />
@@ -268,13 +269,7 @@ const Form2 = ({
           inputMode="numeric"
           onWheel={(e) => e.target.blur()}
           autoComplete="otp"
-          className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-          style={{
-            /* CSS to hide arrows */ "-moz-appearance": "none" /* Firefox */,
-            appearance: "none" /* Chrome, Safari, Edge, Opera */,
-            WebkitAppearance: "none",
-            // no style seems to remove the arrows
-          }}
+          className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-700 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]"
         />
         {errors2.otp && <p className="text-red-500">{errors2.otp.message}</p>}
 
@@ -345,7 +340,7 @@ const Form3 = ({
           type="password"
           autoComplete="password"
           placeholder="Enter New Password"
-          className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+          className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-700"
         />
         {errors3.password && (
           <p className="text-red-500">{errors3.password.message}</p>

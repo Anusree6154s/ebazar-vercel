@@ -39,8 +39,8 @@ function LoginPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center h-screen">
-        <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white flex justify-center h-screen">
+        <div className="max-w-screen-xl m-0 sm:m-10 bg-white dark:bg-gray-800 shadow sm:rounded-lg flex justify-center flex-1">
           <div className="lg:w-1/2 xl:w-5/12 ">
             <div className="mt-10 flex flex-col items-center">
               <h1 className="text-2xl xl:text-3xl font-extrabold">Sign In</h1>
@@ -66,7 +66,7 @@ function LoginPage() {
                           message: "Email not valid",
                         },
                       })}
-                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-600/70"
                       type="email"
                       placeholder="Email"
                       autoComplete="true"
@@ -79,7 +79,7 @@ function LoginPage() {
                       {...register("password", {
                         required: "Password is required",
                       })}
-                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-sm focus:outline-none focus:border-gray-400 focus:bg-white focus:dark:bg-gray-600/70 mt-5"
                       type="password"
                       placeholder="Password"
                       autoComplete="true"
@@ -95,7 +95,7 @@ function LoginPage() {
                     </span>
                     <button
                       onClick={() => navigate("/forgot-password")}
-                      className="text-xs text-gray-600 flex-1 text-right w-full"
+                      className="text-xs text-gray-600 dark:text-gray-400 flex-1 text-right w-full"
                     >
                       Forgot Password?
                     </button>
@@ -122,7 +122,7 @@ function LoginPage() {
                       <span className="ml-3">Sign In</span>
                     </button>
                   </form>
-                  <p className="mt-6 text-xs text-gray-600 text-center">
+                  <p className="mt-6 text-xs text-gray-600 dark:text-gray-400 text-center">
                     <span>Not a member? </span>
                     <button
                       onClick={() => navigate("/signup")}
@@ -135,7 +135,7 @@ function LoginPage() {
               </div>
             </div>
           </div>
-          <div className="flex-1 bg-[#afe3ffed] text-center hidden lg:flex justify-center">
+          <div className="flex-1 bg-[#364153] text-center hidden lg:flex justify-center">
             <img src="/images/login-image.png" alt="" />
           </div>
         </div>

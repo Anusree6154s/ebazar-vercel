@@ -39,7 +39,7 @@ export default function Pagination({ totalItems }) {
       });
   };
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white dark:bg-transparent dark:border-transparent dark:bg-gray-800  pt-6 ">
+    <div className="flex items-center justify-between border-t border-gray-200 bg-white dark:bg-transparent dark:border-transparent  pt-6 ">
       <MobilePagination
         dispatch={dispatch}
         page={page}
