@@ -6,6 +6,7 @@ import {
   selectUserOrders,
 } from "../../redux";
 import { BackButton } from "../../components";
+import { getDiscountedPrice } from "../../util/discounted-price";
 
 function UserOrdersPage() {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function UserOrdersPage() {
       {orders.map((order, index) => (
         <div
           key={index}
-          className="flex flex-col bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 max-w-7xl px-6 py-8 sm:px-6 lg:px-8 mb-6"
+          className="flex flex-col bg-white  dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 max-w-7xl px-6 py-8 sm:px-6 lg:px-8 mb-6"
         >
           <div className="mb-8 flex justify-between">
             <span className="text-gray-900 dark:text-gray-300 font-bold text-2xl ">
@@ -41,64 +42,66 @@ function UserOrdersPage() {
             )}
           </div>
 
-          <div className="flex flex-col border dark:border-gray-500 px-4 py-2  sm:px-6">
-            <p className="text-gray-900 dark:text-gray-300 font-bold text-lg">
-              Items:
-            </p>
+          <div className="flex flex-col  dark:border-gray-500 px-4 py-2  sm:px-6 border-1 border-gray-200/80 rounded-md">
             <div className="flex-1 py-6 flow-root">
               <ul className="-my-6 divide-y divide-gray-200 dark:divide-gray-700">
-                {order.items.map((item, index) => (
-                  <li key={index} className="flex py-6">
-                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md ">
-                      <img
-                        src={item.thumbnail}
-                        alt={item.title}
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </div>
-
-                    <div className="ml-4 flex flex-1 flex-col">
-                      <div>
-                        <div className="flex justify-between text-base font-medium text-gray-900 dark:text-gray-100">
-                          <h3>{item.title}</h3>
-                          <p className="ml-4">
-                            ₹ {item.price * (item.quantity || 1)}
-                          </p>
+                {order.items.map((item, index) => {
+                  return (
+                    item.product && (
+                      <li key={index} className="flex py-6">
+                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md ">
+                          <img
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
+                            className="h-full w-full object-cover object-center"
+                          />
                         </div>
-                        <p className="dark:text-gray-300">
-                          Qty: {item.quantity || 1}
-                        </p>
-                        <p
-                          className={`mt-1 text-sm ${
-                            order.status === "Pending"
-                              ? "text-red-700 dark:text-orange-500"
-                              : order.status === "Dispatched"
-                                ? "text-yellow-600"
-                                : "text-green-600"
-                          } `}
-                        >
-                          Order Status: {order.status}
-                        </p>
-                        {order.date && order.status !== "Delivered" && (
-                          <p className="mt-1 text-sm dark:text-gray-400">
-                            {" "}
-                            Delivery Expected By:
-                            <span className="font-bold dark:text-gray-300 ">
-                              {" "}
-                              {`${
-                                parseInt(order.date.split("-")[0]) + 7
-                              }-${order.date.substring(3)}`}
-                            </span>
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </li>
-                ))}
+
+                        <div className="ml-4 flex flex-1 flex-col">
+                          <div>
+                            <div className="flex justify-between text-base font-medium text-gray-900 dark:text-gray-100">
+                              <h3>{item.product.title}</h3>
+                              <p className="ml-4">
+                                ₹
+                                {getDiscountedPrice(
+                                  item.product.price,
+                                  item.product.discountPercentage,
+                                  item.quantity
+                                )}
+                              </p>
+                            </div>
+                            <p className="dark:text-gray-300">
+                              Qty: {item.quantity || 1}
+                            </p>
+                            <p
+                              className={`mt-1 text-sm ${
+                                order.status === "Pending"
+                                  ? "text-red-700 dark:text-orange-500"
+                                  : order.status === "Dispatched"
+                                    ? "text-yellow-600"
+                                    : "text-green-600"
+                              } `}
+                            >
+                              Order Status: {order.status}
+                            </p>
+                            {order.date && order.status !== "Delivered" && (
+                              <p className="mt-1 text-sm dark:text-gray-400">
+                                <span>Delivery Expected By: </span>
+                                <span className="font-bold dark:text-gray-300 ">
+                                  {`${parseInt(order.date.split("-")[0]) + 7}-${order.date.substring(3)}`}
+                                </span>
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </li>
+                    )
+                  );
+                })}
               </ul>
             </div>
 
-            <div className="border-t border-gray-300 dark:border-gray-700  px-4 pt-6 sm:px-6">
+            <div className="border-t border-gray-300 dark:border-gray-700  pt-6 ">
               <div className="flex justify-between text-base  font-medium text-gray-900 dark:text-gray-300">
                 <p>Subtotal</p>
                 <p>₹ {order.totalPrice}</p>
@@ -111,7 +114,7 @@ function UserOrdersPage() {
           </div>
 
           {order.selectedAddress && (
-            <div className="border dark:border-gray-500 mt-6 space-y-2 items-baseline p-5 px-4 py-6 sm:px-6">
+            <div className=" dark:border-gray-500 mt-6 space-y-2 items-baseline p-5 px-4 py-6 sm:px-6 border-1 border-gray-200/80 rounded-md ">
               <p className="text-gray-900 dark:text-gray-300 font-bold text-lg">
                 {order.status !== "Delivered" ? "Shipping to:" : "Shipped To:"}
               </p>

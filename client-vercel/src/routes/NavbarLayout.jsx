@@ -17,6 +17,7 @@ export default function NavbarLayout() {
     "admin/orders": "Orders",
     "admin/profile": "Profile",
     "profile": "Profile",
+    "my-orders": "My Orders",
   };
 
   const keys = Object.keys(pageTitles).sort((a, b) => b.localeCompare(a));
