@@ -26,10 +26,10 @@ export default function MobileNavOptions({ handleTheme, dark, open }) {
         type="button"
         className="flex items-center text-gray-500 dark:text-gray-400  hover:text-gray-100 dark:hover:text-gray-100 focus:outline-none focus:ring-4 focus:ring-transparent rounded-lg text-sm p-2.5 dark:border-gray-600"
       >
-        {dark ? "Light Mode" : "Dark Mode"}
+        <span className="hidden sm:inline">{dark ? "Light Mode" : "Dark Mode"}</span>
         <svg
           id="theme-toggle-dark-icon"
-          className={`${dark ? "hidden" : ""}  w-5 h-5 ml-2`}
+          className={`${dark ? "hidden" : ""}  w-5 h-5 sm:ml-2`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ export default function MobileNavOptions({ handleTheme, dark, open }) {
         </svg>
         <svg
           id="theme-toggle-light-icon"
-          className={`${dark ? "" : "hidden"}  w-5 h-5 ml-2`}
+          className={`${dark ? "" : "hidden"}  w-5 h-5 sm:ml-2`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -101,4 +101,3 @@ export default function MobileNavOptions({ handleTheme, dark, open }) {
     </div>
   );
 }
-

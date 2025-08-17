@@ -1,5 +1,6 @@
+import { Disclosure } from "@headlessui/react";
 import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -7,12 +8,9 @@ import {
   selectLoggedInUser,
   selectWishListLength,
 } from "../../redux";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
 import MobileNavOptions from "./MobileNavOptions";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { MobileNavbarProfileDropdown } from "./navbar/MobileNavbarProfileDropdown";
+import { NavbarUserProfileDropdown } from "./navbar/NavbarUserProfileDropdown";
 
 export default function Navbar({ children, name, preview }) {
   const user = useSelector(selectLoggedInUser);
@@ -179,60 +177,10 @@ export default function Navbar({ children, name, preview }) {
                       </button>
                     </Link>
 
-                    {/* Profile dropdown */}
-                    {user && (
-                      <Menu as="div" className="relative ml-3">
-                        <div>
-                          <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 dark:bg-gray-700">
-                            <span className="absolute -inset-1.5" />
-                            <span className="sr-only">Open user menu</span>
-                            <img
-                              className="h-8 w-8 rounded-full"
-                              src={
-                                // user.image ||
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfZbXR5XmpH1OOJhigJF4nWkJIITHis1Y4dA&s"
-                              }
-                              alt=""
-                            />
-                          </Menu.Button>
-                        </div>
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          {userNavigation ? (
-                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white py-1 shadow-lg  dark:bg-gray-700  ">
-                              {userNavigation.map((item, index) => (
-                                <Menu.Item key={index}>
-                                  {({ active }) => (
-                                    <Link
-                                      to={item.link}
-                                      className={classNames(
-                                        active
-                                          ? "bg-gray-100"
-                                          : "dark:bg-gray-700",
-                                        "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300",
-                                        "hover:bg-gray-100 dark:hover:bg-gray-600", // Adding hover colors
-                                        "transition-colors ease-in-out duration-150" // Adding transition effect
-                                      )}
-                                    >
-                                      {item.name}
-                                    </Link>
-                                  )}
-                                </Menu.Item>
-                              ))}
-                            </Menu.Items>
-                          ) : (
-                            <div>Login to view profile</div>
-                          )}
-                        </Transition>
-                      </Menu>
-                    )}
+                    <NavbarUserProfileDropdown
+                      user={user}
+                      userNavigation={userNavigation}
+                    />
                   </div>
                 </div>
 
@@ -244,45 +192,10 @@ export default function Navbar({ children, name, preview }) {
               </div>
             </div>
 
-            {userNavigation && (
-              <Disclosure.Panel className="md:hidden">
-                <div className="border-t border-gray-700 pb-3 pt-4">
-                  <div className="flex items-center px-5">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={
-                          user.image ||
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfZbXR5XmpH1OOJhigJF4nWkJIITHis1Y4dA&s"
-                        }
-                        alt=""
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">
-                        {user.name}
-                      </div>
-                      <div className="text-sm font-medium leading-none text-gray-400">
-                        {user.email}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 space-y-1 px-2">
-                    {userNavigation.map((item, index) => (
-                      <Link key={index} to={item.link}>
-                        <Disclosure.Button
-                          key={item.name}
-                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100"
-                        >
-                          {item.name}
-                        </Disclosure.Button>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </Disclosure.Panel>
-            )}
+            <MobileNavbarProfileDropdown
+              user={user}
+              userNavigation={userNavigation}
+            />
           </>
         )}
       </Disclosure>

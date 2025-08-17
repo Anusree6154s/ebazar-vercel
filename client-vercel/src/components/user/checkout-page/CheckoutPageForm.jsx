@@ -36,11 +36,10 @@ const CheckoutPageForm = (
               >
                 Full name
               </label>
-              <div className="mt-2">
+              <div className="mt-2" ref={addressRef}>
                 <input
                   type="text"
                   {...register("name", { required: "required" })}
-                  ref={addressRef}
                   id="full-name"
                   autoComplete="given-name"
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none"
@@ -155,9 +154,6 @@ const CheckoutPageForm = (
                   id="postal-code"
                   autoComplete="postal-code"
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]"
-                  // ref={inputRef}
-                  onWheel={preventScrollAndArrows}
-                  onKeyDown={preventScrollAndArrows}
                 />
               </div>
             </div>
@@ -176,9 +172,6 @@ const CheckoutPageForm = (
                   id="phone"
                   autoComplete="phone"
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-600 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue  dark:focus:ring-blue-500 sm:text-sm sm:leading-6 dark:bg-gray-800 focus-visible:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]"
-                  // ref={inputRef}
-                  onWheel={preventScrollAndArrows}
-                  onKeyDown={preventScrollAndArrows}
                 />
               </div>
             </div>
@@ -214,4 +207,3 @@ const CheckoutPageForm = (
 };
 
 export default forwardRef(CheckoutPageForm);
-

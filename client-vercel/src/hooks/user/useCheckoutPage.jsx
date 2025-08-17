@@ -1,9 +1,6 @@
 import { enqueueSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
-import {
-  createOrderAsync,
-  resetCartAsync
-} from "../../redux";
+import { createOrderAsync, resetCartAsync } from "../../redux";
 
 export default function useCheckoutPage(
   selectedAddress,
@@ -15,7 +12,10 @@ export default function useCheckoutPage(
 
   const handleOrder = () => {
     if (!selectedAddress) {
-      addressRef.current.focus();
+      addressRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
       enqueueSnackbar("Please enter your address before placing the order.", {
         variant: "error",
       });

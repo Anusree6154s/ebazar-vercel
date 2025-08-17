@@ -69,7 +69,7 @@ function UserProfilePage() {
   };
 
   const handleEditProfile = (data) => {
-    if (data.image2.length !== 0) {
+    if (data.image2?.length !== 0) {
       const reader = new FileReader();
       reader.readAsDataURL(data.image2[0]);
       reader.onload = (e) =>
@@ -109,7 +109,7 @@ function UserProfilePage() {
 
         {!editProfileVisibility && (
           <div className="flex flex-col items-center">
-            <img src="/images/profile-bg.png" className="h-[200px] lg:h-full"/>
+            <img src="/images/profile-bg.png" className="h-[200px] lg:h-full" />
             <div className="-translate-y-30 flex flex-col items-center gap-2">
               <img
                 src={user.image || "/images/profile-icon.png"}
@@ -132,9 +132,11 @@ function UserProfilePage() {
               </span>
             </div>
 
-            <div className=" w-full p-5 rounded-md -translate-y-14">
-              <p className="text-gray-900 dark:text-gray-300 font-bold text-lg flex justify-between">
-                <span className={user.addresses.length === 0 && "hidden"}>
+            <div className={`w-full p-5 rounded-md -translate-y-14 ${user.addresses?.length === 0?"bg-gray-50":""}`}>
+              <p
+                className={`text-gray-900 dark:text-gray-300 font-bold text-lg flex ${user.addresses?.length === 0 ? "justify-center" : "justify-between"}`}
+              >
+                <span className={user.addresses?.length === 0 ? "hidden":""}>
                   Your Addresses:
                 </span>
 
@@ -154,7 +156,7 @@ function UserProfilePage() {
 
               <p
                 className={
-                  "text-gray-500 text-center h-full flex items-center justify-center " +
+                  "text-gray-400 text-center h-full flex items-center justify-center text-sm pt-2 " +
                   (user.addresses.length !== 0 || addFormVisibility
                     ? "hidden"
                     : "")
@@ -200,4 +202,3 @@ function UserProfilePage() {
 }
 
 export default UserProfilePage;
-

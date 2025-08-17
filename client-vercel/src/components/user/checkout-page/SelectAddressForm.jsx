@@ -6,7 +6,7 @@ export default function SelectAddressFormSection({
   selectedAddress,
 }) {
   if (!user?.addresses?.length) return null;
-  
+
   return (
     <fieldset>
       <legend className="text-lg font-semibold leading-7 text-gray-900 dark:text-gray-300">
@@ -31,6 +31,7 @@ export default function SelectAddressFormSection({
                     JSON.stringify(address) === JSON.stringify(selectedAddress)
                   }
                   value={JSON.stringify(address)}
+                  onChange={() => handleAddress(address)}
                   className="cursor-pointer  border-gray-300 dark:border-gray-600 text-customBlue focus:ring-customBlue dark:bg-gray-800 dark:hover:bg-blue-600 dark:text-blue-500 dark:focus:ring-blue-600"
                 />
                 <label

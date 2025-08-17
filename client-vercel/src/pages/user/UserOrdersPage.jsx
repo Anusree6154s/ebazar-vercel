@@ -31,7 +31,7 @@ function UserOrdersPage() {
           key={index}
           className="flex flex-col bg-white  dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 max-w-7xl px-6 py-8 sm:px-6 lg:px-8 mb-6"
         >
-          <div className="mb-8 flex justify-between">
+          <div className="mb-8 flex flex-col md:flex-row justify-between">
             <span className="text-gray-900 dark:text-gray-300 font-bold text-2xl ">
               Order #{order.id}
             </span>

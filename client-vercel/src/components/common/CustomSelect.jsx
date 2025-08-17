@@ -30,7 +30,6 @@ export default function CustomSelect({ options, onClickFn }) {
         ref={btnRef}
         onClick={() => setOpen(!open)}
         className="flex w-12 items-center justify-between rounded-md border-gray-100  bg-gray-100 px-2 py-1 text-left text-sm text-gray-700 focus:border-0 focus:outline-gray-100 focus:ring-1 focus:ring-gray-100"
-        onChange
       >
         <span>{selected}</span>
         <svg
@@ -60,7 +59,7 @@ export default function CustomSelect({ options, onClickFn }) {
               onClick={() => {
                 setSelected(option);
                 setOpen(false);
-                onClickFn(option)
+                onClickFn(option);
               }}
               className="cursor-pointer px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
