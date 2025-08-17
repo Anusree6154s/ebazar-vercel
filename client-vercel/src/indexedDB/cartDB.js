@@ -44,6 +44,20 @@ export async function getCartItemsIDB() {
   }
 }
 
+export async function getCartItemsCountIDB() {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readonly");
+    return new Promise((resolve, reject) => {
+      const request = store.count();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject("Failed to count cart items");
+    });
+  } catch (error) {
+    console.error("Error counting items in cart:", error);
+    throw error;
+  }
+}
+
 // Remove an item from the cart
 export async function removeFromCartIDB(itemId) {
   try {
@@ -60,7 +74,7 @@ export async function removeFromCartIDB(itemId) {
 }
 
 // Clear the cart
-export async function clearCart() {
+export async function clearCartIDB() {
   try {
     const store = await getTransaction(CART_STORE_NAME, "readwrite");
 
@@ -83,10 +97,10 @@ export async function existsInCartIDB(productId) {
       request.onsuccess = () => resolve(!!request.result);
       // If product exists, return true; otherwise, false
       request.onerror = () =>
-        reject("Failed to check exitence of product in wishlist");
+        reject("Failed to check exitence of product in cart");
     });
   } catch (error) {
-    console.error("Error check exitence of product in wishlist:", error);
+    console.error("Error check exitence of product in cart:", error);
     throw error;
   }
 }

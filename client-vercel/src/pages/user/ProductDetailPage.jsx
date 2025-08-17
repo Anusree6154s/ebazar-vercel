@@ -1,13 +1,18 @@
 import { useState } from "react";
 
-
 import {
   useHandleAdd,
   useHandleBuy,
   useHandleWishlist,
   useProductDetail,
 } from "../../hooks";
-import { BackButton, BreadCrumb, ProductImages, ProductInfoDesktop, ProductInfoMobile } from "../../components";
+import {
+  BackButton,
+  BreadCrumb,
+  ProductImages,
+  ProductInfoDesktop,
+  ProductInfoMobile,
+} from "../../components";
 
 function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
@@ -31,7 +36,7 @@ function ProductDetailPage() {
 
               <ProductInfoDesktop
                 product={product}
-                handleQuantity={(e) => setQuantity(+e.target.value)}
+                handleQuantity={(value) => setQuantity(value)}
                 handleWishList={handleWishList}
                 handleAdd={handleAdd}
                 handleBuy={handleBuy}
@@ -39,7 +44,7 @@ function ProductDetailPage() {
 
               <ProductInfoMobile
                 product={product}
-                handleQuantity={(e) => setQuantity(+e.target.value)}
+                handleQuantity={(value) => setQuantity(value)}
                 handleWishList={handleWishList}
                 handleAdd={handleAdd}
                 handleBuy={handleBuy}

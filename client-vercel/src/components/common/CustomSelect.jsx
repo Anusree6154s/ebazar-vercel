@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-export default function CustomSelect({ options, onClickFn }) {
+export default function CustomSelect({ options, onClickFn, startingValue }) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState(startingValue);
 
   const menuRef = useRef(null);
   const btnRef = useRef(null);

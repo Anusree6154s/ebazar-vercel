@@ -6,6 +6,8 @@ import {
   deleteItemFromCartIDBAsync,
   fetchCartByUserIdAsync,
   fetchCartIDBAsync,
+  isCartIDBEmptyAsync,
+  moveCartFromIDBToRemoteAsync,
   resetCartAsync,
   updateCartAsync,
   updateCartIDBAsync,
@@ -14,6 +16,7 @@ import {
 const initialState = {
   items: [],
   status: null,
+  isCartIDBEmpty: true,
 };
 
 export const cartSlice = createSlice({
@@ -28,7 +31,7 @@ export const cartSlice = createSlice({
     },
     updateCartItemIDB(state, action) {
       const index = state.items.findIndex(
-        (item) => item.id === action.payload.id,
+        (item) => item.id === action.payload.id
       );
       const cartItems = [...state.items];
       cartItems.splice(index, 1, action.payload);
@@ -78,7 +81,7 @@ export const cartSlice = createSlice({
       .addCase(updateCartAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id,
+          (item) => item.id === action.payload.id
         );
         state.items[index] = action.payload;
       })
@@ -88,7 +91,7 @@ export const cartSlice = createSlice({
       .addCase(updateCartIDBAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id,
+          (item) => item.id === action.payload.id
         );
         state.items[index] = action.payload;
       })
@@ -98,7 +101,7 @@ export const cartSlice = createSlice({
       .addCase(deleteItemFromCartAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id,
+          (item) => item.id === action.payload.id
         );
         state.items.splice(index, 1);
       })
@@ -108,7 +111,7 @@ export const cartSlice = createSlice({
       .addCase(deleteItemFromCartIDBAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload,
+          (item) => item.id === action.payload
         );
         state.items.splice(index, 1);
       })
@@ -118,6 +121,21 @@ export const cartSlice = createSlice({
       .addCase(resetCartAsync.fulfilled, (state) => {
         state.status = "idle";
         state.items = [];
+      })
+      .addCase(isCartIDBEmptyAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(isCartIDBEmptyAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.isCartIDBEmpty = action.payload;
+      })
+      .addCase(moveCartFromIDBToRemoteAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(moveCartFromIDBToRemoteAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const combinedItems = [...state.items, ...action.payload];
+        state.items = combinedItems;
       });
   },
 });

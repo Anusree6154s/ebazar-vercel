@@ -31,9 +31,6 @@ export default function useCart(product) {
   const dispatch = useDispatch();
   const handleCart = useCallback(
     (cartItem) => {
-      if (!isLoggedIn) toggleProductInLocalCart();
-      else toggleProductInRemoteCart();
-
       async function toggleProductInLocalCart() {
         if (cartItem) {
           dispatch(deleteItemFromCartIDBAsync(product.id));
@@ -55,6 +52,9 @@ export default function useCart(product) {
           setProductInCart(true);
         }
       }
+
+      if (!isLoggedIn) toggleProductInLocalCart();
+      else toggleProductInRemoteCart();
     },
     [dispatch, isLoggedIn, product, user?.id]
   );

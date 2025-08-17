@@ -32,7 +32,7 @@ export function NavbarUserProfileDropdown({ user, userNavigation }) {
         leaveTo="transform opacity-0 scale-95"
       >
         {userNavigation ? (
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white py-1 shadow-lg  dark:bg-gray-700  ">
+          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white py-1 shadow-lg  dark:bg-gray-700 focus:outline-none ">
             {userNavigation.map((item, index) => (
               <Menu.Item key={index}>
                 {({ active }) => (

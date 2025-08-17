@@ -1,13 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addToCart,
-  fetchItemsByUserId,
   updateCart,
   deleteItemFromCart,
   resetCart,
+  fetchCartByUserId,
+  addToCartMany,
 } from "../../api";
 import {
   addToCartIDB,
+  clearCartIDB,
+  getCartItemsCountIDB,
   getCartItemsIDB,
   removeFromCartIDB,
   updateCartIDB,
@@ -18,7 +21,7 @@ export const addToCartAsync = createAsyncThunk(
   async (item) => {
     const response = await addToCart(item);
     return response.data;
-  },
+  }
 );
 
 export const addToCartIDBAsync = createAsyncThunk(
@@ -26,15 +29,15 @@ export const addToCartIDBAsync = createAsyncThunk(
   async (item) => {
     const response = await addToCartIDB(item);
     return response;
-  },
+  }
 );
 
 export const fetchCartByUserIdAsync = createAsyncThunk(
   "cart/fetchCartByUserId",
   async () => {
-    const response = await fetchItemsByUserId();
+    const response = await fetchCartByUserId();
     return response.data;
-  },
+  }
 );
 
 export const fetchCartIDBAsync = createAsyncThunk(
@@ -42,7 +45,7 @@ export const fetchCartIDBAsync = createAsyncThunk(
   async () => {
     const response = await getCartItemsIDB();
     return response;
-  },
+  }
 );
 
 export const updateCartAsync = createAsyncThunk(
@@ -50,7 +53,7 @@ export const updateCartAsync = createAsyncThunk(
   async (update) => {
     const response = await updateCart(update);
     return response.data;
-  },
+  }
 );
 
 export const updateCartIDBAsync = createAsyncThunk(
@@ -58,7 +61,7 @@ export const updateCartIDBAsync = createAsyncThunk(
   async (update) => {
     const response = await updateCartIDB(update);
     return response;
-  },
+  }
 );
 
 export const deleteItemFromCartAsync = createAsyncThunk(
@@ -66,7 +69,7 @@ export const deleteItemFromCartAsync = createAsyncThunk(
   async (itemId) => {
     const response = await deleteItemFromCart(itemId);
     return response.data;
-  },
+  }
 );
 
 export const deleteItemFromCartIDBAsync = createAsyncThunk(
@@ -74,7 +77,7 @@ export const deleteItemFromCartIDBAsync = createAsyncThunk(
   async (itemId) => {
     const response = await removeFromCartIDB(itemId);
     return response;
-  },
+  }
 );
 
 export const resetCartAsync = createAsyncThunk(
@@ -82,5 +85,46 @@ export const resetCartAsync = createAsyncThunk(
   async (userId) => {
     const response = await resetCart(userId);
     return response;
-  },
+  }
+);
+
+export const isCartIDBEmptyAsync = createAsyncThunk(
+  "cart/isCartIDBEmpty",
+  async () => {
+    const cartIDBCount = await getCartItemsCountIDB();
+    return !cartIDBCount;
+  }
+);
+
+
+export const moveCartFromIDBToRemoteAsync = createAsyncThunk(
+  "cart/moveCartFromIDBToRemote",
+  async (userID) => {
+    const cartItemsIDB = await getCartItemsIDB();
+
+    if (cartItemsIDB.length > 0) {
+      const cartItemsRemote = await fetchCartByUserId();
+      const cartItemsRemoteIds = new Set(
+        cartItemsRemote.data.map((item) => item.product.id)
+      );
+
+      const addToCartManyPayload = cartItemsIDB
+        .filter((product) => !cartItemsRemoteIds.has(product.id))
+        .map((product) => ({
+          product: product.id,
+          user: userID,
+          quantity: product.quantity || 1
+        }));
+
+      let cartRes;
+      if (addToCartManyPayload.length > 0) {
+        cartRes = await addToCartMany(addToCartManyPayload);
+      }
+
+      await clearCartIDB();
+
+      const value= cartRes.data;
+      return value
+    }
+  }
 );

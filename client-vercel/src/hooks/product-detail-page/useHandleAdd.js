@@ -2,9 +2,11 @@ import { enqueueSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCartAsync,
+  addToCartIDBAsync,
   selectCartItems,
   selectLoggedInUser,
   updateCartAsync,
+  updateCartIDBAsync,
 } from "../../redux";
 
 export default function useHandleAdd({ quantity, product }) {
@@ -21,9 +23,6 @@ export default function useHandleAdd({ quantity, product }) {
     );
 
     if (product.stock == 0) return;
-
-    if (isLoggedIn) addToCartRemote();
-    else addToCartIDB();
 
     enqueueSnackbar("Added to Cart!", { variant: "success" });
 
@@ -51,7 +50,21 @@ export default function useHandleAdd({ quantity, product }) {
       }
     }
 
-    function addToCartIDB() {}
+    function addToCartIDB() {
+      if (productInCart) {
+        dispatch(
+          updateCartIDBAsync({
+            ...product,
+            quantity,
+          })
+        );
+      } else {
+        dispatch(addToCartIDBAsync({ ...product, quantity }));
+      }
+    }
+
+    if (isLoggedIn) addToCartRemote();
+    else addToCartIDB();
   };
   `1`;
 

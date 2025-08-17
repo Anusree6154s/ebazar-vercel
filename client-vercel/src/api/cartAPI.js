@@ -73,7 +73,7 @@ export async function addToCart(item) {
   return { data };
 }
 
-export async function fetchItemsByUserId() {
+export async function fetchCartByUserId() {
   const response = await fetch(BASE_URL + "/cart", {
     credentials: "include",
   });
@@ -104,7 +104,7 @@ export async function deleteItemFromCart(itemId) {
 
 export async function resetCart(userId) {
   // [in case of server cart reset] fetch all items of user's cart and delete each item
-  const response = await fetchItemsByUserId(userId);
+  const response = await fetchCartByUserId(userId);
   const items = response.data;
 
   for (let item of items) {
@@ -112,4 +112,17 @@ export async function resetCart(userId) {
   }
 
   return { status: "success" };
+}
+
+export async function addToCartMany(items) {
+  return fetch(BASE_URL + "/cart/many", {
+    method: "POST",
+    body: JSON.stringify(items),
+    headers: { "content-type": "application/json" },
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return { data };
+    });
 }

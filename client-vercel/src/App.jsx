@@ -9,8 +9,11 @@ import {
   fetchLoggedInUserAsync,
   fetchWishListByUserIdAsync,
   fetchWishListIDBAsync,
+  isCartIDBEmptyAsync,
   isWishListIDBEmptyAsync,
+  moveCartFromIDBToRemoteAsync,
   moveWishListFromIDBToRemoteAsync,
+  selectIsCartIDBEmpty,
   selectIsWishlistIDBEmpty,
   selectLoggedInUser,
 } from "./redux";
@@ -22,10 +25,12 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
   const isWishlistIDBEmpty = useSelector(selectIsWishlistIDBEmpty);
+  const isCartIDBEmpty = useSelector(selectIsCartIDBEmpty);
 
   useEffect(() => {
     if (user && !user.error) {
       dispatch(isWishListIDBEmptyAsync());
+      dispatch(isCartIDBEmptyAsync());
       dispatch(fetchCartByUserIdAsync());
       dispatch(fetchWishListByUserIdAsync());
     } else {
@@ -39,6 +44,12 @@ function App() {
       dispatch(moveWishListFromIDBToRemoteAsync(user.id));
     }
   }, [user, isWishlistIDBEmpty, dispatch]);
+
+  useEffect(() => {
+    if (user && !user.error && !isCartIDBEmpty) {
+      dispatch(moveCartFromIDBToRemoteAsync(user.id));
+    }
+  }, [user, isCartIDBEmpty, dispatch]);
 
   useEffect(() => {
     dispatch(fetchLoggedInUserAsync());

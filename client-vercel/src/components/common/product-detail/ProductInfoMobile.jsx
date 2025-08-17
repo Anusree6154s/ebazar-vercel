@@ -1,4 +1,6 @@
+import { getDiscountedPrice } from "../../../util/discounted-price";
 import RatingStars from "../../user/product-list-page/RatingStars";
+import CustomSelect from "../CustomSelect";
 import ProductButton from "./ProductButton";
 
 const highlights = [
@@ -27,10 +29,7 @@ export default function ProductInfoMobile({
         <div>
           <span className="text-4xl tracking-tight text-gray-900 dark:text-gray-300">
             <span>₹</span>
-            {(
-              product.price -
-              product.price * (product.discountPercentage / 100)
-            ).toFixed(2)}
+            {getDiscountedPrice(product.price, product.discountPercentage, 1)}
           </span>
           <div className="flex flex-wrap gap-4 ">
             <p className="text-lg tracking-tight text-gray-400 dark:text-gray-300">
@@ -48,18 +47,6 @@ export default function ProductInfoMobile({
           <h3 className="sr-only">Reviews</h3>
           <div className="flex items-center">
             <div className="flex items-center">
-              {/* {[0, 1, 2, 3, 4].map((rating) => (
-                <StarIcon
-                  key={rating}
-                  className={classNames(
-                    product.rating > rating
-                      ? "text-gray-900 dark:text-gray-200"
-                      : "text-gray-200 dark:text-gray-700",
-                    "h-5 w-5 flex-shrink-0"
-                  )}
-                  aria-hidden="true"
-                />
-              ))} */}
               <RatingStars rating={product.rating} />
             </div>
             <p className="sr-only">{product.rating} out of 5 stars</p>
@@ -73,10 +60,10 @@ export default function ProductInfoMobile({
         </div>
 
         <div className="mt-12">
-          <label className="text-sm font-medium dark:text-gray-300">
+          <label className="text-sm font-medium dark:text-gray-300 mr-2">
             Quantity:
           </label>
-          <select
+          {/* <select
             onChange={handleQuantity}
             // value={product.quantity || 1}
             name="Quantity"
@@ -87,7 +74,12 @@ export default function ProductInfoMobile({
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
-          </select>
+          </select> */}
+          <CustomSelect
+            options={[1, 2, 3, 4]}
+            onClickFn={handleQuantity}
+            startingValue={1}
+          />
         </div>
 
         <div className="mt-10 flex flex-col gap-2">

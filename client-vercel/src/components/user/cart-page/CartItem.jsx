@@ -35,7 +35,7 @@ export default function CartItem({ item, quantity, itemId }) {
       );
     }
   };
-
+  
   return (
     <li className="flex py-6">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-500">
@@ -61,7 +61,11 @@ export default function CartItem({ item, quantity, itemId }) {
           </div>
           <div className="text-gray-500 text-sm inline-block">
             <label className="mr-3 dark:text-gray-300">Qty</label>
-            <CustomSelect options={[1, 2, 3, 4]} onClickFn={handleClick} />
+            <CustomSelect
+              options={[1, 2, 3, 4]}
+              onClickFn={handleClick}
+              startingValue={quantity || 1}
+            />
           </div>
         </div>
         <div className="flex flex-col justify-between items-end">

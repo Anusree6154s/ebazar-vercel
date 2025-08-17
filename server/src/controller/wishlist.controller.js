@@ -66,7 +66,7 @@ exports.addToWishListMany = catchAsyncUtil.catchAsync(async (req, res) => {
   // Populate 'product' for all created wishlist items
   const populated = await WishList.populate(wishLists, { path: "product" });
   console.log("🚀 ~ populated:", populated);
-  res.status(status.OK).json(populated);
+  res.status(httpStatus.OK).json(populated);
 
   // Use .populate('field') on a single document.
   // Use Model.populate(docs, { path: 'field' }) for an array of documents.
