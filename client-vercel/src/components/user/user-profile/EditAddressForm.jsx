@@ -16,7 +16,7 @@ export function EditAddressForm({
       })}
       className={visibilityIndex !== index ? "hidden" : "px-4 w-full"}
     >
-      <div className="pt-6 border-b border-t border-gray-900/10 pb-12  grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <div className="pt-6 border-b border-t border-gray-900/10 dark:border-gray-700/50 pb-12  grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="col-span-full lg:col-span-3">
           <label
             htmlFor="full-name"
@@ -53,7 +53,7 @@ export function EditAddressForm({
               })}
               type="email"
               autoComplete="email"
-              className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 dark:text-gray-300= ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-700 dark:placeholder:text-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-inset focus:ring-customBlue sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 dark:text-gray-300 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-700 dark:placeholder:text-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-inset focus:ring-customBlue sm:text-sm sm:leading-6"
             />
           </div>
           {errors2.email && <p className="text-red-500">* required</p>}

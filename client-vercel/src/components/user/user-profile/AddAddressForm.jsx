@@ -13,7 +13,7 @@ export function AddAddressForm({
         handleAdd(data);
         setaddFormVisibility(!addFormVisibility);
       })}
-      className={addFormVisibility ? "bg-gray-50 px-10 py-1" : "hidden mt-6"}
+      className={addFormVisibility ? "bg-gray-50 dark:bg-transparent px-10 py-1" : "hidden mt-6"}
     >
       <div className="pt-6 border-b border-gray-400 dark:border-gray-700 pb-12  grid gap-x-6 gap-y-8 grid-cols-6">
         <div className="col-span-full lg:col-span-3">
@@ -95,7 +95,7 @@ export function AddAddressForm({
         <div className="col-span-full md:col-span-3 lg:col-span-2">
           <label
             htmlFor="state"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
           >
             State
           </label>
@@ -135,7 +135,7 @@ export function AddAddressForm({
         <div className="col-span-full md:col-span-3 lg:col-span-2">
           <label
             htmlFor="pincode"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
           >
             Pin code
           </label>
@@ -155,7 +155,7 @@ export function AddAddressForm({
         <div className="col-span-full md:col-span-3 lg:col-span-2">
           <label
             htmlFor="phone"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
           >
             Phone
           </label>

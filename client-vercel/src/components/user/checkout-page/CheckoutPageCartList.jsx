@@ -26,7 +26,7 @@ export default function CheckoutPageCartList({ item, quantity, itemId }) {
 
   return (
     <li key={item.id} className="flex py-6 items=stretch">
-      <div className="w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
+      <div className="w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-600">
         <img
           src={item.thumbnail}
           alt={item.title}
@@ -62,7 +62,11 @@ export default function CheckoutPageCartList({ item, quantity, itemId }) {
         <div className="flex flex-1 items-end justify-between  text-sm ">
           <div className="text-gray-500 dark:text-gray-300 inline-block">
             <label className="mr-3 ">Qty</label>
-            <CustomSelect options={[1, 2, 3, 4]} onClickFn={handleQuantity} />
+            <CustomSelect
+              options={[1, 2, 3, 4]}
+              onClickFn={handleQuantity}
+              startingValue={quantity}
+            />
           </div>
 
           <div className="flex">

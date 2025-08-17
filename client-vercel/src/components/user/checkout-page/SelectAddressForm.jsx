@@ -20,7 +20,7 @@ export default function SelectAddressFormSection({
           {user.addresses.map((address, index) => (
             <li
               key={index}
-              className=" flex justify-between items-baseline border-[1.5px] px-5 group cursor-pointer border-gray-200 rounded-md hover:border-customBlue"
+              className=" flex justify-between items-baseline border-[1.5px] px-5 group cursor-pointer border-gray-200 dark:border-gray-700 rounded-md hover:border-customBlue"
               onClick={() => handleAddress(address)}
             >
               <div className=" flex items-baseline gap-5 ">

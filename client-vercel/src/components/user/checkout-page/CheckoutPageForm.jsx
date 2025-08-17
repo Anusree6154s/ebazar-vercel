@@ -8,12 +8,12 @@ const CheckoutPageForm = (
   { addressRef, user, selectedAddress, setSelectedAddress, setpaymentMethod },
   ref
 ) => {
-  const { handleSubmit, register } = useFormContext();
-  const {
-    submitHandler,
-    handleAddress,
-    handlePayment,
-  } = useCheckoutPageForm(setSelectedAddress, setpaymentMethod, user);
+  const { handleSubmit, register, reset } = useFormContext();
+  const { submitHandler, handleAddress, handlePayment } = useCheckoutPageForm(
+    setSelectedAddress,
+    setpaymentMethod,
+    user
+  );
 
   return (
     <form ref={ref} noValidate onSubmit={handleSubmit(submitHandler)}>
@@ -180,6 +180,7 @@ const CheckoutPageForm = (
           <button
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-300"
+            onClick={() => reset()}
           >
             Reset
           </button>

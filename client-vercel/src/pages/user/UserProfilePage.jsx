@@ -28,7 +28,6 @@ function UserProfilePage() {
     register: register3,
     handleSubmit: handleSubmit3,
     setValue: setValue3,
-    // formState: { errors: errors3 },
   } = useForm();
 
   const dispatch = useDispatch();
@@ -116,8 +115,8 @@ function UserProfilePage() {
                 alt={user.name}
                 className="w-30 h-30 rounded-full shadow-md"
               />
-              {user.name && <span className="font-medium">{user.name}</span>}
-              <span className="text-gray-500 text-sm font-medium">
+              {user.name && <span className="font-medium dark:text-white">{user.name}</span>}
+              <span className="text-gray-500 text-sm font-medium dark:text-gray-400">
                 {user.email}
               </span>
               <span
@@ -125,14 +124,14 @@ function UserProfilePage() {
                   setValue3("recovery_email", user.recovery_email);
                   setEditProfileVisibility(!editProfileVisibility);
                 }}
-                className="text-sm text-gray-400 hover:text-gray-500  dark:hover:text-white  cursor-pointer flex  items-center underline"
+                className="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400/80    cursor-pointer flex  items-center underline"
               >
                 <PencilIcon className="h-3 w-3 inline" />
                 Edit
               </span>
             </div>
 
-            <div className={`w-full p-5 rounded-md -translate-y-14 ${user.addresses?.length === 0?"bg-gray-50":""}`}>
+            <div className={`w-full p-5 rounded-md -translate-y-14 ${user.addresses?.length === 0?"bg-gray-50 dark:bg-gray-800":""}`}>
               <p
                 className={`text-gray-900 dark:text-gray-300 font-bold text-lg flex ${user.addresses?.length === 0 ? "justify-center" : "justify-between"}`}
               >

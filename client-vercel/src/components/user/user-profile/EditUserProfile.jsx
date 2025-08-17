@@ -61,7 +61,7 @@ export function EditUserProfile({
               id="image2"
               autoComplete="image2"
               defaultValue={user?.image2 || ""}
-              className="md:ml-2 mt-2 md:mt-0 inline col-span-full sm:col-span-6 cursor-pointer hover:bg-gray-200/80 rounded-md bg-gray-200 border-gray-100 border-1 py-1.5 px-4 text-gray-600 dark:text-gray-300  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-700 dark:placeholder:text-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-inset focus:ring-customBlue sm:text-sm sm:leading-6 focus-visible:outline-none"
+              className="md:ml-2 mt-2 md:mt-0 inline col-span-full sm:col-span-6 cursor-pointer hover:bg-gray-200/80 rounded-md bg-gray-200 border-gray-100 dark:border-gray-800 border-1 py-1.5 px-4 text-gray-600 dark:text-gray-300  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-700 dark:placeholder:text-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 focus:ring-2 focus:ring-inset focus:ring-customBlue sm:text-sm sm:leading-6 focus-visible:outline-none"
             />
           </div>
         </div>
