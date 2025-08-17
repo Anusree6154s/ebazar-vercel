@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import BackButton from "../../components/common/BackButton";
 import CartItem from "../../components/user/cart-page/CartItem";
 import {
@@ -7,9 +7,9 @@ import {
   selectCartStatus,
   selectLoggedInUser,
 } from "../../redux";
+import { pathnames } from "../../routes/pathnames";
 import { getTotalCartItemsCount } from "../../util/total-cart-items";
 import { getTotalCartItemsPrice } from "../../util/total-cart-items-price";
-import { pathnames } from "../../routes/pathnames";
 
 function CartPage() {
   const items = useSelector(selectCartItems);
