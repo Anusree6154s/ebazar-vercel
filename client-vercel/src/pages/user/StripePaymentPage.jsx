@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import "../../styles/Stripe.css";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { PaymentForm } from "../../components";
 import {
   makePaymentAsync,
   selectClientSecret,
   selectCurrentOrder,
 } from "../../redux";
-import { Elements } from "@stripe/react-stripe-js";
-import { PaymentForm } from "../../components";
+import "../../styles/Stripe.css";
 
 function StripePaymentPage() {
   const stripePromise = loadStripe(
@@ -33,6 +34,8 @@ function StripePaymentPage() {
     clientSecret,
     appearance,
   };
+
+  if (!clientSecret && !currentOrder) return <Navigate to="/" replace />;
 
   return (
     <div className="Stripe">

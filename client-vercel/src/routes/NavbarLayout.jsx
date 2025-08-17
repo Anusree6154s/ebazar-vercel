@@ -18,6 +18,7 @@ export default function NavbarLayout() {
     "admin/profile": "Profile",
     "profile": "Profile",
     "my-orders": "My Orders",
+    "stripe-payment": "Payment",
   };
 
   const keys = Object.keys(pageTitles).sort((a, b) => b.localeCompare(a));
