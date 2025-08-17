@@ -6,10 +6,12 @@ import {
 } from "../../../redux";
 import { getDiscountedPrice } from "../../../util/discounted-price";
 import CustomSelect from "../../common/CustomSelect";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CheckoutPageCartList({ item, quantity, itemId }) {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
+  const navigate = useNavigate();
   const handleQuantity = (value) => {
     dispatch(
       updateCartAsync({
@@ -28,7 +30,8 @@ export default function CheckoutPageCartList({ item, quantity, itemId }) {
         <img
           src={item.thumbnail}
           alt={item.title}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-center cursor-pointer"
+          onClick={() => navigate(`/product-detail/${item.id}`)}
         />
       </div>
 
@@ -36,7 +39,7 @@ export default function CheckoutPageCartList({ item, quantity, itemId }) {
         <div>
           <div className="flex flex-col sm:flex-row lg:flex-col gap-4 sm:gap-0 lg:gap-4 justify-between text-base font-medium text-gray-900 dark:text-gray-300">
             <h3 className="flex flex-col">
-              <a href={item.id}>{item.title}</a>
+              <Link to={`/product-detail/${item.id}`}>{item.title}</Link>
               <span className="text-gray-400 uppercase text-xs font-bold">
                 {item.brand || "No Brand"}
               </span>

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   deleteItemFromCartAsync,
   deleteItemFromCartIDBAsync,
@@ -42,7 +42,7 @@ export default function CartItem({ item, quantity, itemId }) {
         <img
           src={item.thumbnail}
           alt={item.title}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-center cursor-pointer"
           onClick={() => navigate(`/product-detail/${item.id}`)}
         />
       </div>
@@ -51,45 +51,16 @@ export default function CartItem({ item, quantity, itemId }) {
         <div className="flex flex-col justify-between">
           <div className="flex flex-col gap-1">
             <h3>
-              <a href={item.href}>{item.title}</a>
+              <Link to={`/product-detail/${item.id}`}>{item.title}</Link>
             </h3>
             <h5 className="text-gray-400 font-bold text-xs uppercase">
-              <a href={item.href}>{item.brand || "No Brand"}</a>
+              <Link to={`/product-detail/${item.id}`}>
+                {item.brand || "No Brand"}
+              </Link>
             </h5>
           </div>
           <div className="text-gray-500 text-sm inline-block">
             <label className="mr-3 dark:text-gray-300">Qty</label>
-            {/* <select
-              onChange={(e) => {
-                if (user) {
-                  dispatch(
-                    updateCartAsync({
-                      id: itemId,
-                      product: item.id,
-                      quantity: +e.target.value,
-                      user: user.id,
-                    })
-                  );
-                } else {
-                  dispatch(
-                    updateCartIDBAsync({
-                      ...item,
-                      product: item.id,
-                      quantity: +e.target.value,
-                    })
-                  );
-                }
-              }}
-              className="py-0 rounded-md dark:text-gray-200 dark:bg-gray-700 focus:outline-none"
-              value={quantity}
-              name=""
-              id=""
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select> */}
             <CustomSelect options={[1, 2, 3, 4]} onClickFn={handleClick} />
           </div>
         </div>
