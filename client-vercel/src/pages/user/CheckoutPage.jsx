@@ -1,7 +1,12 @@
 import { useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  BackButton,
+  CheckoutPageCartList,
+  CheckoutPageForm,
+} from "../../components";
 import useCheckoutPage from "../../hooks/user/useCheckoutPage";
 import {
   selectCartItems,
@@ -11,11 +16,6 @@ import {
 import { getFormattedDate } from "../../util/format-date";
 import { getTotalCartItemsCount } from "../../util/total-cart-items";
 import { getTotalCartItemsPrice } from "../../util/total-cart-items-price";
-import {
-  BackButton,
-  CheckoutPageCartList,
-  CheckoutPageForm,
-} from "../../components";
 
 function CheckoutPage() {
   const methods = useForm({ mode: "onChange" });

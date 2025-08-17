@@ -2,9 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
   deleteItemFromCartAsync,
-  deleteItemFromCartIDBAsync,
   selectLoggedInUser,
-  updateCartAsync,
+  updateCartAsync
 } from "../../../redux";
 import { getDiscountedPrice } from "../../../util/discounted-price";
 import CustomSelect from "../../common/CustomSelect";

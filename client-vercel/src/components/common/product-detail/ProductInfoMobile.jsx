@@ -63,18 +63,6 @@ export default function ProductInfoMobile({
           <label className="text-sm font-medium dark:text-gray-300 mr-2">
             Quantity:
           </label>
-          {/* <select
-            onChange={handleQuantity}
-            // value={product.quantity || 1}
-            name="Quantity"
-            id="quantity"
-            className="border border-gray-300  dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300 rounded-md pt-0 pb-0 ml-4"
-          >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select> */}
           <CustomSelect
             options={[1, 2, 3, 4]}
             onClickFn={handleQuantity}
@@ -109,8 +97,8 @@ export default function ProductInfoMobile({
         </div>
       </div>
 
-      <div className="p-4 border rounded-md">
-        <h1 className="font-bold text-lg mb-4">Product Description</h1>
+      <div className="p-4 border rounded-md dark:border-gray-700">
+        <h1 className="font-bold text-lg mb-4 dark:text-white">Product Description</h1>
         <div className="flex flex-col gap-4">
           {/* Description and details */}
 
