@@ -13,8 +13,6 @@ const CheckoutPageForm = (
     submitHandler,
     handleAddress,
     handlePayment,
-    inputRef,
-    preventScrollAndArrows,
   } = useCheckoutPageForm(setSelectedAddress, setpaymentMethod, user);
 
   return (

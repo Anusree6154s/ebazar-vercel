@@ -7,10 +7,10 @@ import {
   selectCartItems,
   selectLoggedInUser,
   selectWishListLength,
-} from "../../redux";
-import MobileNavOptions from "./MobileNavOptions";
-import { MobileNavbarProfileDropdown } from "./navbar/MobileNavbarProfileDropdown";
-import { NavbarUserProfileDropdown } from "./navbar/NavbarUserProfileDropdown";
+} from "../../../redux";
+import MobileNavOptions from "../MobileNavOptions";
+import { MobileNavbarProfileDropdown } from "./MobileNavbarProfileDropdown";
+import { NavbarUserProfileDropdown } from "./NavbarUserProfileDropdown";
 
 export default function Navbar({ children, name, preview }) {
   const user = useSelector(selectLoggedInUser);

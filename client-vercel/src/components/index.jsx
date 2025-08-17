@@ -18,8 +18,8 @@ export { default as InputField } from "./auth/InputField";
 export { default as BackButton } from "./common/BackButton";
 export { default as LandingBanner } from "./common/LandingBanner";
 export { default as Loader } from "./common/Loader";
-export { default as Navbar } from "./common/Navbar";
-export { default as Pagination } from "./common/Pagination";
+export { default as Navbar } from "./common/navbar/Navbar";
+export { default as Pagination } from "./common/pagination/Pagination";
 export { default as MobileNavOptions } from "./common/MobileNavOptions";
 
 // common/product-detail
