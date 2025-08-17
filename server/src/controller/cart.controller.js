@@ -43,7 +43,6 @@ exports.addToCartMany = catchAsyncUtil.catchAsync(async (req, res) => {
 
   // Validate all entries
   for (const item of req.body) {
-    console.log("🚀 ~ req.body:", req.body)
     if (!item.product || !mongoose.Types.ObjectId.isValid(item.product)) {
       throw new ApiError(
         httpStatus.BAD_REQUEST,
@@ -60,10 +59,8 @@ exports.addToCartMany = catchAsyncUtil.catchAsync(async (req, res) => {
 
   // Insert many cart items
   const carts = await Cart.insertMany(req.body);
-  console.log("🚀 ~ carts:", carts);
   // Populate 'product' for all created cart items
   const populated = await Cart.populate(carts, { path: "product" });
-  console.log("🚀 ~ populated:", populated);
   res.status(httpStatus.OK).json(populated);
 
   // Use .populate('field') on a single document.
