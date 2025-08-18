@@ -26,15 +26,13 @@ function LoginPage() {
       dispatch(resetAuthError());
     }
   }, [dispatch, user]);
-  
 
   if (user && user.role === "user") {
-    
-    return <Navigate to="/" replace={true}/>;
+    return <Navigate to="/" replace={true} />;
   }
 
   if (user && user.role === "admin") {
-    return <Navigate to="/admin" replace={true}/>;
+    return <Navigate to="/admin" replace={true} />;
   }
 
   return (
@@ -135,7 +133,7 @@ function LoginPage() {
               </div>
             </div>
           </div>
-          <div className="flex-1 bg-[#364153] text-center hidden lg:flex justify-center">
+          <div className="flex-1 dark:bg-[#364153] bg-[#afe3ffed]  text-center hidden lg:flex justify-center">
             <img src="/images/login-image.png" alt="" />
           </div>
         </div>

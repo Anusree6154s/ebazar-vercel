@@ -38,7 +38,7 @@ function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white flex justify-center h-screen overflow-hidden">
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white dark:bg-gray-800 shadow sm:rounded-lg flex justify-center flex-1">
-        <div className="flex-1 bg-[#364153] text-center hidden lg:flex justify-center">
+        <div className="flex-1 dark:bg-[#364153] bg-[#afe3ffed] text-center hidden lg:flex justify-center">
           <img src="/images/forgot-password-image.png" alt="" />
         </div>
         <div className="lg:w-1/2 xl:w-5/12 ">
