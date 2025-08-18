@@ -19,15 +19,6 @@ const productSchema = new Schema({
 });
 modelsUtil.createVirtualID(productSchema);
 
-// 1️⃣ Single-field indexes for independent sorting
-productSchema.index({ rating: -1 });   // Sorting by rating
-productSchema.index({ price: 1 });     // Sorting by price (ascending)
-productSchema.index({ price: -1 });    // Sorting by price (descending)
-
-// 2️⃣ Compound indexes for filtering & sorting
-productSchema.index({ category: 1, brand: 1, rating: -1, price: 1 });  // Filters + sorts together
-productSchema.index({ category: 1, brand: 1, rating: -1, price: -1 }); // Same, but descending price
-// This hybrid strategy ensures that sorting & filtering remain efficient, even when query patterns are unpredictable.
  
 /**
  * Mongoose model for the Product schema.

@@ -9,9 +9,9 @@
     "commit":"cz"
   },
   "lint-staged": {
-    "my-app2/**/*.{js,jsx,ts,tsx}": [
-      "cd my-app2 && eslint --fix",
-      "cd my-app2 && prettier --write"
+    "client-vercel/**/*.{js,jsx,ts,tsx}": [
+      "cd client-vercel && eslint --fix",
+      "cd client-vercel && prettier --write"
     ],
     "client/**/*.{js,jsx,ts,tsx}": [
       "cd client && eslint --fix",

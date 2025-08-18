@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --trace-warnings src/index",
     "dev:local": "cross-env NODE_ENV=local nodemon --trace-warnings src/index",
-    "build": "npm i && cd ../client && npm run build",
+    "build": "npm i && cd ../client-vercel && npm run build",
     "start": "node src/index",
     "start:local": "cross-env NODE_ENV=local node src/index",
     "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",

@@ -28,10 +28,10 @@ const sendEmail = (email, OTP, id) => {
       if (err) {
         return reject({ message: "Error reading email template", statusCode: httpStatus.INTERNAL_SERVER_ERROR });
       }
-
+      
       // Replace the placeholder with the actual OTP
       const html = data.replace('{{OTP}}', OTP);
-
+      
       var transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -49,6 +49,7 @@ const sendEmail = (email, OTP, id) => {
 
       transporter.sendMail(mail_configs, function (error, info) {
         if (error) {
+          console.error('Error sending mail',error)
           return reject({ message: `Error occurred in sending email`, statusCode: httpStatus.INTERNAL_SERVER_ERROR });
         }
         return resolve({ id });

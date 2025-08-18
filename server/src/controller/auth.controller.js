@@ -31,7 +31,10 @@ exports.createUser = catchAsyncUtil.catchAsync(async (req, res) => {
   );
 
   const data = await cryptoService.crytpoSignup(req.body);
-  const token = jwt.sign(sanitizeUtil.sanitizeUser(data), env.jwt.jwt_secret_key);
+  const token = jwt.sign(
+    sanitizeUtil.sanitizeUser(data),
+    env.jwt.jwt_secret_key
+  );
 
   res
     .cookie("jwt", token, {
@@ -105,11 +108,12 @@ exports.checkAuth = catchAsyncUtil.catchAsync(async (req, res) => {
  * @throws {apiUtil.ApiError} Throws a 404 (Not Found) error if the email is not found in the database.
  */
 exports.sendOTP = catchAsyncUtil.catchAsync(async (req, res, next) => {
-  const user = await User.findOne({ email: req.body.email });
+  const data = JSON.parse(Buffer.from(req.body.data, "base64").toString("utf8"));
+  const user = await User.findOne({ email: data.email });
   if (!user) {
     throw new apiUtil.ApiError(httpStatus.NOT_FOUND, "Email doesn't exist");
   }
-  await authService.sendEmail(req.body.email, req.body.OTP, user.id);
+  await authService.sendEmail(data.email, data.OTP, user.id);
   res
     .status(httpStatus.OK)
     .json({ id: user.id, message: "OTP sent successfully" });

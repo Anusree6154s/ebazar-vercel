@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 const resolveEnvFile = require("./resolveEnvFile");
 
 dotenv.config({ path: resolveEnvFile() });
-// console.log("🚀 ~ exports.env.jwt.process.env:", process.env)
 
 
 

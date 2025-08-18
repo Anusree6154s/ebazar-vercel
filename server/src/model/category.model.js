@@ -9,7 +9,6 @@ const categorySchema = new Schema({
 })
 modelsUtil.
 createVirtualID(categorySchema)
-categorySchema.index({ value: 1 });
 
 
 /**

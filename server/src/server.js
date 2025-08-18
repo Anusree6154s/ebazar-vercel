@@ -18,7 +18,7 @@ morgan.token("date", function () {
 server.use(morgan(":date :method :url :status :response-time ms"));
 
 server.use(cors({ origin: "http://localhost:3000", credentials: true }));
-server.use(express.static(path.resolve(__dirname, "../..", "my-app2/dist")));
+server.use(express.static(path.resolve(__dirname, "../..", "client-vercel/dist")));
 
 server.use(cookieParser());
 
@@ -38,7 +38,7 @@ passport.use("jwt", jwtStrategy);
 
 server.use("/api", routes);
 server.get("*", (req, res) =>
-  res.sendFile(path.resolve(__dirname, "../..", "my-app2/dist", "index.html"))
+  res.sendFile(path.resolve(__dirname, "../..", "client-vercel/dist", "index.html"))
 );
 
 server.use(errorHandler);
