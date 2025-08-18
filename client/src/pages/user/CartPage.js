@@ -1,33 +1,18 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../../components/common/BackButton";
-import CartItem from "../../components/user/CartPage/CartItem";
-import {
-    selectCartStatus,
-    selectItems
-} from "../../redux";
+import CartItem from "../../components/user/cart-page/CartItem";
+import { selectCartItems, selectCartStatus } from "../../redux";
+import { getTotalCartItemsCount } from "../../util/total-cart-items";
+import { getTotalCartItemsPrice } from "../../util/total-cart-items-price";
 
 function CartPage() {
-  const items = useSelector(selectItems);
+  const items = useSelector(selectCartItems);
   const status = useSelector(selectCartStatus);
   const navigate = useNavigate();
 
-  const totalPrice =
-    items.length > 0
-      ? Number(
-          items
-            .reduce(
-              (amount, item) => item.product.price * item.quantity + amount,
-              0
-            )
-            .toFixed(2)
-        )
-      : 0;
-
-  const totalItems =
-    items.length > 0
-      ? items.reduce((amount, item) => item.quantity + amount, 0)
-      : 0;
+  const totalPrice = getTotalCartItemsPrice(items);
+  const totalItems = getTotalCartItemsCount(items);
 
   if (!items.length && status === "idle") navigate("/", { replace: true });
 
@@ -38,9 +23,9 @@ function CartPage() {
       <div className="flex flex-col bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex-1 px-4 py-6 sm:px-6 flow-root">
           <ul className="-my-6 divide-y divide-gray-200 dark:divide-gray-500">
-            {items.map((item) => 
-              <CartItem item={item} key={item.id}/>
-            )}
+            {items.map((item) => (
+              <CartItem item={item} key={item.id} />
+            ))}
           </ul>
         </div>
 

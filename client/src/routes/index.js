@@ -1,5 +1,4 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import { ForgotPassword, Logout, PageNotFound } from "../components";
 import {
   AddProductFormPage,
   AdminOrdersPage,
@@ -10,7 +9,10 @@ import {
   CheckoutPage,
   EditProductFormPage,
   ErrorFallbackPage,
+  ForgotPasswordPage,
   LoginPage,
+  LogoutPage,
+  NotFoundPage,
   OrderSuccessPage,
   ProductDetailPage,
   ProductListPage,
@@ -58,6 +60,10 @@ export const router = createBrowserRouter([
             path: "checkout",
             element: <CheckoutPage />,
           },
+          {
+            path: "*",
+            element: <NotFoundPage />,
+          },
         ],
       },
 
@@ -71,11 +77,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/logout",
-        element: <Logout />,
+        element: <LogoutPage />,
       },
       {
         path: "/forgot-password",
-        element: <ForgotPassword />,
+        element: <ForgotPasswordPage />,
       },
     ],
   },
@@ -128,9 +134,5 @@ export const router = createBrowserRouter([
         ],
       },
     ],
-  },
-  {
-    path: "*",
-    element: <PageNotFound />,
   },
 ]);

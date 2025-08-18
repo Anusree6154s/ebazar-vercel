@@ -23,6 +23,50 @@ exports.addToCart = catchAsyncUtil.catchAsync(async (req, res) => {
     res.status(httpStatus.CREATED).json(data);
 });
 
+/**
+ * Adds a product to the user's cart.
+ * Creates a new cart entry with the product information provided in the request body.
+ * @function
+ * @name addToCart
+ * @memberof module:controller/cart.controller.js
+ * @param {Object} req - Express request object. Expects cart data in `req.body`.
+ * @param {Object} res - Express response object. Responds with the newly created cart item.
+ * @returns {Promise<void>} Responds with the created cart item after populating product details.
+ */
+exports.addToCartMany = catchAsyncUtil.catchAsync(async (req, res) => {
+  if (!Array.isArray(req.body)) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Request body must be an array of cart items."
+    );
+  }
+
+  // Validate all entries
+  for (const item of req.body) {
+    if (!item.product || !mongoose.Types.ObjectId.isValid(item.product)) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        "Invalid product ID in one of the items."
+      );
+    }
+    if (!item.user || !mongoose.Types.ObjectId.isValid(item.user)) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        "Invalid user ID in one of the items."
+      );
+    }
+  }
+
+  // Insert many cart items
+  const carts = await Cart.insertMany(req.body);
+  // Populate 'product' for all created cart items
+  const populated = await Cart.populate(carts, { path: "product" });
+  res.status(httpStatus.OK).json(populated);
+
+  // Use .populate('field') on a single document.
+  // Use Model.populate(docs, { path: 'field' }) for an array of documents.
+});
+
 
 /**
  * Controller to fetch all cart items for a specific user.

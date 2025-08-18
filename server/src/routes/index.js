@@ -17,11 +17,11 @@ router
   .use("/auth", authRouter)
   .use("/payment", paymentRouter)
   .use("/products", productsRouter)
+  .use("/categories", categoriesRouter)
+  .use("/brands", brandsRouter)
   .use(isAuthJwt, protectedRouter);
 
 protectedRouter
-  .use("/categories", categoriesRouter)
-  .use("/brands", brandsRouter)
   .use("/users", usersRouter)
   .use("/cart", cartRouter)
   .use("/wishlist", wishListRouter)

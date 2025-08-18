@@ -1,0 +1,106 @@
+import { getTransaction, CART_STORE_NAME } from ".";
+
+// add/update items to cart
+export const addToCartIDB = async (item) => {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readwrite");
+    return new Promise((resolve, reject) => {
+      const request = store.add(item);
+      request.onsuccess = () => resolve(item);
+      request.onerror = () => reject("Failed to add item");
+    });
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    throw error;
+  }
+};
+
+export const updateCartIDB = async (item) => {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readwrite");
+    return new Promise((resolve, reject) => {
+      const request = store.put(item);
+      request.onsuccess = () => resolve(item);
+      request.onerror = () => reject("Failed to add item");
+    });
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    throw error;
+  }
+};
+
+// Get all cart items
+export async function getCartItemsIDB() {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readonly");
+    return new Promise((resolve, reject) => {
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject("Failed to fetch cart items");
+    });
+  } catch (error) {
+    console.error("Error getting items from cart:", error);
+    throw error;
+  }
+}
+
+export async function getCartItemsCountIDB() {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readonly");
+    return new Promise((resolve, reject) => {
+      const request = store.count();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject("Failed to count cart items");
+    });
+  } catch (error) {
+    console.error("Error counting items in cart:", error);
+    throw error;
+  }
+}
+
+// Remove an item from the cart
+export async function removeFromCartIDB(itemId) {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readwrite");
+    return new Promise((resolve, reject) => {
+      const request = store.delete(itemId);
+      request.onsuccess = () => resolve(itemId);
+      request.onerror = () => reject("Failed to remove item from cart");
+    });
+  } catch (error) {
+    console.error("Error removing items from cart:", error);
+    throw error;
+  }
+}
+
+// Clear the cart
+export async function clearCartIDB() {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readwrite");
+
+    return new Promise((resolve, reject) => {
+      const request = store.clear();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject("Failed to clear cart");
+    });
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+    throw error;
+  }
+}
+
+export async function existsInCartIDB(productId) {
+  try {
+    const store = await getTransaction(CART_STORE_NAME, "readonly");
+    return new Promise((resolve, reject) => {
+      const request = store.get(productId);
+      request.onsuccess = () => resolve(!!request.result);
+      // If product exists, return true; otherwise, false
+      request.onerror = () =>
+        reject("Failed to check exitence of product in cart");
+    });
+  } catch (error) {
+    console.error("Error check exitence of product in cart:", error);
+    throw error;
+  }
+}

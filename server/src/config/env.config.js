@@ -2,8 +2,10 @@
  * Loads environment variables from a `.env` file into `process.env` and exports constant values for use across the application.
  * @module config/env.config
  */
+const dotenv = require("dotenv");
+const resolveEnvFile = require("./resolveEnvFile");
 
-require('dotenv').config({path:'../.env'});
+dotenv.config({ path: resolveEnvFile() });
 
 
 
@@ -33,7 +35,7 @@ exports.env = {
         jwt_secret_key: process.env.JWT_SECRET_KEY,
     },
     mongoose: {
-        uri: process.env.NODE_ENV === 'test' ? process.env.URI_TEST : process.env.URI,
+        uri: process.env.NODE_ENV === 'test' ? process.env.MONGODB_URI_TEST : process.env.MONGODB_URI,
     },
     stripe: {
         stripe_secret_key: process.env.STRIPE_SECRET_KEY,

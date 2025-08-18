@@ -8,9 +8,11 @@ import {
   fetchItemsByUserIdAsync,
   fetchWishListByUserIdAsync,
   selectLoggedInUser,
+  setWishlistItemsIDB,
 } from "./redux";
 import { SnackbarProvider } from "notistack";
 import { CustomSnackbar } from "./components";
+import { getWishlistItemsIDB } from "./indexedDB/wishlistDB";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,6 +22,16 @@ function App() {
     if (user && !user.error) {
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchWishListByUserIdAsync());
+    } else {
+      const fetchWishlistItemsIDB = async () => {
+        try {
+          const wishlistItems = await getWishlistItemsIDB();
+          dispatch(setWishlistItemsIDB(wishlistItems));
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchWishlistItemsIDB();
     }
   }, [user, dispatch]);
 

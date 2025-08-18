@@ -1,0 +1,224 @@
+import { Disclosure } from "@headlessui/react";
+import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  selectCartItems,
+  selectLoggedInUser,
+  selectWishListLength,
+} from "../../../redux";
+import MobileNavOptions from "../MobileNavOptions";
+import { MobileNavbarProfileDropdown } from "./MobileNavbarProfileDropdown";
+import { NavbarUserProfileDropdown } from "./NavbarUserProfileDropdown";
+
+export default function Navbar({ children, name, preview }) {
+  const user = useSelector(selectLoggedInUser);
+  const cartItems = useSelector(selectCartItems);
+  const wishlistLength = useSelector(selectWishListLength);
+  const dispatch = useDispatch();
+
+  const [dark, setDark] = useState(false);
+  const [userNavigation, setUserNavigation] = useState(null);
+  const navigate = useNavigate();
+
+  const handleTheme = () => {
+    if (localStorage.getItem("color-theme") === "light") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("color-theme", "dark");
+      setDark(true);
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("color-theme", "light");
+      setDark(false);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("color-theme")) {
+      if (localStorage.getItem("color-theme") === "dark") {
+        document.documentElement.classList.add("dark");
+        setDark(true);
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } else {
+      localStorage.setItem("color-theme", "light");
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      let userNavigation;
+      if (user.role === "user") {
+        userNavigation = [
+          { name: "Your Profile", link: "/profile" },
+          { name: "My Orders", link: "/my-orders" },
+          { name: "Sign out", link: "/logout" },
+        ];
+      } else {
+        userNavigation = [
+          { name: "Your Profile", link: "/admin/profile" },
+          { name: "Orders", link: "/admin/orders" },
+          { name: "Sign out", link: "/logout" },
+        ];
+      }
+      setUserNavigation(userNavigation);
+    }
+  }, [user]);
+
+  return (
+    <div className="min-h-full relative">
+      <Disclosure
+        as="nav"
+        className="bg-gray-800 dark:bg-gray-900 sticky top-0 left-0 z-100"
+      >
+        {({ open }) => (
+          <>
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-[90%]">
+              <div className="flex h-16 items-center justify-between">
+                <Link to={"/"}>
+                  {/* <Link to={user.role === "user" ? "/" : "/admin"}> */}
+                  <h1 className="text-white text-2xl flex gap-2 ">
+                    <img className="h-8" src="/favicon2.ico" alt="" />
+                  </h1>
+                </Link>
+
+                <div className="hidden md:block">
+                  <div className="ml-4 flex gap-2 items-center md:ml-6">
+                    {!user && (
+                      <>
+                        <button
+                          onClick={() => navigate("/login")}
+                          className="p-1 w-32 text-center rounded-sm bg-orange-500 text-white font-medium"
+                        >
+                          Login
+                        </button>
+                        <button
+                          onClick={() => navigate("/signup")}
+                          className="p-1 w-32 text-center rounded-sm  text-orange-400  border border-orange-400 font-medium"
+                        >
+                          Register
+                        </button>
+                      </>
+                    )}
+
+                    <button
+                      id="theme-toggle"
+                      onClick={handleTheme}
+                      type="button"
+                      className="flex items-center text-gray-400  hover:text-gray-100  focus:outline-none focus:ring-4 focus:ring-transparent rounded-lg text-sm p-2.5 dark:border-gray-600 min-w-[122px]"
+                    >
+                      {dark ? "Light Mode" : "Dark Mode"}
+                      <svg
+                        id="theme-toggle-dark-icon"
+                        className={`${dark ? "hidden" : ""}  w-5 h-5 ml-2`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                      </svg>
+                      <svg
+                        id="theme-toggle-light-icon"
+                        className={`${dark ? "" : "hidden"}  w-5 h-5 ml-2`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+
+                    <Link
+                      to="/wishlist"
+                      // className={user.role === "user" ? "" : "hidden"}
+                    >
+                      <button
+                        type="button"
+                        className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
+                      >
+                        <span className="sr-only">View WishList</span>
+                        <HeartIcon
+                          className="h-6 w-6 cursor-pointer"
+                          aria-hidden="true"
+                        />
+                        {wishlistLength > 0 && (
+                          <span className="absolute items-center rounded-md bg-pink-50 -mt-10 px-2 py-1 text-xs font-medium text-pink-500 ring-1 ring-inset ring-pink-600/10 ">
+                            {wishlistLength}
+                          </span>
+                        )}
+                      </button>
+                    </Link>
+
+                    <Link
+                      to={cartItems.length > 0 ? "/cart" : "#"}
+                      // className={user.role === "user" ? "" : "hidden"}
+                    >
+                      <button
+                        type="button"
+                        className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
+                      >
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">View cart</span>
+                        <ShoppingCartIcon
+                          className="h-6 w-6 cursor-pointer"
+                          aria-hidden="true"
+                        />
+                        {cartItems.length > 0 && (
+                          <span className="absolute items-center rounded-md bg-blue-50 -mt-10 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-red-600/10 ">
+                            {cartItems.length}
+                          </span>
+                        )}
+                      </button>
+                    </Link>
+
+                    <NavbarUserProfileDropdown
+                      user={user}
+                      userNavigation={userNavigation}
+                    />
+                  </div>
+                </div>
+
+                <MobileNavOptions
+                  handleTheme={handleTheme}
+                  dark={dark}
+                  open={open}
+                />
+              </div>
+            </div>
+
+            <MobileNavbarProfileDropdown
+              user={user}
+              userNavigation={userNavigation}
+            />
+          </>
+        )}
+      </Disclosure>
+
+      {name && (
+        <header className="bg-white dark:bg-gradient-to-r dark:from-blue-900 dark:to-customBlue shadow sticky top-16 left-0 z-40">
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8  w-[90%]">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+              <span>{name}</span>
+              {preview && (
+                <span className="text-xl text-gray-500 dark:text-gray-300 font-medium italic">
+                  Preview
+                </span>
+              )}
+            </h1>
+          </div>
+        </header>
+      )}
+      <main className="dark:bg-gray-900">
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 w-[90%]">
+          {children}
+        </div>
+      </main>
+    </div>
+  );
+}

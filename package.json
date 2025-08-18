@@ -1,0 +1,35 @@
+{
+  "name": "ebazar-vercel",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">\r   <img src=\"https://github.com/user-attachments/assets/ca432d2d-09a0-40f8-a043-bdbbae85b4c6\" width=\"150\"/>\r     <h1 id=\"title\">EBazar</h1>\r     <p><strong> A Fullstack E-commerce Application</strong></p>\r     <p>\r       <a href=\"https://ebazar-a2pa.onrender.com\">View Website</a> •\r       <a href=\"https://documenter.getpostman.com/view/33572999/2sAY547K4U\">View API Documentation</a>\r     </p>\r     <img src=\"https://github.com/user-attachments/assets/b1351b33-b68d-457f-b7c8-bc020adfba2d\" width=\"700\"/>\r </div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pre-commit": "husky",
+    "commit":"cz"
+  },
+  "lint-staged": {
+    "client-vercel/**/*.{js,jsx,ts,tsx}": [
+      "cd client-vercel && eslint --fix",
+      "cd client-vercel && prettier --write"
+    ],
+    "client/**/*.{js,jsx,ts,tsx}": [
+      "cd client && eslint --fix",
+      "cd client && prettier --write"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

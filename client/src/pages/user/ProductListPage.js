@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   DesktopFilter,
   MobileFilterButton,
@@ -7,12 +8,13 @@ import {
   ProductGrid,
   Sort,
 } from "../../components";
-import { useFetchData, useFilters, usePagination } from "../../hooks";
+import { useFetchData, useFilters } from "../../hooks";
+import { selectPage } from "../../redux";
 
 function ProductListPage() {
   const [sort, setSort] = useState({});
   const { filter, filterFlag, handleFilter } = useFilters();
-  const { page, setPage } = usePagination();
+  const page = useSelector(selectPage);
   const { products, totalItems, brands, categories } = useFetchData(
     filter,
     sort,
@@ -69,15 +71,9 @@ function ProductListPage() {
                 <ProductGrid products={products} />
               </div>
             </section>
+            
 
-            {!filterFlag && (
-              <Pagination
-                handlePage={setPage}
-                page={page}
-                setPage={setPage}
-                totalItems={totalItems}
-              />
-            )}
+            {!filterFlag && <Pagination totalItems={totalItems} />}
           </main>
         </div>
       </div>
