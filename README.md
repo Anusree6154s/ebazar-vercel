@@ -3,7 +3,7 @@
     <h1 id="title">EBazar</h1>
     <p><strong> A Fullstack E-commerce Application</strong></p>
     <p>
-      <a href="https://ebazar-a2pa.onrender.com">View Website</a> •
+      <a href="https://ebazar-fullstack.vercel.app/">View Website</a> •
       <a href="https://documenter.getpostman.com/view/33572999/2sAY547K4U">View API Documentation</a>
     </p>
     <img src="https://github.com/user-attachments/assets/b1351b33-b68d-457f-b7c8-bc020adfba2d" width="700"/>
@@ -254,3 +254,4 @@ npm test
 <p align="center"> 
  <img width="0" id="image" src="https://github.com/user-attachments/assets/7558c916-e7df-4c9d-aa39-92d3e48f8f2d" >
 </p>
+
